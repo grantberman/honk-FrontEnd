@@ -65,11 +65,13 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
+            NavigationView {
             List {
                 ForEach (chatController.messages, id: \.self) { msg in
                     ChatRow(chatMessage: msg)
                 }
             }
+        }
             HStack{
                 TextField("Message...", text:$composedMessage).frame(minHeight: CGFloat(30))
                 Button(action: sendMessage) {

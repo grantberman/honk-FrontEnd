@@ -15,7 +15,19 @@ class ChatController : ObservableObject {
     
     @Published var messages = [
         ChatMessage(message: "Hey honk team, I am a text message that does not go too far over to the right side of the screen. This is very exciting.", avatar: "A", color: .red),
-        ChatMessage(message: "Hi", avatar: "B", color: .blue)
+        ChatMessage(message: "Hi", avatar: "B", color: .blue),
+        ChatMessage(message: "Hey honk team, I am a text message that does not go too far over to the right side of the screen. This is very exciting.", avatar: "A", color: .red),
+        ChatMessage(message: "Hi", avatar: "B", color: .blue),
+        ChatMessage(message: "Hi", avatar: "B", color: .blue),
+        ChatMessage(message: "Hey honk team, I am a text message that does not go too far over to the right side of the screen. This is very exciting.", avatar: "A", color: .red),
+        ChatMessage(message: "Hi", avatar: "B", color: .blue),
+        ChatMessage(message: "Hi", avatar: "B", color: .blue),
+        ChatMessage(message: "Hey honk team, I am a text message that does not go too far over to the right side of the screen. This is very exciting.", avatar: "A", color: .red),
+        ChatMessage(message: "Hi", avatar: "B", color: .blue),
+        ChatMessage(message: "Hi", avatar: "B", color: .blue),
+        ChatMessage(message: "Hey honk team, I am a text message that does not go too far over to the right side of the screen. This is very exciting.", avatar: "A", color: .red),
+        ChatMessage(message: "Hi", avatar: "B", color: .blue),
+
     ]
     
     func sendMessage(_ chatMessage: ChatMessage) {
