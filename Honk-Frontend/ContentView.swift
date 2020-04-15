@@ -9,6 +9,7 @@
 import SwiftUI
 
 
+
 struct ChatMessage : Hashable {
     var message: String
     var avatar: String
@@ -16,23 +17,45 @@ struct ChatMessage : Hashable {
     var isMe: Bool = false
 }
 
+extension Date {
+    func currentTimeMillis() -> Int64 {
+        return Int64(self.timeIntervalSince1970 * 1000)
+    }
+}
+
 struct ChatRow: View {
     var chatMessage: ChatMessage
+   
     
     var body: some View{
-        Group {
+        
+        let today = Date()
+        let dateString = DateFormatter()
+        dateString.dateFormat = "HH:mm E, d MMM y"
+        
+        
+        return Group {
             if !chatMessage.isMe{
-                HStack {
-                    Group {
-                         Text(chatMessage.avatar)
-                         Text(chatMessage.message)
-                             .bold()
-                             .foregroundColor(.white)
-                             .padding(10)
-                             .background(chatMessage.color)
-                             .cornerRadius(10)
-                            .frame(minWidth: 10, maxWidth: 250,  alignment: .leading)
+                VStack{
+                    HStack{
+                        Group{
+                                       
+                            Text(dateString.string(from:today))
+                            }
+                        }
+                    HStack {
+                        Group {
+                             Text(chatMessage.avatar)
+                             Text(chatMessage.message)
+                                 .bold()
+                                 .foregroundColor(.white)
+                                 .padding(10)
+                                 .background(chatMessage.color)
+                                 .cornerRadius(10)
+                                .frame(minWidth: 10, maxWidth: 250,  alignment: .leading)
+                        }
                     }
+                   
                 }
                 
             } else {
@@ -57,6 +80,7 @@ struct ChatRow: View {
     
 }
 
+
 struct ContentView: View {
     
     @State var composedMessage: String = ""
@@ -71,7 +95,7 @@ struct ContentView: View {
                 }
             }
             HStack{
-                TextField("Message...", text:$composedMessage).frame(minHeight: CGFloat(30))
+                TextField("Message...", text: $composedMessage).frame(minHeight: CGFloat(30))
                 Button(action: sendMessage) {
                     Text("Send")
                 }
