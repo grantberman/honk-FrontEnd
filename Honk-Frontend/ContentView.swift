@@ -63,14 +63,20 @@ struct ContentView: View {
     @EnvironmentObject var chatController : ChatController
     
     
+    
     var body: some View {
+        
+        
         VStack {
             NavigationView {
             List {
                 ForEach (chatController.messages, id: \.self) { msg in
                     ChatRow(chatMessage: msg)
                 }
+            }.onAppear {
+                UITableView.appearance().separatorStyle = .none     //gets rid of lines between messages
             }
+            
         }
             HStack{
                 TextField("Message...", text:$composedMessage).frame(minHeight: CGFloat(30))
@@ -82,6 +88,7 @@ struct ContentView: View {
         
     }
     func sendMessage() {
+        print("begging call")
         chatController.sendMessage(ChatMessage(message: composedMessage, avatar: "C", color: .green, isMe: true))
         composedMessage = ""
     }
