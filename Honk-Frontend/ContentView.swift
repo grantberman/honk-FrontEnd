@@ -96,8 +96,9 @@ struct ContentView: View {
             NavigationView {
                 ReverseScrollView {
 
+                    VStack{
                         ForEach (self.chatController.messages, id: \.self) { msg in
-                            VStack{
+                            VStack(spacing: 0){
                                 ChatRow(chatMessage: msg)
                             }
                         
@@ -106,6 +107,7 @@ struct ContentView: View {
                             }
                     }
                     .navigationBarTitle("Chat Title", displayMode: .inline)
+                }
             }
             HStack{
                 TextField("Message...", text: $composedMessage).frame(minHeight: CGFloat(30))
