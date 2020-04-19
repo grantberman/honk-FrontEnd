@@ -92,9 +92,8 @@ struct ContentView: View {
     
     
     var body: some View {
-        
+        VStack{
             NavigationView {
-                VStack{
                 ReverseScrollView {
 
                         ForEach (self.chatController.messages, id: \.self) { msg in
@@ -107,7 +106,7 @@ struct ContentView: View {
                             }
                     }
                     .navigationBarTitle("Chat Title", displayMode: .inline)
-            
+            }
             HStack{
                 TextField("Message...", text: $composedMessage).frame(minHeight: CGFloat(30))
                 Button(action: sendMessage) {
@@ -117,7 +116,7 @@ struct ContentView: View {
                 .padding()
                 .keyBoardAdaptive()
             }
-        }
+        
     }
         
     
