@@ -43,6 +43,7 @@ struct ChatRow: View {
                     Group{ // originally had this in the Vstack although it didn't orient correctly, moved back we'll see
                         Text(dateString.string(from:today))
                             .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(5)
                         }
                     HStack {
                         Group {
@@ -63,7 +64,7 @@ struct ChatRow: View {
                         Spacer()
                         Text(dateString.string(from:today))
                             .frame(maxWidth: .infinity, alignment: .center)
-                            .padding(10)
+                            .padding(5)
                     }
                     HStack {
                         Group {
@@ -98,7 +99,7 @@ struct ContentView: View {
 
                     VStack{
                         ForEach (self.chatController.messages, id: \.self) { msg in
-                            VStack(spacing: 0){
+                            VStack{
                                 ChatRow(chatMessage: msg)
                             }
                         
