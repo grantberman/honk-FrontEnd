@@ -48,14 +48,17 @@ struct ChatRow: View {
                     HStack {
                         Group {
                              Text(chatMessage.avatar)
+                                 .padding(.leading, 5)
                              Text(chatMessage.message)
                                  .bold()
                                  .foregroundColor(.white)
                                  .padding(10)
                                  .background(chatMessage.color)
                                  .cornerRadius(10)
+                                 .fixedSize(horizontal: false, vertical: true)
                                  .frame(minWidth: 10, maxWidth: 250,  alignment: .leading)
                         }
+                        // One thing I don't know about here is why the receiving texts are showing up more central. It doesn't have to do with the frame and I can't find a reason for them to be. It also happens if I send a new text as isme=false. Is it because navigationview has something there we cant see? then why doesn't it adjust when I get rid of navigation view
                     }
                 }
             } else {
@@ -75,8 +78,10 @@ struct ChatRow: View {
                                 .padding(10)
                                 .background(chatMessage.color)
                                 .cornerRadius(10)
-                                .frame(minWidth: 10, maxWidth: 250, alignment: .leading)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(minWidth: 10, maxWidth: 250, alignment: .bottomTrailing)
                             Text(chatMessage.avatar)
+                                .padding(.trailing, 5)
                             
                         }
                     }
@@ -102,15 +107,15 @@ struct ContentView: View {
                         ForEach (self.chatController.messages, id: \.self) { msg in
                             VStack{
                                 ChatRow(chatMessage: msg)
-                            }
+                            }.frame(alignment: .leading)
                         
-                        }.onAppear {
-                            UITableView.appearance().separatorStyle = .none     //gets rid of lines between messages
-                            }
+                        }
                     }
                     .navigationBarTitle("Chat Title", displayMode: .inline)
-                }
-            }
+                }.frame(alignment: .leading)
+            }.padding()
+            
+        
             HStack{
                 TextField("Message...", text: $composedMessage).frame(minHeight: CGFloat(30))
                 Button(action: sendMessage) {
@@ -119,8 +124,8 @@ struct ContentView: View {
                 }
                 .padding()
                 .keyBoardAdaptive()
-            }
-        
+            
+        }
     }
         
     
