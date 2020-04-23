@@ -75,6 +75,7 @@ struct ChatRow: View {
                                 .padding(10)
                                 .background(chatMessage.color)
                                 .cornerRadius(10)
+                                .frame(minWidth: 10, maxWidth: 250, alignment: .leading)
                             Text(chatMessage.avatar)
                             
                         }
