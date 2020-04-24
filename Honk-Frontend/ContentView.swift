@@ -26,6 +26,7 @@ struct ContentView: View {
                 }
             }.onAppear {
                 UITableView.appearance().separatorStyle = .none     //gets rid of lines between messages
+                
             }
             
         }

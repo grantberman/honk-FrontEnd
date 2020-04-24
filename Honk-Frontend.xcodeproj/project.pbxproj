@@ -79,14 +79,14 @@
 		93A803102446B9DB00815B21 /* Honk-Frontend */ = {
 			isa = PBXGroup;
 			children = (
+				9342EA99245270E00031FC07 /* Models */,
 				93A803112446B9DB00815B21 /* AppDelegate.swift */,
 				93A803132446B9DB00815B21 /* SceneDelegate.swift */,
-				93A803182446B9DB00815B21 /* ContentView.swift */,
 				9342EA9E24528BD10031FC07 /* ChatRow.swift */,
-				93757FD7244BBAE40027D96E /* LoginView.swift */,
-				9342EA99245270E00031FC07 /* Models */,
-				93757FD9244BD5810027D96E /* LoginViewController.swift */,
+				93A803182446B9DB00815B21 /* ContentView.swift */,
 				93A8032824475BD200815B21 /* ChatController.swift */,
+				93757FD7244BBAE40027D96E /* LoginView.swift */,
+				93757FD9244BD5810027D96E /* LoginViewController.swift */,
 				93A8031A2446B9DE00815B21 /* Assets.xcassets */,
 				93A8031F2446B9DE00815B21 /* LaunchScreen.storyboard */,
 				93A803222446B9DE00815B21 /* Info.plist */,
