@@ -19,6 +19,7 @@ struct Result: Codable {
     var author:  String
     var created_at : String
     var content : String
+  
 }
 
 class ChatController : ObservableObject {
@@ -40,11 +41,11 @@ class ChatController : ObservableObject {
 //        willChange.send()
         
 
-        guard let url = URL(string: "http://honk-api.herokuapp.com/api/messages") else {
+        guard let url = URL(string: "http://localhost:5000/api/messages") else {
             print("Invalid URL")
             return
         }
-        let body: [String: Any] = ["content" : chatMessage.message, "chat_id": 3]
+        let body: [String: Any] = ["content" : chatMessage.message, "chat_id": 1]
         
         let finalBody = try! JSONSerialization.data(withJSONObject: body)  //make proper check later
         
@@ -54,36 +55,43 @@ class ChatController : ObservableObject {
         
         
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer la9p3RTqmd6fJmewhRqvGOiQNCXEDxSI", forHTTPHeaderField: "Authorization") //after
+        request.setValue("Bearer sqfOEOYpMfYMSTYxOOqAwQky4XOSr8r8", forHTTPHeaderField: "Authorization") //after
         
 //        print(request.allHTTPHeaderFields)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-//            if let data = data {
             
-            
-            guard let data = data else { return }
-            let finalData = try! JSONDecoder().decode(Result.self, from:data)
-//            print(finalData ?? error?.localizedDescription ?? "Unknown error")
-            
-            print(finalData)
-            
-//                if let decodedResponse = try? JSONDecoder().decode(Response.self, from:data) {
-//                    DispatchQueue.main.async {
-//                        print(decodedResponse)
-//                        self.results = decodedResponse.results
-//                        self.messages.append(chatMessage)
-//                        self.willChange.send(self)
-//                    }
-//                    return
-//                }
-                
-
+//             guard let data = data else { return }
+//            if let finalData = try? JSONDecoder().decode(Result.self, from:data) {
+//                print(finalData)
 //            }
+//            //            print(finalData ?? error?.localizedDescription ?? "Unknown error")
+            
+            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
+//                print("Server error! ")
+//                print(response ?? HTTPURLResponse())
+                let suck = response as? HTTPURLResponse
+                print(suck?.statusCode)
+                return
+            }
+            
+            if let data = data {
+                if let decodedResponse = try? JSONDecoder().decode(Result.self, from: data) {
+                    DispatchQueue.main.async {
+                        //update UI here
+                        print(decodedResponse)
+                        print("success!")
+                        //self.results = decodedResponse.results
+                        self.messages.append(chatMessage)
+                        self.willChange.send()
+//                        self.willChange.send(self)
+                    }
+                    return
+                }
+                
+            }
 //            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
-        }.resume()
-        
-        print("after call")
-        
+            
+            }.resume()
     }
 }
