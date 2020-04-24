@@ -47,8 +47,8 @@ class ChatController : ObservableObject {
     ]
     
     func sendMessage(_ chatMessage: ChatMessage) {
-//        messages.append(chatMessage)
-//        willChange.send()
+        messages.append(chatMessage)
+        willChange.send()
         
 
         guard let url = URL(string: "http://localhost:5000/api/messages") else {
