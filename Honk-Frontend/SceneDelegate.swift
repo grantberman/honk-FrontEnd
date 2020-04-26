@@ -32,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView.environmentObject(chatController))      //used for content view as start up
+            window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController))      //used for content view as start up
 //            window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController))
             self.window = window
             window.makeKeyAndVisible()
