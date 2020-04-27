@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9339863C2456232B009206CD /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9339863B2456232B009206CD /* Credentials.swift */; };
+		9339864624567284009206CD /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9339864424567284009206CD /* KeychainWrapper.swift */; };
+		9339864724567284009206CD /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9339864524567284009206CD /* KeychainItemAccessibility.swift */; };
 		9342EA98245270CF0031FC07 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9342EA97245270CF0031FC07 /* Authentication.swift */; };
 		9342EA9F24528BD10031FC07 /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9342EA9E24528BD10031FC07 /* ChatRow.swift */; };
 		9342EAA324528F810031FC07 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9342EAA224528F810031FC07 /* ChatMessage.swift */; };
@@ -27,6 +30,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9339863B2456232B009206CD /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		9339863D24562FEE009206CD /* Honk-Frontend.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Honk-Frontend.entitlements"; sourceTree = "<group>"; };
+		9339864424567284009206CD /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
+		9339864524567284009206CD /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
 		9342EA97245270CF0031FC07 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		9342EA9E24528BD10031FC07 /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
 		9342EAA224528F810031FC07 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
@@ -59,11 +66,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9339864324563E04009206CD /* ChatHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				C6A12E01244BB08800AFFF7A /* ReverseScrollView.swift */,
+				C6A12E07244BB70E00AFFF7A /* UIResponder.swift */,
+				C6A12E05244BB4E100AFFF7A /* KeyBoardAdaptive.swift */,
+				C6A12E03244BB49000AFFF7A /* KeyBoardAvoidance.swift */,
+			);
+			path = ChatHelpers;
+			sourceTree = "<group>";
+		};
 		9342EA99245270E00031FC07 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				9342EAA224528F810031FC07 /* ChatMessage.swift */,
 				9342EA97245270CF0031FC07 /* Authentication.swift */,
+				9339863B2456232B009206CD /* Credentials.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -87,18 +106,18 @@
 		93A803102446B9DB00815B21 /* Honk-Frontend */ = {
 			isa = PBXGroup;
 			children = (
-				9342EA99245270E00031FC07 /* Models */,
+				9339863D24562FEE009206CD /* Honk-Frontend.entitlements */,
 				93A803112446B9DB00815B21 /* AppDelegate.swift */,
 				93A803132446B9DB00815B21 /* SceneDelegate.swift */,
 				9342EA9E24528BD10031FC07 /* ChatRow.swift */,
 				93A803182446B9DB00815B21 /* ContentView.swift */,
-				C6A12E01244BB08800AFFF7A /* ReverseScrollView.swift */,
-				C6A12E07244BB70E00AFFF7A /* UIResponder.swift */,
-				C6A12E05244BB4E100AFFF7A /* KeyBoardAdaptive.swift */,
-				C6A12E03244BB49000AFFF7A /* KeyBoardAvoidance.swift */,
 				93A8032824475BD200815B21 /* ChatController.swift */,
 				93757FD7244BBAE40027D96E /* LoginView.swift */,
 				93757FD9244BD5810027D96E /* LoginViewController.swift */,
+				9339864524567284009206CD /* KeychainItemAccessibility.swift */,
+				9339864424567284009206CD /* KeychainWrapper.swift */,
+				9342EA99245270E00031FC07 /* Models */,
+				9339864324563E04009206CD /* ChatHelpers */,
 				93A8031A2446B9DE00815B21 /* Assets.xcassets */,
 				93A8031F2446B9DE00815B21 /* LaunchScreen.storyboard */,
 				93A803222446B9DE00815B21 /* Info.plist */,
@@ -193,12 +212,15 @@
 				93A803122446B9DB00815B21 /* AppDelegate.swift in Sources */,
 				9342EAA324528F810031FC07 /* ChatMessage.swift in Sources */,
 				93A803172446B9DB00815B21 /* Honk_Frontend.xcdatamodeld in Sources */,
+				9339864724567284009206CD /* KeychainItemAccessibility.swift in Sources */,
 				9342EA9F24528BD10031FC07 /* ChatRow.swift in Sources */,
 				93A803192446B9DB00815B21 /* ContentView.swift in Sources */,
 				C6A12E08244BB70E00AFFF7A /* UIResponder.swift in Sources */,
 				93A8032924475BD200815B21 /* ChatController.swift in Sources */,
 				C6A12E04244BB49000AFFF7A /* KeyBoardAvoidance.swift in Sources */,
 				C6A12E02244BB08800AFFF7A /* ReverseScrollView.swift in Sources */,
+				9339863C2456232B009206CD /* Credentials.swift in Sources */,
+				9339864624567284009206CD /* KeychainWrapper.swift in Sources */,
 				93A803142446B9DB00815B21 /* SceneDelegate.swift in Sources */,
 				9342EA98245270CF0031FC07 /* Authentication.swift in Sources */,
 			);
@@ -336,6 +358,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Honk-Frontend/Honk-Frontend.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Honk-Frontend/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
@@ -355,6 +378,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Honk-Frontend/Honk-Frontend.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Honk-Frontend/Preview Content\"";
 				ENABLE_PREVIEWS = YES;

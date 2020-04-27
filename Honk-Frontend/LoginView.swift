@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+//import KeychainWrapper
 
 
 struct User : Codable {
@@ -19,12 +20,13 @@ struct User : Codable {
 struct LoginView: View {
 
     @ObservedObject var loginViewController = LoginViewController()
+    @EnvironmentObject var Auth : Authentication
     
     
     @ViewBuilder
     var body: some View {
         
-        if loginViewController.isAuthenticated {
+        if Auth.isAuthenticated {
             ContentView()
             }
             
@@ -78,6 +80,7 @@ struct LoginView: View {
                     }
             }
             }
+            
             .padding(.top, 26.0)
             
         }
@@ -85,6 +88,7 @@ struct LoginView: View {
         
         
     }
+    
     
     func register() {
 

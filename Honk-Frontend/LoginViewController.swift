@@ -23,6 +23,7 @@ class LoginViewController : ObservableObject {
     
     var isValidUser = false {
         willSet{
+            writeKeychain()
             getAuthorization()
         }
     }
@@ -75,6 +76,7 @@ class LoginViewController : ObservableObject {
 
                 
                         self.isValidUser = true
+                        
 
                     }
                     return
@@ -114,7 +116,8 @@ class LoginViewController : ObservableObject {
                     }
                     
                     if let data = data {
-                        if (try? JSONDecoder().decode(Authentication.self, from: data)) != nil {
+                        if (try? JSONDecoder().decode(AuthenticationResult
+                            .self, from: data)) != nil {
                             DispatchQueue.main.async {
 
                                 self.isAuthenticated = true
@@ -130,4 +133,13 @@ class LoginViewController : ObservableObject {
                     }.resume()
         
     }
+    func writeKeychain() {
+        let username = user.username
+        let password = user.password
+        
+        KeychainWrapper.standard.set(username, forKey: "username")
+        KeychainWrapper.standard.set(password, forKey: "password")
+    }
+    
+
 }
