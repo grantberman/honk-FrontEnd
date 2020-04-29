@@ -44,6 +44,15 @@ struct ContentView: View {
             
         }
     }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+    willPresent notification: UNNotification,
+    withCompletionHandler completionHandler:
+       @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        Text("Incoming Message")
+        
+    }
         
     
     func sendMessage() {

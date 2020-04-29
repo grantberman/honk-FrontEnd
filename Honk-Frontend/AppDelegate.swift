@@ -9,27 +9,52 @@
 import UIKit
 import CoreData
 import UserNotifications
+import SwiftUI
+
+//extension AppDelegate: UNUserNotificationCenterDelegate
+    
+//   This function will be called right after user tap on the notification
+//  func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+//    print("notif")
+//    guard var rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else {
+//        return
+//    }
+//
+//
+//    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+//    let notificationView = NotificationTestView().environment(\.managedObjectContext, context)
+//
+//    let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
+//    window?.rootViewController = UIHostingController(rootView: notificationView)
+//
+//
+//    let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+//    sceneDelegate?.window = window
+//    window?.makeKeyAndVisible()
+//
+//
+//
+//
+//    // tell the app that we have finished processing the user’s action / response
+//    completionHandler()
+//  }
+//}
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate{
     
-    
-    
+        
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        registerForPushNotifications()
-//        let notificationOption = launchOptions?[.remoteNotification]
-//
-//        if let notification = notificationOption as? [String: AnyObject], let aps = notification["aps"] as? [String:AnyObject] {
-//
-//            //do stuff
-//
-//            //            (window?.rootViewController as? UITabBarController)?.selectedIndex = 1
-//
-
-//        }
         
+        registerForPushNotifications()
+        UNUserNotificationCenter.current().delegate = self
+        print("set")
+        
+        let notificationOption = launchOptions?[.remoteNotification]
+
         
         return true
     }
@@ -93,6 +118,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func application(
+      _ application: UIApplication,
+      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
+      let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+      let token = tokenParts.joined()
+      print("Device Token: \(token)")
+    }
+
+    func application(
+      _ application: UIApplication,
+      didFailToRegisterForRemoteNotificationsWithError error: Error) {
+      print("Failed to register: \(error)")
+    }
+    
     
     func registerForPushNotifications() {
         UNUserNotificationCenter.current()
@@ -116,16 +156,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken : Data) {
-        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data)}
-        let token = tokenParts.joined()
-        print("Device Token: \(token)")
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+      print("notif")
+      guard var rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else {
+          return
+      }
+
+
+      let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+      let notificationView = NotificationTestView().environment(\.managedObjectContext, context)
+
+      let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
+      window?.rootViewController = UIHostingController(rootView: notificationView)
+
+
+      let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+      sceneDelegate?.window = window
+      window?.makeKeyAndVisible()
+
+
+
+
+      // tell the app that we have finished processing the user’s action / response
+
+        completionHandler()
+    }
+//      guard var rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else {
+//          return
+//      }
+//
+      
+//      let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+//      let notificationView = NotificationTestView().environment(\.managedObjectContext, context)
+//
+//      let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
+//      window?.rootViewController = UIHostingController(rootView: notificationView)
+//
+//
+//      let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+//      sceneDelegate?.window = window
+//      window?.makeKeyAndVisible()
+      
+      
+      
         
-    }
+      // tell the app that we have finished processing the user’s action / response
     
-    func application (_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print ("Failed to register: \(error)")
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)
+        -> Void) {
+        let notifInfo = notification.request.content.userInfo
+        
+        if let notifBody = notifInfo["aps"] as? [String:AnyObject] {
+            print(notifBody)
+        }
+        print("here")
+        completionHandler([.alert, .badge, .sound])
     }
-    
+
+
 }
 
