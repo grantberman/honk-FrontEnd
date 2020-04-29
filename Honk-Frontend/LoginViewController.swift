@@ -20,10 +20,12 @@ class LoginViewController : ObservableObject {
     
     var user: User
     var willChange = PassthroughSubject<Void, Never>()
+    var Auth : Authentication?
     
     var isValidUser = false {
         willSet{
-            getAuthorization()
+            writeKeychain()
+            Auth?.getAuth(user.username, user.password)
         }
     }
     var isAuthenticated = false {
@@ -41,7 +43,7 @@ class LoginViewController : ObservableObject {
     
     func register() {       //this function is called when a user is trying to regsiter a new account
 
-        guard let url = URL(string: "http://localhost:5000/api/users") else {
+        guard let url = URL(string: "http://honk-api.herokuapp.com/api/users") else {
             print("Invalid URL")
             return
         }
@@ -63,8 +65,8 @@ class LoginViewController : ObservableObject {
             
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
                 
-                let httpResponse = response as! HTTPURLResponse
-                print(httpResponse.statusCode)
+//                let httpResponse = response as! HTTPURLResponse
+//                print(httpResponse.statusCode)
                 return
             }
             
@@ -75,6 +77,7 @@ class LoginViewController : ObservableObject {
 
                 
                         self.isValidUser = true
+                        
 
                     }
                     return
@@ -86,48 +89,58 @@ class LoginViewController : ObservableObject {
             }.resume()
     }
     
-    func getAuthorization()  {      //after the username and password have been validated as correct, this call gets the users auth token
+//    func getAuthorization()  {      //after the username and password have been validated as correct, this call gets the users auth token
+//
+//                guard let url = URL(string: "http://localhost:5000/api/tokens") else {
+//                    print("Invalid URL")
+//                    return
+//                }
+//
+//                var request = URLRequest(url: url)
+//                request.httpMethod = "POST"
+//                request.setValue(user.username + ":" + user.password, forHTTPHeaderField: "Authorization")
+//        
+//
+//
+//                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//
+//                URLSession.shared.dataTask(with: request) { data, response, error in
+//
+//
+//
+//                    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
+//
+//                        let httpResponse = response as! HTTPURLResponse
+//                        print(httpResponse.statusCode)
+//                        return
+//                    }
+//
+//                    if let data = data {
+//                        if (try? JSONDecoder().decode(AuthenticationResult
+//                            .self, from: data)) != nil {
+//                            DispatchQueue.main.async {
+//
+//                                self.isAuthenticated = true
+//
+//
+//                            }
+//                            return
+//                        }
+//
+//                    }
+////                    print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
+//
+//                    }.resume()
+//
+//    }
+    func writeKeychain() {
+        let username = user.username
+        let password = user.password
         
-                guard let url = URL(string: "http://localhost:5000/api/tokens") else {
-                    print("Invalid URL")
-                    return
-                }
-                
-                var request = URLRequest(url: url)
-                request.httpMethod = "POST"
-                request.setValue(user.username + ":" + user.password, forHTTPHeaderField: "Authorization")
-        
-                
-                
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-                
-                URLSession.shared.dataTask(with: request) { data, response, error in
-                    
-
-                    
-                    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
-                        
-                        let httpResponse = response as! HTTPURLResponse
-                        print(httpResponse.statusCode)
-                        return
-                    }
-                    
-                    if let data = data {
-                        if (try? JSONDecoder().decode(Authentication.self, from: data)) != nil {
-                            DispatchQueue.main.async {
-
-                                self.isAuthenticated = true
-
-
-                            }
-                            return
-                        }
-                        
-                    }
-//                    print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
-                    
-                    }.resume()
-        
+        KeychainWrapper.standard.set(username, forKey: "username")
+        KeychainWrapper.standard.set(password, forKey: "password")
     }
+    
+
 }
