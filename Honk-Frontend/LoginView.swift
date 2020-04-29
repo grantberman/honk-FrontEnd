@@ -19,9 +19,11 @@ struct User : Codable {
 
 struct LoginView: View {
 
-    @ObservedObject var loginViewController = LoginViewController()
     @EnvironmentObject var Auth : Authentication
+    @ObservedObject var loginViewController = LoginViewController()
     
+    
+
     
     @ViewBuilder
     var body: some View {
@@ -91,11 +93,12 @@ struct LoginView: View {
     
     
     func register() {
-
+        loginViewController.Auth = Auth
         loginViewController.register()
     }
     
     func signIn() {
+//        loginViewController.Auth = Auth
 //        loginViewController.signIn()
     }
 }

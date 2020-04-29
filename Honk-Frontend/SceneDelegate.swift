@@ -32,11 +32,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let loginView = LoginView().environment(\.managedObjectContext, context)
 
         checkAuth()
-        print("check auth above")
+
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController).environmentObject(Auth))      //used for content view as start up
+            window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController).environmentObject(Auth))     
 //            window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController))
             self.window = window
             window.makeKeyAndVisible()
