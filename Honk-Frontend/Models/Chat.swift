@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+
+struct Chat: Hashable {
+    
+    var id: Int
+    var communityId: Int
+    var name: String
+    var created_at: String
+    var messages: [ChatMessage] 
+    
+    
+}

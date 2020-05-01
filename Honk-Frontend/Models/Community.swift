@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+struct Community  {
+    var id : Int
+    var name : String
+    var description: String
+    var created_at : String
+    var chats: [Chat]
+    var subscriptions: String?
+}

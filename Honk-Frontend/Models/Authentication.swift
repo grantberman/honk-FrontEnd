@@ -15,7 +15,7 @@ struct AuthenticationResult: Codable {
 
 class Authentication: ObservableObject{
     
-    @Published var token: String = ""
+    var token: String = ""
     @Published var isAuthenticated: Bool = false{
         willSet{
             objectWillChange.send()
@@ -23,7 +23,7 @@ class Authentication: ObservableObject{
     }
     
     func getAuth(_ username: String, _ password: String) {   //after the username and password have been validated as correct, this call gets the users auth token
-        
+//        print(username + " " + password)
         guard let url = URL(string: "http://honk-api.herokuapp.com/api/tokens") else {
             print("Invalid URL")
             return
@@ -51,9 +51,13 @@ class Authentication: ObservableObject{
             
             if let data = data {
                 if (try? JSONDecoder().decode(AuthenticationResult.self, from: data)) != nil {
+                    let group = DispatchGroup()
+                    group.enter()
                     DispatchQueue.main.async {
                         
                         self.isAuthenticated = true
+//                        print("true")
+                        group.leave()
                         
                         
                     }

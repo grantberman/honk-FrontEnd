@@ -10,25 +10,32 @@ import SwiftUI
 //import KeychainWrapper
 
 
-struct User : Codable {
-      var username: String  //should these details be made private or fileprivate?
-     var password: String
-      var email: String
+struct LoginResult: Codable {
+    var email: String
+    var id : Int
+    var username:  String
 }
+
 
 
 struct LoginView: View {
 
-    @EnvironmentObject var Auth : Authentication
-    @ObservedObject var loginViewController = LoginViewController()
-    
-    
+    @EnvironmentObject var user: User
+    @EnvironmentObject var auth : Authentication
+    @State var isValidUser : Bool  = false {
+           willSet{
+               writeKeychain()
+            print(user.username + " " + user.password)
+               auth.getAuth(user.username, user.password)
+           }
+       }
 
     
+
     @ViewBuilder
     var body: some View {
         
-        if Auth.isAuthenticated {
+        if auth.isAuthenticated == true{
             ContentView()
             }
             
@@ -41,17 +48,17 @@ struct LoginView: View {
                         .font(.largeTitle).padding(10)
                         .padding([.top, .bottom], 40)
                         .background(Color.red)
-                    TextField("Username", text: $loginViewController.user.username)
+                    TextField("Username", text: $user.username)
                         .padding()
                         .cornerRadius(20)
                         .foregroundColor(.black)
                         .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                    SecureField("password", text:$loginViewController.user.password)
+                    SecureField("password", text: $user.password)
                         .padding()
                         .cornerRadius(20)
                         .foregroundColor(.black)
                         .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                    TextField("email", text: $loginViewController.user.email)
+                    TextField("email", text: $user.email)
                                       .padding()
                                       .cornerRadius(20)
                                       .foregroundColor(.white)
@@ -70,7 +77,7 @@ struct LoginView: View {
                             .cornerRadius(15.0)
                     }
 
-                
+
                     Button(action: register) {
                       Text("Create Account")
                         .font(.headline)
@@ -81,10 +88,14 @@ struct LoginView: View {
                         .cornerRadius(15.0)
                     }
             }
+            }.onAppear{
+                print("auth" + String(self.auth.isAuthenticated))
             }
             
             .padding(.top, 26.0)
+
             
+        
         }
         
         
@@ -93,19 +104,70 @@ struct LoginView: View {
     
     
     func register() {
-        loginViewController.Auth = Auth
-        loginViewController.register()
-    }
+        
+        guard let url = URL(string: "http://honk-api.herokuapp.com/api/users") else {
+            print("Invalid URL")
+            return
+        }
+        let body: [String: String] = ["username" : user.username, "password": user.password, "email": user.email]
+        
+        let finalBody = try! JSONSerialization.data(withJSONObject: body)  //make proper check later
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = finalBody
+        
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            
+            
+            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
+                
+                //                let httpResponse = response as! HTTPURLResponse
+                //                print(httpResponse.statusCode)
+                return
+            }
+            
+            if let data = data {
+                print(data)
+                if (try? JSONDecoder().decode(LoginResult.self, from: data)) != nil {      //if successful response
+                    DispatchQueue.main.async {
+                        
+                        
+                        self.isValidUser = true
+                        
+                        
+                    }
+                    return
+                }
+                
+                            }
+                //            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
+                            
+                            }.resume()}
     
     func signIn() {
 //        loginViewController.Auth = Auth
 //        loginViewController.signIn()
+    }
+    
+    
+    func writeKeychain() {
+        let username = user.username
+        let password = user.password
+        
+        KeychainWrapper.standard.set(username, forKey: "username")
+        KeychainWrapper.standard.set(password, forKey: "password")
     }
 }
 
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(isValidUser: false)
     }
 }

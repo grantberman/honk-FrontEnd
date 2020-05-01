@@ -181,23 +181,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         completionHandler()
     }
-//      guard var rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else {
-//          return
-//      }
-//
-      
-//      let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//      let notificationView = NotificationTestView().environment(\.managedObjectContext, context)
-//
-//      let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
-//      window?.rootViewController = UIHostingController(rootView: notificationView)
-//
-//
-//      let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
-//      sceneDelegate?.window = window
-//      window?.makeKeyAndVisible()
-      
-      
+
       
         
       // tell the app that we have finished processing the user’s action / response
