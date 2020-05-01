@@ -44,9 +44,10 @@ struct ChatRow: View {
                              Text(chatMessage.message)
                                  .bold()
                                  .foregroundColor(.white)
-                                 .padding(10)
+                                 .padding(10)       //comment this out to 
                                  .background(chatMessage.color)
                                  .cornerRadius(10)
+                            
                             
                                  .fixedSize(horizontal: false, vertical: true)
                                 .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
@@ -87,7 +88,7 @@ struct ChatRow: View {
 
 struct ChatRow_Previews: PreviewProvider {
     static var previews: some View {
-        ChatRow(chatMessage: ChatMessage(message: "This is a long message test Im not sure what will happen with it and we need to see what happens", avatar: "B", color: .blue))
+        ChatRow(chatMessage: ChatMessage(message: "This is a long message test Im not sure what will happen with it and we need to see what happens", avatar: "B", color: .blue)).previewDevice("iPhone 8")
     }
 }
 
