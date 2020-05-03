@@ -16,6 +16,16 @@ struct Chat: Hashable {
     var name: String
     var created_at: String
     var messages: [ChatMessage] 
-    
-    
+
+}
+
+
+
+
+struct ChatCodable: Codable {
+    var id: String
+    var name : String
+    var createdAt : String
+    var members: [UserCodable]
+    var community : [CommunityCodable]
 }

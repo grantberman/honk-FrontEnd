@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct Community  {
     var id : Int
@@ -15,4 +16,17 @@ struct Community  {
     var created_at : String
     var chats: [Chat]
     var subscriptions: String?
+}
+
+
+
+struct CommunityCodable: Codable {
+    var id : Int
+    var name : String
+    var description: String
+    var created_at : String
+    var subscribers: [UserCodable]
+    var admins : [String]
+    var chats : [ChatCodable]
+    
 }

@@ -26,10 +26,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Get the managed object context from the shared persistent container.
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        
-        checkAuth()
         readUserData()
         readAppState()
+        checkAuth()
         
         let validUser = Auth.isAuthenticated ? true : false     //if authenticated is true then it is a valid user, otherwise, it is not.
         
@@ -45,12 +44,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             
-            if validUser {
-                window.rootViewController = UIHostingController(rootView: contentView.environmentObject(chatController).environmentObject(Auth).environmentObject(user).environmentObject(appState))
-            }
-            else {
-                window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController).environmentObject(Auth).environmentObject(user).environmentObject(appState))
-            }
+//            if validUser {
+//                window.rootViewController = UIHostingController(rootView: contentView.environmentObject(chatController).environmentObject(Auth).environmentObject(user).environmentObject(appState))
+//            }
+//            else {
+//                window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController).environmentObject(Auth).environmentObject(user).environmentObject(appState))
+//            }
+             window.rootViewController = UIHostingController(rootView: contentView.environmentObject(chatController).environmentObject(Auth).environmentObject(user).environmentObject(appState))
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -99,47 +99,50 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
-    func readUserData () {          //read user data from the local device (communities, chats, messages)
-        
-        let frontEndMessages = [
-            ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
-            ChatMessage(message: "nick are u there", avatar: "G", color: .red),
-            ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
-            ChatMessage(message: "nick are u there", avatar: "G", color: .red),
-            ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
-            ChatMessage(message: "nick are u there", avatar: "G", color: .red),
-            
-            ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
-            ChatMessage(message: "nick are u there", avatar: "G", color: .red),
-            ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
-            ChatMessage(message: "nick are u there", avatar: "G", color: .red)
-        ]
-        
-        let backEndMessages = [
-            ChatMessage(message: "this is the start of the back end chat", avatar: "G", color: .blue),
-            ChatMessage(message: "ben are u there", avatar: "G", color: .blue)
-        ]
-        
-        
-        let frontEndChat = Chat(id: 1, communityId: 1, name: "front end", created_at: "4/20/20", messages: frontEndMessages)
-        
-        let backEndChat = Chat(id: 1, communityId: 1, name: "back end", created_at: "4/20/20", messages: backEndMessages)
-        
-        
-        let community1 = Community(id: 1, name: "Honk Developers", description: "All of the coolest iOS developers", created_at: "4/30/20", chats: [frontEndChat, backEndChat] )
-        
-        self.user.communities.append(community1)
-        
-        
-        
-    }
     
-    func readAppState() {
-        
-        appState.selectedCommunity = user.communities[0]
-        appState.selectedChat = appState.selectedCommunity?.chats[0] ?? nil
-        
-    }
+     func readAppState() {
+         
+         appState.selectedCommunity = self.user.communities[0]
+         appState.selectedChat = appState.selectedCommunity?.chats[0] ?? nil
+         
+     }
+     
+     func readUserData () {          //read user data from the local device (communities, chats, messages)
+           
+           let frontEndMessages = [
+               ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
+               ChatMessage(message: "nick are u there", avatar: "G", color: .red),
+               ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
+               ChatMessage(message: "nick are u there", avatar: "G", color: .red),
+               ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
+               ChatMessage(message: "nick are u there", avatar: "G", color: .red),
+               
+               ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
+               ChatMessage(message: "nick are u there", avatar: "G", color: .red),
+               ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
+               ChatMessage(message: "nick are u there", avatar: "G", color: .red)
+           ]
+           
+           let backEndMessages = [
+               ChatMessage(message: "this is the start of the back end chat", avatar: "G", color: .blue),
+               ChatMessage(message: "ben are u there", avatar: "G", color: .blue)
+           ]
+           
+           
+           let frontEndChat = Chat(id: 1, communityId: 1, name: "front end", created_at: "4/20/20", messages: frontEndMessages)
+           
+           let backEndChat = Chat(id: 1, communityId: 1, name: "back end", created_at: "4/20/20", messages: backEndMessages)
+           
+           
+           let community1 = Community(id: 1, name: "Honk Developers", description: "All of the coolest iOS developers", created_at: "4/30/20", chats: [frontEndChat, backEndChat] )
+           
+           self.user.communities.append(community1)
+           
+           
+           
+       }
+    
+    
     
     
 }

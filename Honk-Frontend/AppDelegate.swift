@@ -11,47 +11,21 @@ import CoreData
 import UserNotifications
 import SwiftUI
 
-//extension AppDelegate: UNUserNotificationCenterDelegate
-    
-//   This function will be called right after user tap on the notification
-//  func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-//    print("notif")
-//    guard var rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else {
-//        return
-//    }
-//
-//
-//    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//    let notificationView = NotificationTestView().environment(\.managedObjectContext, context)
-//
-//    let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
-//    window?.rootViewController = UIHostingController(rootView: notificationView)
-//
-//
-//    let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
-//    sceneDelegate?.window = window
-//    window?.makeKeyAndVisible()
-//
-//
-//
-//
-//    // tell the app that we have finished processing the user’s action / response
-//    completionHandler()
-//  }
-//}
 
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate{
     
-        
+
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        
+
         registerForPushNotifications()
         UNUserNotificationCenter.current().delegate = self
-        print("set")
+//        print("set")
         
         let notificationOption = launchOptions?[.remoteNotification]
 
@@ -80,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
          The persistent container for the application. This implementation
          creates and returns a container, having loaded the store for the
          application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
+         error conditions that could cause the creation o f the store to fail.
          */
         let container = NSPersistentContainer(name: "Honk_Frontend")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -99,6 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+        
         return container
     }()
     
@@ -117,6 +92,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
     }
+    
+ 
+    
+    
     
     func application(
       _ application: UIApplication,
@@ -188,12 +167,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)
         -> Void) {
-        let notifInfo = notification.request.content.userInfo
         
-        if let notifBody = notifInfo["aps"] as? [String:AnyObject] {
-            print(notifBody)
+        
+        
+        if (notification.request.content.userInfo["body"] as? String) != nil {
+            
+            
+            
         }
-        print("here")
+        guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
+            fatalError("Unable to read managed object context.")
+        }
+        
+        let decoder = JSONDecoder()
+        
+        switch notification.request.content.categoryIdentifier {
+        case "NEW_MESSAGE":
+            print("received new message")
+            
+        case "NEW_COMMUNITY":
+//            print(notification.request.content.userInfo["body"] )
+            let payload = notification.request.content.userInfo["name"] as! String
+//            let data = Data(payload.utf8)
+            
+            
+//            if let communityData = try? decoder.decode(CommunityCodable.self, from: data){
+//        }
+//
+            let community = CommunityD(context: context)
+            community.name = payload
+            try? context.save()
+        
+            
+            break
+            
+            
+        default:
+            break
+        }
+//        print(notification.request.content.categoryIdentifier)
+//        let notifInfo = notification.request.content.userInfo
+//
+//        if let notifBody = notifInfo["aps"] as? [String:AnyObject] {
+//            print(notifBody)
+//        }
+//        print("here")
         completionHandler([.alert, .badge, .sound])
     }
 

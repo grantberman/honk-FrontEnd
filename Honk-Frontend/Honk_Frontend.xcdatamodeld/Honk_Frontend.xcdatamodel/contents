@@ -1,4 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ChatD" representedClassName="ChatD" syncable="YES">
+        <attribute name="community" optional="YES" attributeType="Transformable"/>
+        <attribute name="created_at" optional="YES" attributeType="String"/>
+        <attribute name="members" optional="YES" attributeType="Transformable"/>
+        <attribute name="messages" optional="YES" attributeType="Transformable"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+        <relationship name="communityOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CommunityD" inverseName="chat" inverseEntity="CommunityD"/>
+    </entity>
+    <entity name="CommunityD" representedClassName="CommunityD" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="chat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ChatD" inverseName="communityOwner" inverseEntity="ChatD"/>
+    </entity>
+    <entity name="Membership" representedClassName="Membership" syncable="YES" codeGenerationType="class">
+        <attribute name="chat" optional="YES" attributeType="Transformable"/>
+        <attribute name="member" optional="YES" attributeType="Transformable"/>
+    </entity>
+    <entity name="MessageD" representedClassName="MessageD" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="author_uuid" optional="YES" attributeType="String"/>
+        <attribute name="chat" optional="YES" attributeType="Transformable"/>
+        <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="created_at" optional="YES" attributeType="String"/>
+        <attribute name="deliveries" optional="YES" attributeType="Transformable"/>
+        <attribute name="reactions" optional="YES" attributeType="Transformable"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="MessageDelivery" representedClassName="MessageDelivery" syncable="YES" codeGenerationType="class">
+        <attribute name="is_delivered" optional="YES" attributeType="String"/>
+        <attribute name="recipient_username" optional="YES" attributeType="String"/>
+        <attribute name="recipient_uuid" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Reaction" representedClassName="Reaction" syncable="YES" codeGenerationType="class">
+        <attribute name="deliveries" optional="YES" attributeType="Transformable"/>
+        <attribute name="reaction_type" optional="YES" attributeType="String"/>
+        <attribute name="reactor" optional="YES" attributeType="String"/>
+        <attribute name="reactor_uuid" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ReactionDelivery" representedClassName="ReactionDelivery" syncable="YES" codeGenerationType="class">
+        <attribute name="is_delivered" optional="YES" attributeType="String"/>
+        <attribute name="recipient_username" optional="YES" attributeType="String"/>
+        <attribute name="recipient_uuid" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Subscription" representedClassName="Subscription" syncable="YES" codeGenerationType="class">
+        <attribute name="community" optional="YES" attributeType="Transformable"/>
+        <attribute name="subscriber" optional="YES" attributeType="Transformable"/>
+    </entity>
+    <entity name="UserD" representedClassName="UserD" syncable="YES" codeGenerationType="class">
+        <attribute name="biography" optional="YES" attributeType="String"/>
+        <attribute name="created_at" optional="YES" attributeType="String"/>
+        <attribute name="dsiplay_name" optional="YES" attributeType="String"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="ChatD" positionX="9" positionY="99" width="128" height="148"/>
+        <element name="CommunityD" positionX="-45" positionY="0" width="128" height="28"/>
+        <element name="Membership" positionX="45" positionY="189" width="128" height="73"/>
+        <element name="MessageD" positionX="27" positionY="144" width="128" height="163"/>
+        <element name="MessageDelivery" positionX="0" positionY="135" width="128" height="88"/>
+        <element name="Reaction" positionX="9" positionY="144" width="128" height="118"/>
+        <element name="ReactionDelivery" positionX="0" positionY="135" width="128" height="88"/>
+        <element name="Subscription" positionX="18" positionY="153" width="128" height="73"/>
+        <element name="UserD" positionX="-18" positionY="45" width="128" height="118"/>
+    </elements>
 </model>

@@ -11,6 +11,8 @@ import SwiftUI
 struct MenuContent: View {
     @EnvironmentObject var user : User
     @EnvironmentObject var appState: AppState
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: CommunityD.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityD>
     
     @Binding var menuClose: () -> Void
     
@@ -19,31 +21,35 @@ struct MenuContent: View {
         NavigationView {
             
             List {
-                if appState.selectedCommunity != nil {
-                    
-                    Section(header: Text(self.appState.selectedCommunity!.name)){
-                        ForEach (self.user.communities[0].chats, id: \.self) {
-                            chat in VStack{
-                                Text(chat.name).onTapGesture {
-                                    self.appState.selectedChat = chat
-                                    self.menuClose()
-                                    
-                                }
-                            }
-                            
-                        }
-                    }
+                ForEach(communities, id: \.id) { community in
+                    Text(community.name ?? "unknown")
                     
                 }
-                else {
-                    
-                    Button(action: {
-                        print("create community")
-                    }) {
-                        Text("create community")
-                    }
-        
-                }
+//                if appState.selectedCommunity != nil {
+//
+//                    Section(header: Text(self.appState.selectedCommunity!.name)){
+//                        ForEach (self.user.communities[0].chats, id: \.self) {
+//                            chat in VStack{
+//                                Text(chat.name).onTapGesture {
+//                                    self.appState.selectedChat = chat
+//                                    self.menuClose()
+//
+//                                }
+//                            }
+//
+//                        }
+//                    }
+//
+//                }
+//                else {
+//
+//                    Button(action: {
+//                        print("create community")
+//                    }) {
+//                        Text("create community")
+//                    }
+//
+//                }
 
             }
             
