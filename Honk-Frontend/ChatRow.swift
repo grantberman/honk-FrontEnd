@@ -53,7 +53,6 @@ struct ChatRow: View {
                                 .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
                             Spacer()
                         }
-                        // One thing I don't know about here is why the receiving texts are showing up more central. It doesn't have to do with the frame and I can't find a reason for them to be. It also happens if I send a new text as isme=false. Is it because navigationview has something there we cant see? then why doesn't it adjust when I get rid of navigation view
                     }
                 }
             } else {

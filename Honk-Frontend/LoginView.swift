@@ -43,28 +43,32 @@ struct LoginView: View {
         else {
             
             VStack {
-                Group {
-                    Text("Honk Inc")
-                        .font(.largeTitle).padding(10)
-                        .padding([.top, .bottom], 40)
-                        .background(Color.red)
-                    TextField("Username", text: $user.username)
-                        .padding()
-                        .cornerRadius(20)
-                        .foregroundColor(.black)
-                        .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                    SecureField("password", text: $user.password)
-                        .padding()
-                        .cornerRadius(20)
-                        .foregroundColor(.black)
-                        .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                    TextField("email", text: $user.email)
-                                      .padding()
-                                      .cornerRadius(20)
-                                      .foregroundColor(.white)
-                                      .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                    
+                Group{
+                        Text("Honk Inc")
+                            .font(.largeTitle).padding(10)
+                            .padding([.top, .bottom], 40)
+                            .background(Color.red)
+                       
+                        TextField("Username", text: $user.username)
+                            .padding()
+                            .cornerRadius(20)
+                            .foregroundColor(.black)
+                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
+                       
+                        SecureField("password", text: $user.password)
+                            .padding()
+                            .cornerRadius(20)
+                            .foregroundColor(.black)
+                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
+                        
+                        TextField("email", text: $user.email)
+                            .padding()
+                            .cornerRadius(20)
+                            .foregroundColor(.white)
+                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
                 }.padding([.leading, .trailing], 27.5)
+                    
+                
                 
                 HStack {
                     Button(action: signIn) {
@@ -101,6 +105,7 @@ struct LoginView: View {
         
         
     }
+    
     
     
     func register() {
@@ -171,3 +176,5 @@ struct LoginView_Previews: PreviewProvider {
         LoginView(isValidUser: false)
     }
 }
+
+
