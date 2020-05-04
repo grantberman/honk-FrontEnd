@@ -21,7 +21,7 @@ struct MenuContent: View {
         NavigationView {
             
             List {
-                ForEach(communities, id: \.id) { community in
+                ForEach(communities, id: \.uuid) { community in
                     Text(community.name ?? "unknown")
                     
                 }

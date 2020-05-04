@@ -16,13 +16,16 @@ extension CommunityD {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CommunityD> {
         return NSFetchRequest<CommunityD>(entityName: "CommunityD")
     }
-
-    @NSManaged public var id: String?
-    @NSManaged public var name: String?
-    @NSManaged public var chat: NSSet?
+    
+    @NSManaged public var about: String
+    @NSManaged public var uuid: String
+    @NSManaged public var name: String
+    @NSManaged public var created_at: String
+    @NSManaged public var chats: NSSet
+    @NSManaged public var subscribers: NSSet
     
     public var chatArray: [ChatD] {
-        let set = chat as? Set<ChatD> ?? []
+        let set = chats as? Set<ChatD> ?? []
         return set.sorted {
             $0.created_at < $1.created_at
         }

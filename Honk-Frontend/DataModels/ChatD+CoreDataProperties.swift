@@ -17,15 +17,11 @@ extension ChatD {
         return NSFetchRequest<ChatD>(entityName: "ChatD")
     }
 
-    @NSManaged public var community: NSObject?
-    @NSManaged public var created_at: String {
-        created_at ?? "No time!"
-    }
+    @NSManaged public var community: String?
+    @NSManaged public var created_at: String
     @NSManaged public var members: NSObject?
     @NSManaged public var messages: NSObject?
-    @NSManaged public var name: String {
-        name ?? "Unknown Chat"
-    }
+    @NSManaged public var name: String 
     @NSManaged public var uuid: String?
     @NSManaged public var communityOwner: CommunityD?
 
