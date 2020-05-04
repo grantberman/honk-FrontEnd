@@ -143,6 +143,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
 
       let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        
       let notificationView = NotificationTestView().environment(\.managedObjectContext, context)
 
       let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
@@ -425,44 +427,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 """
             
             
-            let jsonData = Data(chat.utf8)
-            
-            
-            
-            
-            
-//            print(payload)
-////            do {
-                let decoder = JSONDecoder()
-                decoder.userInfo[CodingUserInfoKey.context!] = context
+            let jsonData = Data(json.utf8)
+            let decoder = JSONDecoder()
+            decoder.userInfo[CodingUserInfoKey.context!] = context
+            do {
+                let subjects = try decoder.decode([CommunityN].self, from: jsonData)
+                print(subjects)
                 do {
-                    let people = try decoder.decode([ChatD].self, from: jsonData)
-                    print(people)
+                    try context.save()
                 } catch {
-                    print(error.localizedDescription)
+                    print("error")
                 }
-//                print(communities)
-//            } catch {
-//                print(error.localizedDescription)
-//            }
-//
-//
-            
-        
-            
-//            let json = try Data(contentsOf: payload)
-//            let data = Data(payload.utf8)
+            } catch {
+                print("different error")
+            }
             
 
-            
-//            if let communityData = try? decoder.decode(CommunityCodable.self, from: data){
-//        }
-//
-//            print(payload)
-//            let community = CommunityD(context: context)
-//            community.name = payload as! String
-//            try? context.save()
-//
+
             
             break
             

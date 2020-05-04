@@ -12,7 +12,7 @@ struct MenuContent: View {
     @EnvironmentObject var user : User
     @EnvironmentObject var appState: AppState
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(entity: CommunityD.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityD>
+    @FetchRequest(entity: CommunityN.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityN>
     
     @Binding var menuClose: () -> Void
     
@@ -22,7 +22,12 @@ struct MenuContent: View {
             
             List {
                 ForEach(communities, id: \.uuid) { community in
-                    Text(community.name ?? "unknown")
+                    Section(header: Text(community.communityName)) {
+                        ForEach(community.chatArray, id: \.self) { chat in
+                            Text(chat.wrappedName)
+                            
+                        }
+                    }
                     
                 }
 //                if appState.selectedCommunity != nil {
