@@ -107,11 +107,11 @@ struct ChatRow: View {
         }
     }
     func reactToMessage(){
-        // in here will be the API call
+        // in here will be the API call to like
         
     }
     func createSubChat(){
-        
+        // in here will be API call to create new subgroup
     }
 }
 
