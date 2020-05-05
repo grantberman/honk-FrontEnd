@@ -12,6 +12,9 @@ struct MenuContent: View {
     @EnvironmentObject var user : User
     @EnvironmentObject var appState: AppState
     
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: CommunityN.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityN>
+    
     @Binding var menuClose: () -> Void
     
     @ViewBuilder
@@ -19,31 +22,40 @@ struct MenuContent: View {
         NavigationView {
             
             List {
-                if appState.selectedCommunity != nil {
-                    
-                    Section(header: Text(self.appState.selectedCommunity!.name)){
-                        ForEach (self.user.communities[0].chats, id: \.self) {
-                            chat in VStack{
-                                Text(chat.name).onTapGesture {
-                                    self.appState.selectedChat = chat
-                                    self.menuClose()
-                                    
-                                }
-                            }
+                ForEach(communities, id: \.uuid) { community in
+                    Section(header: Text(community.communityName)) {
+                        ForEach(community.chatArray, id: \.self) { chat in
+                            Text(chat.wrappedName)
                             
                         }
                     }
                     
                 }
-                else {
-                    
-                    Button(action: {
-                        print("create community")
-                    }) {
-                        Text("create community")
-                    }
-        
-                }
+//                if appState.selectedCommunity != nil {
+//
+//                    Section(header: Text(self.appState.selectedCommunity!.name)){
+//                        ForEach (self.user.communities[0].chats, id: \.self) {
+//                            chat in VStack{
+//                                Text(chat.name).onTapGesture {
+//                                    self.appState.selectedChat = chat
+//                                    self.menuClose()
+//
+//                                }
+//                            }
+//
+//                        }
+//                    }
+//
+//                }
+//                else {
+//
+//                    Button(action: {
+//                        print("create community")
+//                    }) {
+//                        Text("create community")
+//                    }
+//
+//                }
 
             }
             
