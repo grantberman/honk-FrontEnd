@@ -15,3 +15,19 @@ struct ChatMessage: Hashable{
     var color: Color
     var isMe: Bool = false
 }
+
+class ChatMessageD : NSObject {
+    @NSManaged public var message: String
+    @NSManaged public var avatar: String
+    @NSManaged public var isMe: Bool
+}
+
+
+struct ChatMessageCodable : Codable {
+    var id: String
+    var chat : String
+    var author : String
+    var createdAt : String
+    var content : String
+    
+}

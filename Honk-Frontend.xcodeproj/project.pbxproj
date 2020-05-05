@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9339863C2456232B009206CD /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9339863B2456232B009206CD /* Credentials.swift */; };
 		9339864624567284009206CD /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9339864424567284009206CD /* KeychainWrapper.swift */; };
 		9339864724567284009206CD /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9339864524567284009206CD /* KeychainItemAccessibility.swift */; };
 		933FDCA9245928FE00D0F55C /* NotificationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933FDCA8245928FE00D0F55C /* NotificationTestView.swift */; };
@@ -15,6 +14,20 @@
 		9342EA9F24528BD10031FC07 /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9342EA9E24528BD10031FC07 /* ChatRow.swift */; };
 		9342EAA324528F810031FC07 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9342EAA224528F810031FC07 /* ChatMessage.swift */; };
 		93757FD8244BBAE40027D96E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93757FD7244BBAE40027D96E /* LoginView.swift */; };
+		93A3DCD12460C13E00355382 /* UserN+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCC32460C13E00355382 /* UserN+CoreDataClass.swift */; };
+		93A3DCD22460C13E00355382 /* UserN+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCC42460C13E00355382 /* UserN+CoreDataProperties.swift */; };
+		93A3DCD32460C13E00355382 /* ReactionDelivery+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCC52460C13E00355382 /* ReactionDelivery+CoreDataClass.swift */; };
+		93A3DCD42460C13E00355382 /* ReactionDelivery+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCC62460C13E00355382 /* ReactionDelivery+CoreDataProperties.swift */; };
+		93A3DCD52460C13E00355382 /* ChatN+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCC72460C13E00355382 /* ChatN+CoreDataClass.swift */; };
+		93A3DCD62460C13E00355382 /* ChatN+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCC82460C13E00355382 /* ChatN+CoreDataProperties.swift */; };
+		93A3DCD72460C13E00355382 /* ReactionN+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCC92460C13E00355382 /* ReactionN+CoreDataClass.swift */; };
+		93A3DCD82460C13E00355382 /* ReactionN+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCCA2460C13E00355382 /* ReactionN+CoreDataProperties.swift */; };
+		93A3DCD92460C13E00355382 /* MessageDelivery+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCCB2460C13E00355382 /* MessageDelivery+CoreDataClass.swift */; };
+		93A3DCDA2460C13E00355382 /* MessageDelivery+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCCC2460C13E00355382 /* MessageDelivery+CoreDataProperties.swift */; };
+		93A3DCDB2460C13E00355382 /* CommunityN+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCCD2460C13E00355382 /* CommunityN+CoreDataClass.swift */; };
+		93A3DCDC2460C13E00355382 /* CommunityN+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCCE2460C13E00355382 /* CommunityN+CoreDataProperties.swift */; };
+		93A3DCDD2460C13E00355382 /* MessageN+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCCF2460C13E00355382 /* MessageN+CoreDataClass.swift */; };
+		93A3DCDE2460C13E00355382 /* MessageN+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCD02460C13E00355382 /* MessageN+CoreDataProperties.swift */; };
 		93A803122446B9DB00815B21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A803112446B9DB00815B21 /* AppDelegate.swift */; };
 		93A803142446B9DB00815B21 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A803132446B9DB00815B21 /* SceneDelegate.swift */; };
 		93A803172446B9DB00815B21 /* Honk_Frontend.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93A803152446B9DB00815B21 /* Honk_Frontend.xcdatamodeld */; };
@@ -28,6 +41,7 @@
 		93C228F1245B643200454511 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228F0245B643200454511 /* Community.swift */; };
 		93C228F3245B64CE00454511 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228F2245B64CE00454511 /* User.swift */; };
 		93C228F7245BCD2000454511 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228F6245BCD2000454511 /* AppState.swift */; };
+		93C228FC245BE61A00454511 /* CommunityPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228FB245BE61A00454511 /* CommunityPayload.swift */; };
 		C6A12E02244BB08800AFFF7A /* ReverseScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A12E01244BB08800AFFF7A /* ReverseScrollView.swift */; };
 		C6A12E04244BB49000AFFF7A /* KeyBoardAvoidance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A12E03244BB49000AFFF7A /* KeyBoardAvoidance.swift */; };
 		C6A12E06244BB4E100AFFF7A /* KeyBoardAdaptive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A12E05244BB4E100AFFF7A /* KeyBoardAdaptive.swift */; };
@@ -35,7 +49,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9339863B2456232B009206CD /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		9339863D24562FEE009206CD /* Honk-Frontend.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Honk-Frontend.entitlements"; sourceTree = "<group>"; };
 		9339864424567284009206CD /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		9339864524567284009206CD /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
@@ -44,6 +57,20 @@
 		9342EA9E24528BD10031FC07 /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
 		9342EAA224528F810031FC07 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		93757FD7244BBAE40027D96E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		93A3DCC32460C13E00355382 /* UserN+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserN+CoreDataClass.swift"; sourceTree = "<group>"; };
+		93A3DCC42460C13E00355382 /* UserN+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserN+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		93A3DCC52460C13E00355382 /* ReactionDelivery+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionDelivery+CoreDataClass.swift"; sourceTree = "<group>"; };
+		93A3DCC62460C13E00355382 /* ReactionDelivery+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionDelivery+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		93A3DCC72460C13E00355382 /* ChatN+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatN+CoreDataClass.swift"; sourceTree = "<group>"; };
+		93A3DCC82460C13E00355382 /* ChatN+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatN+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		93A3DCC92460C13E00355382 /* ReactionN+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionN+CoreDataClass.swift"; sourceTree = "<group>"; };
+		93A3DCCA2460C13E00355382 /* ReactionN+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionN+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		93A3DCCB2460C13E00355382 /* MessageDelivery+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageDelivery+CoreDataClass.swift"; sourceTree = "<group>"; };
+		93A3DCCC2460C13E00355382 /* MessageDelivery+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageDelivery+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		93A3DCCD2460C13E00355382 /* CommunityN+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityN+CoreDataClass.swift"; sourceTree = "<group>"; };
+		93A3DCCE2460C13E00355382 /* CommunityN+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityN+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		93A3DCCF2460C13E00355382 /* MessageN+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageN+CoreDataClass.swift"; sourceTree = "<group>"; };
+		93A3DCD02460C13E00355382 /* MessageN+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageN+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		93A8030E2446B9DB00815B21 /* Honk-Frontend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Honk-Frontend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A803112446B9DB00815B21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93A803132446B9DB00815B21 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +86,7 @@
 		93C228F0245B643200454511 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
 		93C228F2245B64CE00454511 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		93C228F6245BCD2000454511 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		93C228FB245BE61A00454511 /* CommunityPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPayload.swift; sourceTree = "<group>"; };
 		C6A12E01244BB08800AFFF7A /* ReverseScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseScrollView.swift; sourceTree = "<group>"; };
 		C6A12E03244BB49000AFFF7A /* KeyBoardAvoidance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoardAvoidance.swift; sourceTree = "<group>"; };
 		C6A12E05244BB4E100AFFF7A /* KeyBoardAdaptive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoardAdaptive.swift; sourceTree = "<group>"; };
@@ -92,7 +120,6 @@
 			children = (
 				9342EAA224528F810031FC07 /* ChatMessage.swift */,
 				9342EA97245270CF0031FC07 /* Authentication.swift */,
-				9339863B2456232B009206CD /* Credentials.swift */,
 				93C228EE245B631400454511 /* Chat.swift */,
 				93C228F0245B643200454511 /* Community.swift */,
 				93C228F2245B64CE00454511 /* User.swift */,
@@ -101,9 +128,30 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		9363CA2C245D3A54003994B3 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
 		93A803052446B9DB00815B21 = {
 			isa = PBXGroup;
 			children = (
+				93A3DCC32460C13E00355382 /* UserN+CoreDataClass.swift */,
+				93A3DCC42460C13E00355382 /* UserN+CoreDataProperties.swift */,
+				93A3DCC52460C13E00355382 /* ReactionDelivery+CoreDataClass.swift */,
+				93A3DCC62460C13E00355382 /* ReactionDelivery+CoreDataProperties.swift */,
+				93A3DCC72460C13E00355382 /* ChatN+CoreDataClass.swift */,
+				93A3DCC82460C13E00355382 /* ChatN+CoreDataProperties.swift */,
+				93A3DCC92460C13E00355382 /* ReactionN+CoreDataClass.swift */,
+				93A3DCCA2460C13E00355382 /* ReactionN+CoreDataProperties.swift */,
+				93A3DCCB2460C13E00355382 /* MessageDelivery+CoreDataClass.swift */,
+				93A3DCCC2460C13E00355382 /* MessageDelivery+CoreDataProperties.swift */,
+				93A3DCCD2460C13E00355382 /* CommunityN+CoreDataClass.swift */,
+				93A3DCCE2460C13E00355382 /* CommunityN+CoreDataProperties.swift */,
+				93A3DCCF2460C13E00355382 /* MessageN+CoreDataClass.swift */,
+				93A3DCD02460C13E00355382 /* MessageN+CoreDataProperties.swift */,
 				93A803102446B9DB00815B21 /* Honk-Frontend */,
 				93A8030F2446B9DB00815B21 /* Products */,
 			);
@@ -132,6 +180,8 @@
 				9339864424567284009206CD /* KeychainWrapper.swift */,
 				933FDCA8245928FE00D0F55C /* NotificationTestView.swift */,
 				9342EA99245270E00031FC07 /* Models */,
+				93C228FA245BE5E500454511 /* Payloads */,
+				9363CA2C245D3A54003994B3 /* DataModels */,
 				9339864324563E04009206CD /* ChatHelpers */,
 				93A8031A2446B9DE00815B21 /* Assets.xcassets */,
 				93A8031F2446B9DE00815B21 /* LaunchScreen.storyboard */,
@@ -148,6 +198,14 @@
 				93A8031D2446B9DE00815B21 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		93C228FA245BE5E500454511 /* Payloads */ = {
+			isa = PBXGroup;
+			children = (
+				93C228FB245BE61A00454511 /* CommunityPayload.swift */,
+			);
+			path = Payloads;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,24 +280,38 @@
 			buildActionMask = 2147483647;
 			files = (
 				93757FD8244BBAE40027D96E /* LoginView.swift in Sources */,
+				93A3DCD32460C13E00355382 /* ReactionDelivery+CoreDataClass.swift in Sources */,
 				C6A12E06244BB4E100AFFF7A /* KeyBoardAdaptive.swift in Sources */,
 				93C228ED245B61D700454511 /* SideMenu.swift in Sources */,
 				93A803122446B9DB00815B21 /* AppDelegate.swift in Sources */,
 				9342EAA324528F810031FC07 /* ChatMessage.swift in Sources */,
 				933FDCA9245928FE00D0F55C /* NotificationTestView.swift in Sources */,
+				93A3DCDA2460C13E00355382 /* MessageDelivery+CoreDataProperties.swift in Sources */,
 				93A803172446B9DB00815B21 /* Honk_Frontend.xcdatamodeld in Sources */,
+				93A3DCD72460C13E00355382 /* ReactionN+CoreDataClass.swift in Sources */,
 				9339864724567284009206CD /* KeychainItemAccessibility.swift in Sources */,
 				9342EA9F24528BD10031FC07 /* ChatRow.swift in Sources */,
+				93A3DCDB2460C13E00355382 /* CommunityN+CoreDataClass.swift in Sources */,
+				93A3DCD42460C13E00355382 /* ReactionDelivery+CoreDataProperties.swift in Sources */,
 				93C228F3245B64CE00454511 /* User.swift in Sources */,
+				93A3DCD82460C13E00355382 /* ReactionN+CoreDataProperties.swift in Sources */,
+				93A3DCD92460C13E00355382 /* MessageDelivery+CoreDataClass.swift in Sources */,
 				93A803192446B9DB00815B21 /* ContentView.swift in Sources */,
+				93C228FC245BE61A00454511 /* CommunityPayload.swift in Sources */,
 				C6A12E08244BB70E00AFFF7A /* UIResponder.swift in Sources */,
+				93A3DCDC2460C13E00355382 /* CommunityN+CoreDataProperties.swift in Sources */,
 				93C228F1245B643200454511 /* Community.swift in Sources */,
+				93A3DCDE2460C13E00355382 /* MessageN+CoreDataProperties.swift in Sources */,
 				93A8032924475BD200815B21 /* ChatController.swift in Sources */,
+				93A3DCD52460C13E00355382 /* ChatN+CoreDataClass.swift in Sources */,
 				93C228EF245B631400454511 /* Chat.swift in Sources */,
 				C6A12E04244BB49000AFFF7A /* KeyBoardAvoidance.swift in Sources */,
+				93A3DCD22460C13E00355382 /* UserN+CoreDataProperties.swift in Sources */,
 				C6A12E02244BB08800AFFF7A /* ReverseScrollView.swift in Sources */,
+				93A3DCD62460C13E00355382 /* ChatN+CoreDataProperties.swift in Sources */,
+				93A3DCD12460C13E00355382 /* UserN+CoreDataClass.swift in Sources */,
+				93A3DCDD2460C13E00355382 /* MessageN+CoreDataClass.swift in Sources */,
 				93C228F7245BCD2000454511 /* AppState.swift in Sources */,
-				9339863C2456232B009206CD /* Credentials.swift in Sources */,
 				9339864624567284009206CD /* KeychainWrapper.swift in Sources */,
 				93A803142446B9DB00815B21 /* SceneDelegate.swift in Sources */,
 				9342EA98245270CF0031FC07 /* Authentication.swift in Sources */,

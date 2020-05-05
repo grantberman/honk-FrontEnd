@@ -16,6 +16,7 @@ struct ContentView: View {
     
     @State var composedMessage: String = ""
     @State var menuOpen: Bool = false
+    @Environment(\.managedObjectContext) var moc
 
     @EnvironmentObject var appState : AppState
     @EnvironmentObject var chatController : ChatController
@@ -53,6 +54,11 @@ struct ContentView: View {
                         .navigationBarItems(leading:
                             Button(action: {
                                 self.openMenu()
+                                do {
+                                    try self.moc.save()
+                                } catch {
+                                    print("no save")
+                                }
                                 print("Edit button pressed...")
                             }) {
                                 Text("Edit")
@@ -95,7 +101,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(ChatController())
-            .environmentObject(AppState())
+            .environmentObject(ChatController()).environmentObject(AppState())
     }
 }

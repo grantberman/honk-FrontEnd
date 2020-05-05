@@ -14,3 +14,10 @@ class User : ObservableObject {
     var email: String = ""
     var communities: [Community] = [] 
 }
+
+struct UserCodable: Codable {
+    var id: String
+    var username : String
+    var email : String
+    var apns : String
+}

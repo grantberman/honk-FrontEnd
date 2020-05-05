@@ -16,6 +16,7 @@ extension Date {
 
 struct ChatRow: View {
     var chatMessage: ChatMessage
+    
    
     
     var body: some View{
