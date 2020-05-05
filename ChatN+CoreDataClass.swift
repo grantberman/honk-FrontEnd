@@ -50,7 +50,7 @@ public class ChatN: NSManagedObject, Codable{
             messages = NSSet( array:  try values.decode([MessageN].self, forKey: .messages))
             
         } catch {
-            print("chat recoding error ")
+            print("chat decoding error ")
         }
     }
 }
