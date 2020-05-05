@@ -34,6 +34,9 @@ struct LoginView: View {
 
     @ViewBuilder
     var body: some View {
+        ZStack{
+            Color.white.edgesIgnoringSafeArea(.all)
+            // so we can change background color if we want
         
         if auth.isAuthenticated == true{
             ContentView()
@@ -43,37 +46,43 @@ struct LoginView: View {
         else {
             
             VStack {
-                Group {
-                    Text("Honk Inc")
-                        .font(.largeTitle).padding(10)
-                        .padding([.top, .bottom], 40)
-                        .background(Color.red)
-                    TextField("Username", text: $user.username)
-                        .padding()
-                        .cornerRadius(20)
-                        .foregroundColor(.black)
-                        .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                    SecureField("password", text: $user.password)
-                        .padding()
-                        .cornerRadius(20)
-                        .foregroundColor(.black)
-                        .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                    TextField("email", text: $user.email)
-                                      .padding()
-                                      .cornerRadius(20)
-                                      .foregroundColor(.white)
-                                      .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                    
+                Group{
+                        Image("Honk-Icon")
+                            .resizable()
+                            .renderingMode(.original)
+                            .scaledToFit()
+                        Text("Honk Inc")
+                            .bold()
+                            .font(.largeTitle)
+                        TextField("Username", text: $user.username)
+                            .padding()
+                            .cornerRadius(20)
+                            .foregroundColor(.black)
+                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
+                       
+                        SecureField("password", text: $user.password)
+                            .padding()
+                            .cornerRadius(20)
+                            .foregroundColor(.black)
+                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
+                        
+                        TextField("email", text: $user.email)
+                            .padding()
+                            .cornerRadius(20)
+                            .foregroundColor(.white)
+                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
                 }.padding([.leading, .trailing], 27.5)
+                    
+                
                 
                 HStack {
                     Button(action: signIn) {
                         Text("Sign In")
                             .font(.headline)
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             .padding()
-                            .frame(width: 100, height: 50)
-                            .background(Color.green)
+                            .frame(width: 175, height: 50)
+                            .background(Color.blue)
                             .cornerRadius(15.0)
                     }
 
@@ -83,24 +92,21 @@ struct LoginView: View {
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding()
-                        .frame(width: 100, height: 50)
-                        .background(Color.green)
+                        .frame(width: 175, height: 50)
+                        .fixedSize(horizontal: true, vertical: false)
+                        .background(Color.blue)
                         .cornerRadius(15.0)
                     }
             }
             }.onAppear{
                 print("auth" + String(self.auth.isAuthenticated))
             }
-            
             .padding(.top, 26.0)
-
-            
-        
+        }
         }
         
-        
-        
     }
+    
     
     
     func register() {
@@ -169,5 +175,9 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView(isValidUser: false)
+        .environmentObject(Authentication())// these are for testing
+        .environmentObject(User())
     }
 }
+
+

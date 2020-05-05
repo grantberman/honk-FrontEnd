@@ -40,8 +40,8 @@ struct ChatRow: View {
                     HStack {
                         Group {
                              Text(chatMessage.avatar)
-                                 .padding(.leading, 5)
-                            .frame(alignment: .leading)
+                                .padding(.leading, 5)
+                                .frame(alignment: .leading)
                              Text(chatMessage.message)
                                  .bold()
                                  .foregroundColor(.white)
@@ -51,10 +51,32 @@ struct ChatRow: View {
                             
                             
                                  .fixedSize(horizontal: false, vertical: true)
-                                .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
+                                 .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
+                                 .contextMenu{
+                                    Button(action: self.reactToMessage){
+                                        HStack{
+                                            Text("Like")
+                                            Image("thumbs-up")
+                                            .renderingMode(.original)
+                                            .resizable()
+                                            .scaledToFit()
+                                        }
+                                    }.frame(alignment: .leading)
+                                    
+                                    Button(action: self.createSubChat){
+                                        
+                                        HStack{
+                                            Text("Create sub chat")
+                                            Image("sub-group")
+                                            .renderingMode(.original)
+                                            .resizable()
+                                            .scaledToFit()
+                                        }
+                                    }
+                             }
                             Spacer()
                         }
-                        // One thing I don't know about here is why the receiving texts are showing up more central. It doesn't have to do with the frame and I can't find a reason for them to be. It also happens if I send a new text as isme=false. Is it because navigationview has something there we cant see? then why doesn't it adjust when I get rid of navigation view
+                        
                     }
                 }
             } else {
@@ -85,6 +107,13 @@ struct ChatRow: View {
             }
         }
     }
+    func reactToMessage(){
+        // in here will be the API call to like
+        
+    }
+    func createSubChat(){
+        // in here will be API call to create new subgroup
+    }
 }
 
 struct ChatRow_Previews: PreviewProvider {
@@ -92,6 +121,8 @@ struct ChatRow_Previews: PreviewProvider {
         ChatRow(chatMessage: ChatMessage(message: "This is a long message test Im not sure what will happen with it and we need to see what happens", avatar: "B", color: .blue)).previewDevice("iPhone 8")
     }
 }
+
+
 
 
 
