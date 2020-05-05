@@ -27,7 +27,7 @@ public class ReactionN: NSManagedObject, Codable {
             try container.encode(uuid ?? "", forKey: .uuid)
         }
         catch {
-            print("error")
+            print("reaction error")
         }
     }
     
@@ -45,7 +45,7 @@ public class ReactionN: NSManagedObject, Codable {
             reactor = try values.decode(UserN?.self, forKey: .reactor)
             deliveries = NSSet (array: try values.decode([ReactionDelivery].self, forKey: .deliveries))
         } catch {
-            print("error")
+            print("reaction delivery error")
         }
     }
 }

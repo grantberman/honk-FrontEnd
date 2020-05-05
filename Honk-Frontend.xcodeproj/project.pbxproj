@@ -59,14 +59,14 @@
 		93757FD7244BBAE40027D96E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		93A3DCC32460C13E00355382 /* UserN+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserN+CoreDataClass.swift"; sourceTree = "<group>"; };
 		93A3DCC42460C13E00355382 /* UserN+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserN+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		93A3DCC52460C13E00355382 /* ReactionDelivery+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ReactionDelivery+CoreDataClass.swift"; path = "../ReactionDelivery+CoreDataClass.swift"; sourceTree = "<group>"; };
-		93A3DCC62460C13E00355382 /* ReactionDelivery+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ReactionDelivery+CoreDataProperties.swift"; path = "../ReactionDelivery+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		93A3DCC52460C13E00355382 /* ReactionDelivery+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionDelivery+CoreDataClass.swift"; sourceTree = "<group>"; };
+		93A3DCC62460C13E00355382 /* ReactionDelivery+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionDelivery+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		93A3DCC72460C13E00355382 /* ChatN+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatN+CoreDataClass.swift"; sourceTree = "<group>"; };
 		93A3DCC82460C13E00355382 /* ChatN+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatN+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		93A3DCC92460C13E00355382 /* ReactionN+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionN+CoreDataClass.swift"; sourceTree = "<group>"; };
 		93A3DCCA2460C13E00355382 /* ReactionN+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionN+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		93A3DCCB2460C13E00355382 /* MessageDelivery+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MessageDelivery+CoreDataClass.swift"; path = "../MessageDelivery+CoreDataClass.swift"; sourceTree = "<group>"; };
-		93A3DCCC2460C13E00355382 /* MessageDelivery+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MessageDelivery+CoreDataProperties.swift"; path = "../MessageDelivery+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		93A3DCCB2460C13E00355382 /* MessageDelivery+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageDelivery+CoreDataClass.swift"; sourceTree = "<group>"; };
+		93A3DCCC2460C13E00355382 /* MessageDelivery+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageDelivery+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		93A3DCCD2460C13E00355382 /* CommunityN+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityN+CoreDataClass.swift"; sourceTree = "<group>"; };
 		93A3DCCE2460C13E00355382 /* CommunityN+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityN+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		93A3DCCF2460C13E00355382 /* MessageN+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageN+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -131,6 +131,13 @@
 		9363CA2C245D3A54003994B3 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
+		93A803052446B9DB00815B21 = {
+			isa = PBXGroup;
+			children = (
 				93A3DCC32460C13E00355382 /* UserN+CoreDataClass.swift */,
 				93A3DCC42460C13E00355382 /* UserN+CoreDataProperties.swift */,
 				93A3DCC52460C13E00355382 /* ReactionDelivery+CoreDataClass.swift */,
@@ -145,13 +152,6 @@
 				93A3DCCE2460C13E00355382 /* CommunityN+CoreDataProperties.swift */,
 				93A3DCCF2460C13E00355382 /* MessageN+CoreDataClass.swift */,
 				93A3DCD02460C13E00355382 /* MessageN+CoreDataProperties.swift */,
-			);
-			path = DataModels;
-			sourceTree = "<group>";
-		};
-		93A803052446B9DB00815B21 = {
-			isa = PBXGroup;
-			children = (
 				93A803102446B9DB00815B21 /* Honk-Frontend */,
 				93A8030F2446B9DB00815B21 /* Products */,
 			);

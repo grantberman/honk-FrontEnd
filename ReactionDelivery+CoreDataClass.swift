@@ -27,7 +27,7 @@ public class ReactionDelivery: NSManagedObject, Codable{
             
         }
         catch {
-            print("error")
+            print("reaction delivery error")
         }
     }
     
@@ -45,7 +45,7 @@ public class ReactionDelivery: NSManagedObject, Codable{
             recipient = try values.decode(UserN?.self, forKey: .recipient)
             
         } catch {
-            print("error")
+            print("reaction delivery decoding error ")
         }
     }
 }

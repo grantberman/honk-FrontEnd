@@ -58,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
          */
         let container = NSPersistentContainer(name: "Honk_Frontend")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -312,120 +313,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 ]
 
 """
-            
-            let user = """
-[{
-               "biography": "boi",
-               "created_at": "Mon, 04 May 2020 00:12:02 GMT",
-               "display_name": "fartface69",
-               "username": "grant",
-               "uuid": "1baaf9d0caa547cea4d3bfddbd4e208f"
-           }]
-
-
-"""
-            
-            let chat = """
-[
-           {
-               "created_at": "Mon, 04 May 2020 00:22:36 GMT",
-               "members": [
-                   {
-                       "biography": "I like to code",
-                       "created_at": "Sun, 03 May 2020 21:31:49 GMT",
-                       "display_name": "Ben",
-                       "username": "bvandyyyyy",
-                       "uuid": "be80b327704d47719129831ebbc8ffe7"
-                   },
-                   {
-                       "biography": null,
-                       "created_at": "Mon, 04 May 2020 00:12:02 GMT",
-                       "display_name": null,
-                       "username": "grant",
-                       "uuid": "1baaf9d0caa547cea4d3bfddbd4e208f"
-                   }
-               ],
-               "messages": [
-                   {
-                       "author": {
-                           "biography": "I like to code",
-                           "created_at": "Sun, 03 May 2020 21:31:49 GMT",
-                           "display_name": "Ben",
-                           "username": "bvandyyyyy",
-                           "uuid": "be80b327704d47719129831ebbc8ffe7"
-                       },
-                       "content": "hi grant",
-                       "created_at": "Mon, 04 May 2020 00:23:07 GMT",
-                       "deliveries": [
-                           {
-                               "is_delivered": true,
-                               "recipient": {
-                                   "biography": "I like to code",
-                                   "created_at": "Sun, 03 May 2020 21:31:49 GMT",
-                                   "display_name": "Ben",
-                                   "username": "bvandyyyyy",
-                                   "uuid": "be80b327704d47719129831ebbc8ffe7"
-                               },
-                               "uuid": "8ca8ce04870f40f1bf4ed66206c93105"
-                           },
-                           {
-                               "is_delivered": true,
-                               "recipient": {
-                                   "biography": null,
-                                   "created_at": "Mon, 04 May 2020 00:12:02 GMT",
-                                   "display_name": null,
-                                   "username": "grant",
-                                   "uuid": "1baaf9d0caa547cea4d3bfddbd4e208f"
-                               },
-                               "uuid": "e0b49616bc06497c94362db748f38b7a"
-                           }
-                       ],
-                       "reactions": [
-                           {
-                               "deliveries": [
-                                   {
-                                       "is_delivered": false,
-                                       "recipient": {
-                                           "biography": "I like to code",
-                                           "created_at": "Sun, 03 May 2020 21:31:49 GMT",
-                                           "display_name": "Ben",
-                                           "username": "bvandyyyyy",
-                                           "uuid": "be80b327704d47719129831ebbc8ffe7"
-                                       },
-                                       "uuid": "1a4337fd4ad94de9beb867b7cd2f05ae"
-                                   },
-                                   {
-                                       "is_delivered": true,
-                                       "recipient": {
-                                           "biography": null,
-                                           "created_at": "Mon, 04 May 2020 00:12:02 GMT",
-                                           "display_name": null,
-                                           "username": "grant",
-                                           "uuid": "1baaf9d0caa547cea4d3bfddbd4e208f"
-                                       },
-                                       "uuid": "0c46b7c5373f4db8a4b23033e2174b89"
-                                   }
-                               ],
-                               "reaction_type": "like",
-                               "reactor": {
-                                   "biography": null,
-                                   "created_at": "Mon, 04 May 2020 00:12:02 GMT",
-                                   "display_name": null,
-                                   "username": "grant",
-                                   "uuid": "1baaf9d0caa547cea4d3bfddbd4e208f"
-                               },
-                               "uuid": "4412070f0d3d47ce8f7f02030146b0a0"
-                           }
-                       ],
-                       "uuid": "47c6bf138c534f7faa1aa2a85021810f"
-                   }
-               ],
-               "name": "Honk Incorporated",
-               "uuid": "b283f6ed4eee45a8bc9bfe329e875ce7"
-           }
-       ]
-"""
-            
+ 
             
             let jsonData = Data(json.utf8)
             let decoder = JSONDecoder()

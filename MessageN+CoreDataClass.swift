@@ -28,7 +28,7 @@ public class MessageN: NSManagedObject, Codable{
             try container.encode(content ?? "", forKey: .content)
         }
         catch {
-            print("error")
+            print("message error ")
         }
     }
     
@@ -47,7 +47,7 @@ public class MessageN: NSManagedObject, Codable{
                 reactions = NSSet (array: try values.decode([ReactionN].self, forKey: .reactions))
             
             } catch {
-                print("error")
+                print("message decoding error")
             }
         }
     }

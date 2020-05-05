@@ -26,7 +26,7 @@ public class MessageDelivery: NSManagedObject, Codable {
                     try container.encode(uuid ?? "", forKey: .uuid)
                 }
                 catch {
-                    print("error")
+                    print("message delivery")
                 }
             }
     
@@ -43,7 +43,7 @@ public class MessageDelivery: NSManagedObject, Codable {
                     recipient = try values.decode(UserN?.self, forKey: .recipient)
 
                 } catch {
-                    print("error")
+                    print("message delivery decoding error ")
                 }
             }
         }

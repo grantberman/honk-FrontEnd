@@ -11,6 +11,7 @@ import SwiftUI
 struct MenuContent: View {
     @EnvironmentObject var user : User
     @EnvironmentObject var appState: AppState
+    
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(entity: CommunityN.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityN>
     

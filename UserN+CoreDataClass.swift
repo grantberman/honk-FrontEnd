@@ -35,7 +35,7 @@ public class UserN: NSManagedObject, Codable {
                try container.encode(username ?? "", forKey: .username)
                try container.encode(uuid ?? "", forKey: .uuid)
            } catch {
-               print("error")
+               print(" user encoding error")
            }
        }
      required convenience public init (from decoder: Decoder) throws {
@@ -51,7 +51,7 @@ public class UserN: NSManagedObject, Codable {
                 username = try values.decode(String?.self, forKey: .username)
                 uuid = try values.decode(String?.self, forKey: .uuid)
             } catch {
-                print("error")
+                print("user decoding error ")
             }
         }
 
