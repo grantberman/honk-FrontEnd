@@ -241,7 +241,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let updatedChats = chats?.adding(chat)
             objectUpdate.chats = updatedChats as NSSet?
             try context.save()
-            print("SaveD")
+            print("saved")
             
         } catch {
             print("could not add new chat to community" )
