@@ -38,6 +38,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let contentView = ContentView().environment(\.managedObjectContext, context)
         let loginView = LoginView(isValidUser: validUser).environment(\.managedObjectContext, context)
         
+        let communityView =
+            CommunityView().environment(\.managedObjectContext, context)
+        
         
         
         // Use a UIHostingController as window root view controller.
@@ -50,7 +53,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            else {
 //                window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController).environmentObject(Auth).environmentObject(user).environmentObject(appState))
 //            }
-             window.rootViewController = UIHostingController(rootView: contentView.environmentObject(chatController).environmentObject(Auth).environmentObject(user).environmentObject(appState))
+//             window.rootViewController = UIHostingController(rootView: contentView.environmentObject(chatController).environmentObject(Auth).environmentObject(user).environmentObject(appState))
+            
+             window.rootViewController = UIHostingController(rootView: communityView.environmentObject(chatController).environmentObject(Auth).environmentObject(user).environmentObject(appState))
             self.window = window
             window.makeKeyAndVisible()
         }

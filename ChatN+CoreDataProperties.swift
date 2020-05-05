@@ -25,7 +25,10 @@ extension ChatN {
     @NSManaged public var inCommunity: CommunityN?
     
     public var wrappedName: String {
-        name ?? "unkown?"
+        name ?? "unknown?"
+    }
+    public var communityName: String{
+        inCommunity?.name ?? "unknown"
     }
 
 }

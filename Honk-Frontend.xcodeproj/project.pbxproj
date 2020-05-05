@@ -42,6 +42,9 @@
 		93C228F3245B64CE00454511 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228F2245B64CE00454511 /* User.swift */; };
 		93C228F7245BCD2000454511 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228F6245BCD2000454511 /* AppState.swift */; };
 		93C228FC245BE61A00454511 /* CommunityPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228FB245BE61A00454511 /* CommunityPayload.swift */; };
+		C65A90132460F96C00CCAFC3 /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65A90122460F96C00CCAFC3 /* CommunityView.swift */; };
+		C65A90172461046C00CCAFC3 /* CreateNewCommunity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65A90162461046C00CCAFC3 /* CreateNewCommunity.swift */; };
+		C65A90192461DEC900CCAFC3 /* ChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65A90182461DEC900CCAFC3 /* ChatsView.swift */; };
 		C6A12E02244BB08800AFFF7A /* ReverseScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A12E01244BB08800AFFF7A /* ReverseScrollView.swift */; };
 		C6A12E04244BB49000AFFF7A /* KeyBoardAvoidance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A12E03244BB49000AFFF7A /* KeyBoardAvoidance.swift */; };
 		C6A12E06244BB4E100AFFF7A /* KeyBoardAdaptive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A12E05244BB4E100AFFF7A /* KeyBoardAdaptive.swift */; };
@@ -87,6 +90,9 @@
 		93C228F2245B64CE00454511 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		93C228F6245BCD2000454511 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		93C228FB245BE61A00454511 /* CommunityPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPayload.swift; sourceTree = "<group>"; };
+		C65A90122460F96C00CCAFC3 /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
+		C65A90162461046C00CCAFC3 /* CreateNewCommunity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewCommunity.swift; sourceTree = "<group>"; };
+		C65A90182461DEC900CCAFC3 /* ChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsView.swift; sourceTree = "<group>"; };
 		C6A12E01244BB08800AFFF7A /* ReverseScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseScrollView.swift; sourceTree = "<group>"; };
 		C6A12E03244BB49000AFFF7A /* KeyBoardAvoidance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoardAvoidance.swift; sourceTree = "<group>"; };
 		C6A12E05244BB4E100AFFF7A /* KeyBoardAdaptive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoardAdaptive.swift; sourceTree = "<group>"; };
@@ -172,8 +178,11 @@
 				93A803112446B9DB00815B21 /* AppDelegate.swift */,
 				93A803132446B9DB00815B21 /* SceneDelegate.swift */,
 				93757FD7244BBAE40027D96E /* LoginView.swift */,
+				C65A90182461DEC900CCAFC3 /* ChatsView.swift */,
 				93A803182446B9DB00815B21 /* ContentView.swift */,
+				C65A90162461046C00CCAFC3 /* CreateNewCommunity.swift */,
 				9342EA9E24528BD10031FC07 /* ChatRow.swift */,
+				C65A90122460F96C00CCAFC3 /* CommunityView.swift */,
 				93A8032824475BD200815B21 /* ChatController.swift */,
 				93C228EC245B61D700454511 /* SideMenu.swift */,
 				9339864524567284009206CD /* KeychainItemAccessibility.swift */,
@@ -289,9 +298,12 @@
 				93A3DCDA2460C13E00355382 /* MessageDelivery+CoreDataProperties.swift in Sources */,
 				93A803172446B9DB00815B21 /* Honk_Frontend.xcdatamodeld in Sources */,
 				93A3DCD72460C13E00355382 /* ReactionN+CoreDataClass.swift in Sources */,
+				C65A90172461046C00CCAFC3 /* CreateNewCommunity.swift in Sources */,
 				9339864724567284009206CD /* KeychainItemAccessibility.swift in Sources */,
 				9342EA9F24528BD10031FC07 /* ChatRow.swift in Sources */,
+				C65A90132460F96C00CCAFC3 /* CommunityView.swift in Sources */,
 				93A3DCDB2460C13E00355382 /* CommunityN+CoreDataClass.swift in Sources */,
+				C65A90192461DEC900CCAFC3 /* ChatsView.swift in Sources */,
 				93A3DCD42460C13E00355382 /* ReactionDelivery+CoreDataProperties.swift in Sources */,
 				93C228F3245B64CE00454511 /* User.swift in Sources */,
 				93A3DCD82460C13E00355382 /* ReactionN+CoreDataProperties.swift in Sources */,
