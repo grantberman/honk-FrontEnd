@@ -16,11 +16,15 @@ struct CommunityResult: Codable {
     var invite_usernames: [String]?
 }
 
-struct CreateNewCommunity: View {
+struct CreateCommunityView: View {
     @State private var CommunityName = ""
     @State private var CommunityDesription = ""
     @State private var UserList = [String]()
     @State private var Username = ""
+    @ObservedObject var viewRouter: ViewRouter
+    @EnvironmentObject var user: User
+
+
     
     var body: some View {
         NavigationView{
@@ -63,7 +67,7 @@ struct CreateNewCommunity: View {
                         
                         Button(action: {
                         // API call to create new community
-                            //self.makeCommunity()
+                            self.makeCommunity(self.CommunityName, self.CommunityDesription, self.UserList, self.user.auth.token)
                           
                         
                         }) {
@@ -92,7 +96,7 @@ struct CreateNewCommunity: View {
     
     
     //API call to make new community
-    private func makeCommunity(){
+    private func makeCommunity(_ name: String, _ description: String, _ invite_usernames: [String], _ auth: String){
         
         
         guard let url = URL(string: "https://honk-api.herokuapp.com/api/communities")
@@ -101,7 +105,7 @@ struct CreateNewCommunity: View {
                 return
                 }
         
-        let body: [String: Any] = ["name": self.CommunityName, "description": self.CommunityDesription, "invite_usernames": self.UserList]
+        let body: [String: Any] = ["name": name, "description": description, "invite_usernames": invite_usernames]
         
         let finalBody = try! JSONSerialization.data(withJSONObject: body)
 //        Body: {
@@ -119,6 +123,7 @@ struct CreateNewCommunity: View {
         request.httpBody = finalBody
                                      
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(auth)", forHTTPHeaderField: "Authorization") //after
                 
                 URLSession.shared.dataTask(with: request) { data, response, error in
                     
@@ -152,6 +157,6 @@ struct CreateNewCommunity: View {
 
 struct CreateNewCommunity_Previews: PreviewProvider {
     static var previews: some View {
-        CreateNewCommunity()
+        CreateCommunityView(viewRouter: ViewRouter())
     }
 }

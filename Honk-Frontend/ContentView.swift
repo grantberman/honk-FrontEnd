@@ -19,6 +19,8 @@ struct ContentView: View {
     @EnvironmentObject var appState : AppState
     @EnvironmentObject var chatController : ChatController
     @EnvironmentObject var user: User
+    @ObservedObject var viewRouter: ViewRouter
+
     
     
     var body: some View {
@@ -40,9 +42,14 @@ struct ContentView: View {
                 VStack{
                     Group{
                         Text("You have no communities")
-                        Button(action: self.createNewCommunity){
+                        Button(action: self.createNewCommunity
+//                            NavigationLink(destination: CreateCommunityView()){
+//                                Text("something")
+//                            }
+                            ){
                             Text("Create new Community")
                             }
+                        
                         }
                         .navigationBarTitle("Chat Title", displayMode: .inline)
                     }
@@ -106,6 +113,9 @@ struct ContentView: View {
     
     func createNewCommunity(){
         // call to create new community page will be here
+        //NavigationLink(<#LocalizedStringKey#>, destination: CreateCommunityView())
+        self.viewRouter.currentPage = "page3"
+
     }
     
     
@@ -119,7 +129,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewRouter: ViewRouter())
             .environmentObject(ChatController()).environmentObject(AppState())
     }
 }

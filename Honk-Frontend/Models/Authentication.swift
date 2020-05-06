@@ -58,7 +58,9 @@ class Authentication: ObservableObject{
                     do {
                         let response = try JSONDecoder().decode(AuthenticationResult.self, from: data) as! AuthenticationResult
                         self.token = response.token
-                        self.isAuthenticated = true
+                        DispatchQueue.main.async{
+                            self.isAuthenticated = true
+                        }
                     } catch {
                         print( "could not get response" )
                     }
