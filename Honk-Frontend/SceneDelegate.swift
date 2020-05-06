@@ -14,9 +14,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     var chatController = ChatController()       //is this even needed here ?
-    var Auth = Authentication()
-    var user = User()
+    
+    var user = (UIApplication.shared.delegate as! AppDelegate).user
     var appState = AppState()
+    
     
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -29,14 +30,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         readUserData()
         readAppState()
         checkAuth()
+
         
-        let validUser = Auth.isAuthenticated ? true : false     //if authenticated is true then it is a valid user, otherwise, it is not.
+        let validUser = user.auth.isAuthenticated ? true : false     //if authenticated is true then it is a valid user, otherwise, it is not.
         
         
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
         let contentView = ContentView().environment(\.managedObjectContext, context)
         let loginView = LoginView(isValidUser: validUser).environment(\.managedObjectContext, context)
+        let rootView = RootView().environment(\.managedObjectContext, context)
         
         
         
@@ -46,15 +49,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             
-//            if validUser {
-//                window.rootViewController = UIHostingController(rootView: contentView.environmentObject(chatController).environmentObject(Auth).environmentObject(user).environmentObject(appState))
-//            }
-//            else {
-//                window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController).environmentObject(Auth).environmentObject(user).environmentObject(appState))
-//            }
-             window.rootViewController = UIHostingController(rootView: contentView.environmentObject(chatController).environmentObject(Auth).environmentObject(user).environmentObject(appState))
-            
-        
+            if validUser {
+                window.rootViewController = UIHostingController(rootView: contentView.environmentObject(chatController).environmentObject(user).environmentObject(user.auth
+                ).environmentObject(appState))
+            }
+            else {
+                window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController).environmentObject(user).environmentObject(user.auth
+                ).environmentObject(appState))
+            }
+//            window.rootViewController = UIHostingController(rootView: rootView.environmentObject(user).environmentObject(user.auth))
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -83,6 +86,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
+        
+        
+        do {
+
+            let communityData : Data = try  NSKeyedArchiver.archivedData(withRootObject: appState.selectedCommunity ?? nil, requiringSecureCoding: false)
+            UserDefaults.standard.set(communityData, forKey: "community")
+            
+            let chatData : Data = try  NSKeyedArchiver.archivedData(withRootObject: appState.selectedChat ?? nil , requiringSecureCoding: false)
+            
+            UserDefaults.standard.set(chatData, forKey: "chat")
+        } catch {
+            print("could not save defaults")
+        }
+       
+        
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
@@ -95,19 +113,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let username = KeychainWrapper.standard.string(forKey: "username") ?? ""
         let password = KeychainWrapper.standard.string(forKey: "password") ?? ""
-        print("checking if user and pass exists")
+        print(username)
+        print(password)
         if username != "" && password != "" {
             //if there are saved credentials
             print("user and pass exist!") 
-            Auth.getAuth( username, password )
+            user.auth.getAuth( username, password )
         }
     }
     
     
      func readAppState() {
          
-         appState.selectedCommunity = self.user.communities[0]
-         appState.selectedChat = appState.selectedCommunity?.chats[0] ?? nil
+        appState.selectedCommunity = UserDefaults.standard.object(forKey: "community")as? CommunityN ?? nil
+        appState.selectedChat = UserDefaults.standard.object(forKey: "chat") as?  ChatN ?? nil
+        
          
      }
      
@@ -140,7 +160,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
            
            let community1 = Community(id: 1, name: "Honk Developers", description: "All of the coolest iOS developers", created_at: "4/30/20", chats: [frontEndChat, backEndChat] )
            
-           self.user.communities.append(community1)
+//           self.user.communities.append(community1)
            
            
            

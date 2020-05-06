@@ -7,16 +7,14 @@
 //
 
 import SwiftUI
-
-
-
-
+import CoreData
 
 struct ContentView: View {
     
     @State var composedMessage: String = ""
     @State var menuOpen: Bool = false
     @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: CommunityN.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityN>
 
     @EnvironmentObject var appState : AppState
     @EnvironmentObject var chatController : ChatController
@@ -48,6 +46,7 @@ struct ContentView: View {
                                     Text("Create new Community")
                                     }
                                 }
+                                .navigationBarTitle("Chat Title", displayMode: .inline)
                             }
                           }
                     else{
@@ -85,7 +84,7 @@ struct ContentView: View {
                             TextField("Message...", text: self.$composedMessage).frame(minHeight: CGFloat(30))
                             Button(action: self.sendMessage) {
                                 Text("Send")
-                            }
+                            }.disabled(self.appState.selectedChat == nil)
                         }
                         .padding()
                         .keyBoardAdaptive()

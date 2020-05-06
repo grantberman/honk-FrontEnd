@@ -24,7 +24,37 @@ extension MessageN {
     @NSManaged public var author: UserN?
     @NSManaged public var reactions: NSSet?
     @NSManaged public var inChat: ChatN?
+    
+    
+    public var contentDef : String {
+        content ?? ""
+    }
+    
+    public var authorDef : UserN {
+        author ?? UserN()
+    }
 
+    
+    public var avatar : String {
+        return "T"      //change this be based off of the display name
+    }
+    
+    
+    public var created_atDef : String {
+        created_at ?? ""
+    }
+
+    public var sentTime:  Date  {
+        let dateFormatter = ISO8601DateFormatter()
+        if let date = dateFormatter.date(from: created_atDef) {
+            return date
+        }
+        else {
+            let date = Date()
+            return date
+        }
+        
+    }
 }
 
 // MARK: Generated accessors for deliveries
