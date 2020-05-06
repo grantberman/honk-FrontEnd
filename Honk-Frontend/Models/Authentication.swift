@@ -24,7 +24,6 @@ class Authentication: ObservableObject{
         guard let url = URL(string: "http://honk-api.herokuapp.com/api/tokens") else {
             print("Invalid URL")
             return
-        
         }
         print(username + password)
         let loginString = username + ":" + password
