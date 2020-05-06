@@ -23,48 +23,42 @@ struct MenuContent: View {
             
             List {
                 ForEach(communities, id: \.uuid) { community in
-                    Section(header: Text(community.communityName)) {
+                    Section(header: HStack {
+                        Text(community.communityName)
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+
+                            Spacer()
+                    }
+                    .background(Color.blue)
+                    .listRowInsets(EdgeInsets(
+                        top: 0,
+                        leading: 0,
+                        bottom: 0,
+                        trailing: 0))
+                    ) {
                         ForEach(community.chatArray, id: \.self) { chat in VStack {
                             Text(chat.wrappedName).onTapGesture {
                                 self.appState.selectedChat = chat
                                 self.menuClose()
                             }
-                            }
+                            }.listStyle(GroupedListStyle())
                             
                             
                         }
                     }
                     
                 }
-//                if appState.selectedCommunity != nil {
-//
-//                    Section(header: Text(self.appState.selectedCommunity!.name)){
-//                        ForEach (self.user.communities[0].chats, id: \.self) {
-//                            chat in VStack{
-//                                Text(chat.name).onTapGesture {
-//                                    self.appState.selectedChat = chat
-//                                    self.menuClose()
-//
-//                                }
-//                            }
-//
-//                        }
-//                    }
-//
-//                }
-//                else {
-//
-//                    Button(action: {
-//                        print("create community")
-//                    }) {
-//                        Text("create community")
-//                    }
-//
-//                }
+
 
             }
-            
+                        .navigationBarTitle("" , displayMode: .inline)
+
+                        .navigationBarHidden(true)
         }
+        
+        
     }
 }
 
@@ -105,3 +99,9 @@ struct SideMenu: View {
 //
 //    }
 //}
+
+struct SideMenu_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
+}

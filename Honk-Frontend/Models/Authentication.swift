@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 struct AuthenticationResult: Codable {
     var token: String
@@ -20,7 +21,7 @@ class Authentication: ObservableObject{
     @Published var isAuthenticated: Bool = false
     
     func getAuth(_ username: String, _ password: String) {   //after the username and password have been validated as correct, this call gets the users auth token
-//        print(username + " " + password)
+        //        print(username + " " + password)
         guard let url = URL(string: "http://honk-api.herokuapp.com/api/tokens") else {
             print("Invalid URL")
             return
@@ -54,7 +55,7 @@ class Authentication: ObservableObject{
             if let data = data {
                 if (try? JSONDecoder().decode(AuthenticationResult.self, from: data)) != nil {
                     
-//                    let group = DispatchGroup()
+                    //                    let group = DispatchGroup()
                     do {
                         let response = try JSONDecoder().decode(AuthenticationResult.self, from: data) as! AuthenticationResult
                         self.token = response.token
@@ -68,14 +69,14 @@ class Authentication: ObservableObject{
                         print( "could not get response" )
                     }
                     
-//                    group.enter()
-//                    DispatchQueue.main.async {
-//                        self.isAuthenticated = true
-////                        print("true")
-//                        group.leave()
-                        
-                        
-//                    }
+                    //                    group.enter()
+                    //                    DispatchQueue.main.async {
+                    //                        self.isAuthenticated = true
+                    ////                        print("true")
+                    //                        group.leave()
+                    
+                    
+                    //                    }
                     return
                 }
                 
@@ -83,6 +84,79 @@ class Authentication: ObservableObject{
             //                    print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
             
         }.resume()
+        
+    }
+    
+    
+    func register(_ username: String, _ password: String, _ email: String) {
+        
+        
+        guard let url = URL(string: "http://honk-api.herokuapp.com/api/users") else {
+            print("Invalid URL")
+            return
+        }
+        let body: [String: String] = ["username" : username, "password": password, "email": email]
+        
+        
+        
+        let finalBody = try! JSONSerialization.data(withJSONObject: body)  //make proper check later
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = finalBody
+        
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            
+            
+            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
+                
+                //                let httpResponse = response as! HTTPURLResponse
+                //                print(httpResponse.statusCode)
+                return
+            }
+            
+            guard let data = data else {
+                print("no data")
+                return
+            }
+            DispatchQueue.main.async{
+                
+                do {
+                    
+                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                    
+                    let jsonString = String(data: data, encoding: .utf8)
+                    
+                    let jsonData = jsonString!.data(using: .utf8)
+                    let decoder = JSONDecoder()
+                    decoder.userInfo[CodingUserInfoKey.context!] = context
+                    let user = try decoder.decode(UserN.self, from: jsonData!)
+                    print(user)
+                    
+                    
+                    do {
+                        try context.save()
+                        self.getAuth(username, password)
+                        print("save")
+                    } catch {
+                        print("could not save")
+                    }
+                } catch {
+                    print("could not decode" )
+                }
+                
+            }
+            
+            return
+            
+        }.resume()
+        
+        
         
     }
     

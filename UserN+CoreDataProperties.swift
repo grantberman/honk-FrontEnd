@@ -33,6 +33,9 @@ extension UserN {
     public var displayName : String {
         display_name ?? "Unkown"
     }
+    public var usernameDef : String {
+        username ?? "Unknown"
+    }
     
     
 

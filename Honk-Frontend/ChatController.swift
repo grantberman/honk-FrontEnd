@@ -10,51 +10,6 @@ import Combine
 import SwiftUI
 import CoreData
 
-struct MessageResponse: Codable {
-    var uuid : String
-    var author : UserResponse
-    var content : String
-    var created_at : String
-    var deliveries : [MessageDeliveryResponse]
-    var reactions : [ReactionResponse]
-}
-
-
-struct MessageDeliveryResponse : Codable {
-    var is_delivered : Bool?
-    var uuid: String?
-    var recipient : UserResponse?
-}
-
-struct ReactionResponse : Codable {
-    var reaction_type: String?
-    var uuid: String?
-    var deliveries: [ReactionDeliveryResponse]?
-    var reactor: UserN?
-}
-
-struct ReactionDeliveryResponse : Codable {
-    var is_delivered : Bool?
-    var uuid: String?
-    var reaction: ReactionN?
-    var recipient : UserN?
-}
-struct UserResponse : Codable {
-    var biography: String?
-    var created_at: String?
-    var display_name : String?
-    var username: String?
-    var uuid: String?
-}
-
-struct Result: Codable {
-    var id : Int
-    var chat : String
-    var author:  String
-    var created_at : String
-    var content : String
-    
-}
 
 class ChatController : ObservableObject {
     @Environment(\.managedObjectContext) var moc
