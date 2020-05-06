@@ -134,25 +134,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     
+    func application(_ application: UIApplication,
+    didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+    fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void){
+        print("here")
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
+    
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        guard var rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else {
-            return
-        }
+//        guard var rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else {
+//            return
+//        }
+        
+        print("did receive" )
         
         
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        
-        
-        let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
-
-        
-        
-        let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
-        sceneDelegate?.window = window
-        window?.makeKeyAndVisible()
-        
-        
+//        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+//        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+//
+//
+//        let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
+//
+//
+//
+//        let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+//        sceneDelegate?.window = window
+//        window?.makeKeyAndVisible()
+//
+//
         
         
         // tell the app that we have finished processing the user’s action / response
@@ -173,7 +183,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             fatalError("Unable to read managed object context.")
         }
         
-        
+        print("will present")
         
         let decoder = JSONDecoder()
         

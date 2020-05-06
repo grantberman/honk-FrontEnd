@@ -36,6 +36,9 @@ extension CommunityN {
             
         }
     }
+    public var uuidDef : String {
+        uuid ?? "unknown"
+    }
     
     
 

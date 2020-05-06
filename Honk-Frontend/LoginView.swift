@@ -22,6 +22,8 @@ struct LoginView: View {
     
     @EnvironmentObject var user: User
     @EnvironmentObject var auth: Authentication
+    @ObservedObject var viewRouter: ViewRouter
+
     
     @State var isValidUser : Bool  = false {
         willSet{
@@ -38,14 +40,12 @@ struct LoginView: View {
         
         
         if auth.isAuthenticated{
-            ContentView()
+            ContentView(viewRouter: viewRouter)
         }
         else {
             ZStack{
                 //            Color.white.edgesIgnoringSafeArea(.all)
                 // so we can change background color if we want
-                
-                
                 
                 VStack {
                     Group{
@@ -119,10 +119,8 @@ struct LoginView: View {
     
     
     
-    
-    
-    
     func signIn() {
+        self.viewRouter.currentPage = "page2"
         self.user.auth.getAuth(user.username, user.password)
     }
     
@@ -139,7 +137,7 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(isValidUser: false)
+        LoginView(viewRouter: ViewRouter(), isValidUser: false)
             .environmentObject(Authentication())// these are for testing
             .environmentObject(User())
     }

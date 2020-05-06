@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Get the managed object context from the shared persistent container.
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         readAppState()
-//        checkAuth()
+        checkAuth()
 
         
         let validUser = user.auth.isAuthenticated ? true : false     //if authenticated is true then it is a valid user, otherwise, it is not.
@@ -36,9 +36,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        let contentView = ContentView().environment(\.managedObjectContext, context)
-        let loginView = LoginView(isValidUser: validUser).environment(\.managedObjectContext, context)
-
+//        let contentView = ContentView().environment(\.managedObjectContext, context)
+//        let loginView = LoginView(isValidUser: validUser).environment(\.managedObjectContext, context)
+//        let rootView = RootView().environment(\.managedObjectContext, context)
+        let motherView = MotherView(viewRouter: ViewRouter()).environment(\.managedObjectContext, context)
         
         
         
@@ -46,14 +47,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             
-            if validUser {
-                window.rootViewController = UIHostingController(rootView: contentView.environmentObject(chatController).environmentObject(user).environmentObject(user.auth
-                ).environmentObject(appState))
-            }
-            else {
-                window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController).environmentObject(user).environmentObject(user.auth
-                ).environmentObject(appState))
-            }
+             window.rootViewController = UIHostingController(rootView: motherView.environmentObject(chatController).environmentObject(user).environmentObject(user.auth).environmentObject(appState))
+            
+            
+//            if validUser {
+//                window.rootViewController = UIHostingController(rootView: contentView.environmentObject(chatController).environmentObject(user).environmentObject(user.auth
+//                ).environmentObject(appState))
+//            }
+//            else {
+//                window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController).environmentObject(user).environmentObject(user.auth
+//                ).environmentObject(appState))
+//            }
+            
 //            window.rootViewController = UIHostingController(rootView: rootView.environmentObject(user).environmentObject(user.auth))
             self.window = window
             window.makeKeyAndVisible()

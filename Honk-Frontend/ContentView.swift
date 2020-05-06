@@ -19,6 +19,9 @@ struct ContentView: View {
     @EnvironmentObject var appState : AppState
     @EnvironmentObject var chatController : ChatController
     @EnvironmentObject var user: User
+    @ObservedObject var viewRouter: ViewRouter
+    @State var makeCommunityViewIsPresented = false
+    
     
     
     var body: some View {
@@ -35,6 +38,17 @@ struct ContentView: View {
         return GeometryReader { geometry in
             
             ZStack {
+                
+                if (self.communities.isEmpty){
+                    Button (action: {
+                        self.makeCommunityViewIsPresented.toggle()
+                    }) {
+                        Text("Create New Community")
+                    }.sheet(isPresented: self.$makeCommunityViewIsPresented){
+                        return CreateCommunityView(isPresented: self.$makeCommunityViewIsPresented).environmentObject(self.user).environmentObject(self.appState)
+                    }
+                    }
+                else{
                 
                     VStack{
                         NavigationView {
@@ -75,7 +89,7 @@ struct ContentView: View {
                         .keyBoardAdaptive()
                         
                     }
-                    
+                }
                 
 
                 SideMenu(width: 270,
@@ -91,6 +105,14 @@ struct ContentView: View {
         self.menuOpen.toggle()
     }
     
+    func createNewCommunity(){
+        // call to create new community page will be here
+        //NavigationLink(<#LocalizedStringKey#>, destination: CreateCommunityView())
+        self.viewRouter.currentPage = "page3"
+
+    }
+        
+    
     
     func sendMessage() {
 
@@ -102,7 +124,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewRouter: ViewRouter())
             .environmentObject(ChatController()).environmentObject(AppState())
     }
 }
