@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-//import KeychainWrapper
+import CoreData
 
 
 struct LoginResult: Codable {
@@ -113,50 +113,11 @@ struct LoginView: View {
     
     func register() {
         
-        guard let url = URL(string: "http://honk-api.herokuapp.com/api/users") else {
-            print("Invalid URL")
-            return
-        }
-        let body: [String: String] = ["username" : user.username, "password": user.password, "email": user.email]
+        self.user.auth.register(user.username, user.password, user.email)
         
-        let finalBody = try! JSONSerialization.data(withJSONObject: body)  //make proper check later
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = finalBody
-        
-        
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            
-            
-            
-            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
-                
-                //                let httpResponse = response as! HTTPURLResponse
-                //                print(httpResponse.statusCode)
-                return
-            }
-            
-            if let data = data {
-                print(data)
-                if (try? JSONDecoder().decode(LoginResult.self, from: data)) != nil {      //if successful response
-                    DispatchQueue.main.async {
-                        
-                        
-                        self.isValidUser = true
-                        
-                        
-                    }
-                    return
-                }
-                
-            }
-            //            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
-            
-        }.resume()}
+    }
+    
+    
     
     func signIn() {
         self.viewRouter.currentPage = "page2"

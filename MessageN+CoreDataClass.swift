@@ -19,6 +19,7 @@ public class MessageN: NSManagedObject, Codable{
               case author = "author"
               case deliveries = "deliveries"
               case reactions = "reactions"
+              case uuid = "uuid"
           }
     
     public func encode (to encoder: Encoder) throws {
@@ -45,6 +46,7 @@ public class MessageN: NSManagedObject, Codable{
                 author = try values.decode(UserN?.self, forKey: .author)
                 deliveries = NSSet (array: try values.decode([MessageDelivery].self, forKey: .deliveries))
                 reactions = NSSet (array: try values.decode([ReactionN].self, forKey: .reactions))
+                uuid = try values.decode(String?.self, forKey: .uuid)
             
             } catch {
                 print("message decoding error")

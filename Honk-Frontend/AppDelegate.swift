@@ -143,10 +143,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         
-        let notificationView = NotificationTestView().environment(\.managedObjectContext, context)
         
         let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
-        window?.rootViewController = UIHostingController(rootView: notificationView)
+
         
         
         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
@@ -182,7 +181,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         case "new_message":
             
             
-            let messageJSON = notification.request.content.userInfo["messages"] as! NSDictionary
+            let messageJSON = notification.request.content.userInfo["message"] as! NSDictionary
             //1. create message object
             do {
                 let data = try JSONSerialization.data(withJSONObject: messageJSON, options: [])
@@ -217,7 +216,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         case "new_chat":
             
             
-            let messageJSON = notification.request.content.userInfo["chats"] as! NSDictionary
+            let messageJSON = notification.request.content.userInfo["chat"] as! NSDictionary
             //1. create message object
             do {
                 let data = try JSONSerialization.data(withJSONObject: messageJSON, options: [])
@@ -235,6 +234,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 
                 let fetchedCommunity = try context.fetch(fetchRequest) as! [CommunityN]
+                print(fetchedCommunity)
+                
                 let objectUpdate = fetchedCommunity[0]
                 let chats = objectUpdate.chats
                 let updatedChats = chats?.adding(chat)
@@ -249,13 +250,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             
             
-        case "NEW_COMMUNITY":
-            
-            let messageJSON = notification.request.content.userInfo["communities"] as! NSDictionary
+        case "new_community":
+            print(notification.request.content.userInfo["community"])
+            let messageJSON = notification.request.content.userInfo["community"] as! NSDictionary
             //1. create message object
             do {
                 let data = try JSONSerialization.data(withJSONObject: messageJSON, options: [])
                 let jsonString = String(data: data, encoding: .utf8)
+//                print(jsonString)
                 let jsonData = jsonString!.data(using: .utf8)
                 
                 

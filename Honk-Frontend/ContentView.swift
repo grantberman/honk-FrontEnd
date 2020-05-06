@@ -20,7 +20,6 @@ struct ContentView: View {
     @EnvironmentObject var chatController : ChatController
     @EnvironmentObject var user: User
     @ObservedObject var viewRouter: ViewRouter
-
     
     
     var body: some View {
@@ -67,7 +66,7 @@ struct ContentView: View {
                                         }
                                     }
                                 }
-                                .navigationBarTitle("Chat Title", displayMode: .inline)
+                                .navigationBarTitle("\(self.appState.selectedChat?.nameDef ?? "unknown")", displayMode: .inline)
                             }
                             .navigationBarItems(leading:
                                 Button(action: {
@@ -117,6 +116,7 @@ struct ContentView: View {
         self.viewRouter.currentPage = "page3"
 
     }
+        
     
     
     func sendMessage() {

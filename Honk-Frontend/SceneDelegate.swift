@@ -27,9 +27,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Get the managed object context from the shared persistent container.
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        readUserData()
         readAppState()
-        checkAuth()
+//        checkAuth()
 
         
         let validUser = user.auth.isAuthenticated ? true : false     //if authenticated is true then it is a valid user, otherwise, it is not.
@@ -71,6 +70,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not neccessarily discarded (see `application:didDiscardSceneSessions` instead).
+        
+//        if appState.selectedChat != nil {
+//            let chat = appState.selectedChat as! ChatN
+//            print(chat.nameDef)
+//            let chatData : Data = try  NSKeyedArchiver.archivedData(withRootObject: appState.selectedChat ?? nil , requiringSecureCoding: false)
+//            
+//            UserDefaults.standard.set(chatData, forKey: "chat")
+//        }
+//        print("write to defaults")
+//            do {
+//
+//                let communityData : Data = try  NSKeyedArchiver.archivedData(withRootObject: appState.selectedCommunity ?? nil, requiringSecureCoding: false)
+//                UserDefaults.standard.set(communityData, forKey: "community")
+//                
+//                
+//            } catch {
+//                print("could not save defaults")
+//            }
+//           
     }
     
     func sceneDidBecomeActive(_ scene: UIScene) {
@@ -90,19 +108,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneDidEnterBackground(_ scene: UIScene) {
         
-        
-        do {
-
-            let communityData : Data = try  NSKeyedArchiver.archivedData(withRootObject: appState.selectedCommunity ?? nil, requiringSecureCoding: false)
-            UserDefaults.standard.set(communityData, forKey: "community")
-            
-            let chatData : Data = try  NSKeyedArchiver.archivedData(withRootObject: appState.selectedChat ?? nil , requiringSecureCoding: false)
-            
-            UserDefaults.standard.set(chatData, forKey: "chat")
-        } catch {
-            print("could not save defaults")
-        }
-       
+    
         
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
@@ -114,13 +120,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func checkAuth() {
         
+        
+        
         let username = KeychainWrapper.standard.string(forKey: "username") ?? ""
         let password = KeychainWrapper.standard.string(forKey: "password") ?? ""
         print(username)
         print(password)
         if username != "" && password != "" {
             //if there are saved credentials
-            print("user and pass exist!") 
+            print("user and pass exist!")
+            print(username + password)
+            print("function call below")
             user.auth.getAuth( username, password )
         }
     }
@@ -133,41 +143,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
          
      }
-     
-     func readUserData () {          //read user data from the local device (communities, chats, messages)
-           
-           let frontEndMessages = [
-               ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
-               ChatMessage(message: "nick are u there", avatar: "G", color: .red),
-               ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
-               ChatMessage(message: "nick are u there", avatar: "G", color: .red),
-               ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
-               ChatMessage(message: "nick are u there", avatar: "G", color: .red),
-               
-               ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
-               ChatMessage(message: "nick are u there", avatar: "G", color: .red),
-               ChatMessage(message: "this is the start of the front end chat", avatar: "G", color: .red),
-               ChatMessage(message: "nick are u there", avatar: "G", color: .red)
-           ]
-           
-           let backEndMessages = [
-               ChatMessage(message: "this is the start of the back end chat", avatar: "G", color: .blue),
-               ChatMessage(message: "ben are u there", avatar: "G", color: .blue)
-           ]
-           
-           
-           let frontEndChat = Chat(id: 1, communityId: 1, name: "front end", created_at: "4/20/20", messages: frontEndMessages)
-           
-           let backEndChat = Chat(id: 1, communityId: 1, name: "back end", created_at: "4/20/20", messages: backEndMessages)
-           
-           
-           let community1 = Community(id: 1, name: "Honk Developers", description: "All of the coolest iOS developers", created_at: "4/30/20", chats: [frontEndChat, backEndChat] )
-           
-//           self.user.communities.append(community1)
-           
-           
-           
-       }
     
     
     
