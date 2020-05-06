@@ -15,7 +15,7 @@ extension Date {
 }
 
 struct ChatRow: View {
-    var chatMessage: ChatMessage
+    var chatMessage: MessageN
     
    
     
@@ -29,7 +29,7 @@ struct ChatRow: View {
         
         
         return Group {
-            if !chatMessage.isMe{
+//            if !chatMessage.isMe{
                
                 VStack{
                     Group{ // originally had this in the Vstack although it didn't orient correctly, moved back we'll see
@@ -42,11 +42,11 @@ struct ChatRow: View {
                              Text(chatMessage.avatar)
                                 .padding(.leading, 5)
                                 .frame(alignment: .leading)
-                             Text(chatMessage.message)
+                             Text(chatMessage.contentDef)
                                  .bold()
                                  .foregroundColor(.white)
                                  .padding(10)       //comment this out to 
-                                 .background(chatMessage.color)
+//                                 .background(chatMessage.color)
                                  .cornerRadius(10)
                             
                             
@@ -79,32 +79,32 @@ struct ChatRow: View {
                         
                     }
                 }
-            } else {
-                VStack{
-                    Group{
-                        Spacer()
-                        Text(dateString.string(from:today))
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .padding(5)
-                    }
-                    HStack {
-                        Group {
-                            Spacer()
-                            Text(chatMessage.message)
-                                .bold()
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(chatMessage.color)
-                                .cornerRadius(10)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .frame(minWidth: 10, maxWidth: 250, alignment: .bottomTrailing)
-                            Text(chatMessage.avatar)
-                                .padding(.trailing, 5)
-                            
-                        }
-                    }
-                }
-            }
+//            } else {
+//                VStack{
+//                    Group{
+//                        Spacer()
+//                        Text(dateString.string(from:today))
+//                            .frame(maxWidth: .infinity, alignment: .center)
+//                            .padding(5)
+//                    }
+//                    HStack {
+//                        Group {
+//                            Spacer()
+//                            Text(chatMessage.contentDef)
+//                                .bold()
+//                                .foregroundColor(.white)
+//                                .padding(10)
+////                                .background(chatMessage.color)
+//                                .cornerRadius(10)
+//                                .fixedSize(horizontal: false, vertical: true)
+//                                .frame(minWidth: 10, maxWidth: 250, alignment: .bottomTrailing)
+//                            Text(chatMessage.avatar)
+//                                .padding(.trailing, 5)
+//                            
+//                        }
+//                    }
+//                }
+//            }
         }
     }
     func reactToMessage(){
@@ -115,13 +115,13 @@ struct ChatRow: View {
         // in here will be API call to create new subgroup
     }
 }
-
-struct ChatRow_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatRow(chatMessage: ChatMessage(message: "This is a long message test Im not sure what will happen with it and we need to see what happens", avatar: "B", color: .blue)).previewDevice("iPhone 8")
-    }
-}
-
+//
+//struct ChatRow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChatRow(chatMessage: ChatMessage(message: "This is a long message test Im not sure what will happen with it and we need to see what happens", avatar: "B", color: .blue)).previewDevice("iPhone 8")
+//    }
+//}
+//
 
 
 

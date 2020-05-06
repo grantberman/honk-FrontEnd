@@ -7,16 +7,14 @@
 //
 
 import SwiftUI
-
-
-
-
+import CoreData
 
 struct ContentView: View {
     
     @State var composedMessage: String = ""
     @State var menuOpen: Bool = false
     @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: CommunityN.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityN>
 
     @EnvironmentObject var appState : AppState
     @EnvironmentObject var chatController : ChatController
@@ -38,45 +36,48 @@ struct ContentView: View {
             
             ZStack {
                 
-                VStack{
-                    NavigationView {
-                        ReverseScrollView {
-                            
-                            VStack{
-                                ForEach (self.appState.selectedChat?.messages ?? [], id: \.self) { msg in
-                                    VStack{
-                                        ChatRow(chatMessage: msg)
+                    VStack{
+                        NavigationView {
+                            ReverseScrollView {
+                                
+                                VStack{
+                                    ForEach (self.appState.selectedChat?.chatMessages ?? [], id: \.self) { msg in
+                                        VStack{
+                                            ChatRow(chatMessage: msg)
+                                        }
                                     }
                                 }
+                                .navigationBarTitle("Chat Title", displayMode: .inline)
                             }
-                            .navigationBarTitle("Chat Title", displayMode: .inline)
-                        }
-                        .navigationBarItems(leading:
-                            Button(action: {
-                                self.openMenu()
-                                do {
-                                    try self.moc.save()
-                                } catch {
-                                    print("no save")
+                            .navigationBarItems(leading:
+                                Button(action: {
+                                    self.openMenu()
+                                    do {
+                                        try self.moc.save()
+                                    } catch {
+                                        print("no save")
+                                    }
+                                    print("Edit button pressed...")
+                                }) {
+                                    Text("Edit")
                                 }
-                                print("Edit button pressed...")
-                            }) {
-                                Text("Edit")
-                            }
-                        )
-                    }.padding()
-                    
-                    
-                    HStack{
-                        TextField("Message...", text: self.$composedMessage).frame(minHeight: CGFloat(30))
-                        Button(action: self.sendMessage) {
-                            Text("Send")
+                            )
+                        }.padding()
+                        
+                        
+                        HStack{
+                            TextField("Message...", text: self.$composedMessage).frame(minHeight: CGFloat(30))
+                            Button(action: self.sendMessage) {
+                                Text("Send")
+                            }.disabled(self.appState.selectedChat == nil)
                         }
+                        .padding()
+                        .keyBoardAdaptive()
+                        
                     }
-                    .padding()
-                    .keyBoardAdaptive()
                     
-                }
+                
+
                 SideMenu(width: 270,
                          isOpen: self.menuOpen,
                          menuClose: self.openMenu)
@@ -92,7 +93,8 @@ struct ContentView: View {
     
     
     func sendMessage() {
-        chatController.sendMessage(ChatMessage(message: composedMessage, avatar: "C", color: .green, isMe: true))
+
+        chatController.sendMessage(composedMessage, self.appState.selectedChat!.uuidDef, self.user.auth.token)
         composedMessage = ""
     }
     

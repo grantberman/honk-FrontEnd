@@ -28,6 +28,8 @@
 		93A3DCDC2460C13E00355382 /* CommunityN+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCCE2460C13E00355382 /* CommunityN+CoreDataProperties.swift */; };
 		93A3DCDD2460C13E00355382 /* MessageN+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCCF2460C13E00355382 /* MessageN+CoreDataClass.swift */; };
 		93A3DCDE2460C13E00355382 /* MessageN+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCD02460C13E00355382 /* MessageN+CoreDataProperties.swift */; };
+		93A3DCE02460F8AE00355382 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCDF2460F8AE00355382 /* NotificationCenter.swift */; };
+		93A3DCE524622A1800355382 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3DCE424622A1800355382 /* RootView.swift */; };
 		93A803122446B9DB00815B21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A803112446B9DB00815B21 /* AppDelegate.swift */; };
 		93A803142446B9DB00815B21 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A803132446B9DB00815B21 /* SceneDelegate.swift */; };
 		93A803172446B9DB00815B21 /* Honk_Frontend.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93A803152446B9DB00815B21 /* Honk_Frontend.xcdatamodeld */; };
@@ -71,6 +73,8 @@
 		93A3DCCE2460C13E00355382 /* CommunityN+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityN+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		93A3DCCF2460C13E00355382 /* MessageN+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageN+CoreDataClass.swift"; sourceTree = "<group>"; };
 		93A3DCD02460C13E00355382 /* MessageN+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageN+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		93A3DCDF2460F8AE00355382 /* NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenter.swift; sourceTree = "<group>"; };
+		93A3DCE424622A1800355382 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		93A8030E2446B9DB00815B21 /* Honk-Frontend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Honk-Frontend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A803112446B9DB00815B21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93A803132446B9DB00815B21 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -170,8 +174,10 @@
 			children = (
 				9339863D24562FEE009206CD /* Honk-Frontend.entitlements */,
 				93A803112446B9DB00815B21 /* AppDelegate.swift */,
+				93A3DCDF2460F8AE00355382 /* NotificationCenter.swift */,
 				93A803132446B9DB00815B21 /* SceneDelegate.swift */,
 				93757FD7244BBAE40027D96E /* LoginView.swift */,
+				93A3DCE424622A1800355382 /* RootView.swift */,
 				93A803182446B9DB00815B21 /* ContentView.swift */,
 				9342EA9E24528BD10031FC07 /* ChatRow.swift */,
 				93A8032824475BD200815B21 /* ChatController.swift */,
@@ -303,6 +309,7 @@
 				93C228F1245B643200454511 /* Community.swift in Sources */,
 				93A3DCDE2460C13E00355382 /* MessageN+CoreDataProperties.swift in Sources */,
 				93A8032924475BD200815B21 /* ChatController.swift in Sources */,
+				93A3DCE524622A1800355382 /* RootView.swift in Sources */,
 				93A3DCD52460C13E00355382 /* ChatN+CoreDataClass.swift in Sources */,
 				93C228EF245B631400454511 /* Chat.swift in Sources */,
 				C6A12E04244BB49000AFFF7A /* KeyBoardAvoidance.swift in Sources */,
@@ -315,6 +322,7 @@
 				9339864624567284009206CD /* KeychainWrapper.swift in Sources */,
 				93A803142446B9DB00815B21 /* SceneDelegate.swift in Sources */,
 				9342EA98245270CF0031FC07 /* Authentication.swift in Sources */,
+				93A3DCE02460F8AE00355382 /* NotificationCenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

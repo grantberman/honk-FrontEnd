@@ -28,5 +28,12 @@ extension UserN {
     @NSManaged public var membersOf: ChatN?
     @NSManaged public var subscribedTo: CommunityN?
     @NSManaged public var reaction: ReactionN?
+    
+    
+    public var displayName : String {
+        display_name ?? "Unkown"
+    }
+    
+    
 
 }

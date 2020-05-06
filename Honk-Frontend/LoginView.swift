@@ -19,34 +19,39 @@ struct LoginResult: Codable {
 
 
 struct LoginView: View {
-
-    @EnvironmentObject var user: User
-    @EnvironmentObject var auth : Authentication
-    @State var isValidUser : Bool  = false {
-           willSet{
-               writeKeychain()
-            print(user.username + " " + user.password)
-               auth.getAuth(user.username, user.password)
-           }
-       }
-
     
-
+    @EnvironmentObject var user: User
+    @EnvironmentObject var auth: Authentication
+    
+    @State var isValidUser : Bool  = false {
+        willSet{
+            writeKeychain()
+            print(user.username + " " + user.password)
+            auth.getAuth(user.username, user.password)
+        }
+    }
+    
+    
+    
     @ViewBuilder
     var body: some View {
-        ZStack{
-            Color.white.edgesIgnoringSafeArea(.all)
-            // so we can change background color if we want
         
-        if auth.isAuthenticated == true{
+        
+        if auth.isAuthenticated{
             ContentView()
-            }
-            
-        
+        }
         else {
-            
-            VStack {
-                Group{
+            ZStack{
+                //            Color.white.edgesIgnoringSafeArea(.all)
+                // so we can change background color if we want
+                
+                
+                
+                
+                
+                
+                VStack {
+                    Group{
                         Image("Honk-Icon")
                             .resizable()
                             .renderingMode(.original)
@@ -59,7 +64,7 @@ struct LoginView: View {
                             .cornerRadius(20)
                             .foregroundColor(.black)
                             .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                       
+                        
                         SecureField("password", text: $user.password)
                             .padding()
                             .cornerRadius(20)
@@ -71,38 +76,38 @@ struct LoginView: View {
                             .cornerRadius(20)
                             .foregroundColor(.white)
                             .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                }.padding([.leading, .trailing], 27.5)
+                    }.padding([.leading, .trailing], 27.5)
                     
-                
-                
-                HStack {
-                    Button(action: signIn) {
-                        Text("Sign In")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(width: 175, height: 50)
-                            .background(Color.blue)
-                            .cornerRadius(15.0)
+                    
+                    
+                    HStack {
+                        Button(action: signIn) {
+                            Text("Sign In")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(width: 175, height: 50)
+                                .background(Color.blue)
+                                .cornerRadius(15.0)
+                        }
+                        
+                        
+                        Button(action: register) {
+                            Text("Create Account")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(width: 175, height: 50)
+                                .fixedSize(horizontal: true, vertical: false)
+                                .background(Color.blue)
+                                .cornerRadius(15.0)
+                        }
                     }
-
-
-                    Button(action: register) {
-                      Text("Create Account")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(width: 175, height: 50)
-                        .fixedSize(horizontal: true, vertical: false)
-                        .background(Color.blue)
-                        .cornerRadius(15.0)
-                    }
+                }.onAppear{
+                    print("auth" + String(self.user.auth.isAuthenticated))
+                }
+                .padding(.top, 26.0)
             }
-            }.onAppear{
-                print("auth" + String(self.auth.isAuthenticated))
-            }
-            .padding(.top, 26.0)
-        }
         }
         
     }
@@ -151,14 +156,13 @@ struct LoginView: View {
                     return
                 }
                 
-                            }
-                //            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
-                            
-                            }.resume()}
+            }
+            //            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
+            
+        }.resume()}
     
     func signIn() {
-//        loginViewController.Auth = Auth
-//        loginViewController.signIn()
+        self.user.auth.getAuth(user.username, user.password)
     }
     
     
@@ -175,8 +179,8 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView(isValidUser: false)
-        .environmentObject(Authentication())// these are for testing
-        .environmentObject(User())
+            .environmentObject(Authentication())// these are for testing
+            .environmentObject(User())
     }
 }
 

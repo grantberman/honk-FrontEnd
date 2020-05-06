@@ -24,8 +24,13 @@ struct MenuContent: View {
             List {
                 ForEach(communities, id: \.uuid) { community in
                     Section(header: Text(community.communityName)) {
-                        ForEach(community.chatArray, id: \.self) { chat in
-                            Text(chat.wrappedName)
+                        ForEach(community.chatArray, id: \.self) { chat in VStack {
+                            Text(chat.wrappedName).onTapGesture {
+                                self.appState.selectedChat = chat
+                                self.menuClose()
+                            }
+                            }
+                            
                             
                         }
                     }
