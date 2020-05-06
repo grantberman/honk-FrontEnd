@@ -69,7 +69,7 @@ struct CreateChatView: View {
                             
                             Button(action: {
                             // API call to create new community
-                                self.makeChat(self.ChatName, self.appState.selectedCommuntiy.uuidDef, self.UserList, self.user.auth.token)
+                                //self.makeChat(self.ChatName, self.appState.selectedCommuntiy.uuidDef, self.UserList, self.user.auth.token)
                               
                             
                             }) {
