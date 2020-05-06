@@ -28,6 +28,7 @@ struct CommunityView: View {
                     VStack{
                          Group{
                             // this should hopefully work if coredata is updated
+                            // where 
                             Text(communityItem.communityName)
                             
                          }.frame(width: .infinity, height: 100, alignment: .leading)
