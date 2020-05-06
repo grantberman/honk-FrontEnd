@@ -29,7 +29,10 @@ extension ChatN {
     }
     
     public var wrappedName: String {
-        name ?? "unkown?"
+        name ?? "unknown?"
+    }
+    public var communityName: String{
+        inCommunity?.name ?? "unknown"
     }
     
     public var chatMessages : [MessageN] {
