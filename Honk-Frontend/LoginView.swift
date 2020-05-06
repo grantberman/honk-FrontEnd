@@ -119,9 +119,6 @@ struct LoginView: View {
     
     
     
-    
-    
-    
     func signIn() {
         self.user.auth.getAuth(user.username, user.password)
     }
