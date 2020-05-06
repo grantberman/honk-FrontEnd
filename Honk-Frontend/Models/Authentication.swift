@@ -58,7 +58,12 @@ class Authentication: ObservableObject{
                     do {
                         let response = try JSONDecoder().decode(AuthenticationResult.self, from: data) as! AuthenticationResult
                         self.token = response.token
-                        self.isAuthenticated = true
+                        DispatchQueue.main.async {
+                            self.isAuthenticated = true
+                            self.writeKeychain(username, password)
+                        }
+                        
+                        
                     } catch {
                         print( "could not get response" )
                     }
@@ -79,6 +84,12 @@ class Authentication: ObservableObject{
             
         }.resume()
         
+    }
+    
+    func writeKeychain(_ username : String, _ password: String) {
+        
+        KeychainWrapper.standard.set(username, forKey: "username")
+        KeychainWrapper.standard.set(password, forKey: "password")
     }
 }
 

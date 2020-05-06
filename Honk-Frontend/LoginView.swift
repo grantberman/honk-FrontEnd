@@ -47,9 +47,6 @@ struct LoginView: View {
                 
                 
                 
-                
-                
-                
                 VStack {
                     Group{
                         Image("Honk-Icon")
