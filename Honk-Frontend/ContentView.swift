@@ -36,6 +36,19 @@ struct ContentView: View {
             
             ZStack {
                 
+                if (self.communities.isEmpty){
+                VStack{
+                    Group{
+                        Text("You have no communities")
+                        Button(action: self.createNewCommunity){
+                            Text("Create new Community")
+                            }
+                        }
+                        .navigationBarTitle("Chat Title", displayMode: .inline)
+                    }
+                  }
+                else{
+                
                     VStack{
                         NavigationView {
                             ReverseScrollView {
@@ -75,7 +88,7 @@ struct ContentView: View {
                         .keyBoardAdaptive()
                         
                     }
-                    
+                }
                 
 
                 SideMenu(width: 270,
@@ -89,6 +102,10 @@ struct ContentView: View {
     }
     func openMenu() {
         self.menuOpen.toggle()
+    }
+    
+    func createNewCommunity(){
+        // call to create new community page will be here
     }
     
     
