@@ -20,6 +20,8 @@ struct ContentView: View {
     @EnvironmentObject var chatController : ChatController
     @EnvironmentObject var user: User
     @ObservedObject var viewRouter: ViewRouter
+    @State var makeCommunityViewIsPresented = false
+    
     
     
     var body: some View {
@@ -38,21 +40,14 @@ struct ContentView: View {
             ZStack {
                 
                 if (self.communities.isEmpty){
-                VStack{
-                    Group{
-                        Text("You have no communities")
-                        Button(action: self.createNewCommunity
-//                            NavigationLink(destination: CreateCommunityView()){
-//                                Text("something")
-//                            }
-                            ){
-                            Text("Create new Community")
-                            }
-                        
-                        }
-                        .navigationBarTitle("Chat Title", displayMode: .inline)
+                    Button (action: {
+                        self.makeCommunityViewIsPresented.toggle()
+                    }) {
+                        Text("Create New Community")
+                    }.sheet(isPresented: self.$makeCommunityViewIsPresented){
+                        return CreateCommunityView(isPresented: self.$makeCommunityViewIsPresented).environmentObject(self.user).environmentObject(self.appState)
                     }
-                  }
+                    }
                 else{
                 
                     VStack{

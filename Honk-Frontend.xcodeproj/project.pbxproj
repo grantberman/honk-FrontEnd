@@ -164,6 +164,7 @@
 				93A3DCD02460C13E00355382 /* MessageN+CoreDataProperties.swift */,
 				93A803102446B9DB00815B21 /* Honk-Frontend */,
 				93A8030F2446B9DB00815B21 /* Products */,
+				93BB634B24633115005E8DEF /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -212,6 +213,14 @@
 				93A8031D2446B9DE00815B21 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		93BB634B24633115005E8DEF /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				C6FA2A562462602A0016C055 /* RootView.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		93C228FA245BE5E500454511 /* Payloads */ = {

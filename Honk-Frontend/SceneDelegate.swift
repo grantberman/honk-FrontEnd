@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Get the managed object context from the shared persistent container.
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         readAppState()
-//        checkAuth()
+        checkAuth()
 
         
         let validUser = user.auth.isAuthenticated ? true : false     //if authenticated is true then it is a valid user, otherwise, it is not.

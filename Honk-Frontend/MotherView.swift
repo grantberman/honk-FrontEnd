@@ -20,9 +20,7 @@ struct MotherView: View {
                 LoginView(viewRouter: viewRouter)
             } else if viewRouter.currentPage == "page2" {
                 ContentView(viewRouter: viewRouter)
-            } else if viewRouter.currentPage == "page3" {
-                CreateCommunityView(viewRouter: viewRouter)
-            }
+            } 
         }
 
 
