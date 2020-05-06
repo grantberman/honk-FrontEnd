@@ -8,24 +8,8 @@
 
 import Combine
 import SwiftUI
+import CoreData
 
-struct MessageResponse: Codable {
-    var uuid : String
-    var author : [UserN]
-    var content : String
-    var created_at : String
-    var deliveries : [MessageDelivery]
-    var reactions : [ReactionN]
-}
-
-struct Result: Codable {
-    var id : Int
-    var chat : String
-    var author:  String
-    var created_at : String
-    var content : String
-    
-}
 
 class ChatController : ObservableObject {
     @Environment(\.managedObjectContext) var moc
@@ -88,69 +72,120 @@ class ChatController : ObservableObject {
                 return
             }
             
-            if let data = data {
+            guard let data = data  else {
+                print(" no data" )
+                return
+            }
+            
+            DispatchQueue.main.async{
                 
-                
-                //                DispatchQueue.main.async { // Correct
-                //                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-                //                do {
-                //                    let dataJSON = try JSONSerialization.jsonObject(with: data, options: [])
-                let jsonString = String(data: data, encoding: .utf8)
-                print(jsonString)
-                //                    let jsonData = jsonString!.data(using: .utf8)
-                //                    let decoder = JSONDecoder()
-                //                    //                        decoder.userInfo[CodingUserInfoKey.context!] = context
-                //                    let message = try decoder.decode(MessageN.self, from: jsonData!)
-                //                    print(message)
-                //                } catch {
-                //                    print("unable to break down")
-                //                }
-                
-                //                }
-                
-                
-                
-                if ( try? JSONDecoder().decode(MessageResponse.self, from: data)) != nil {
+                do {
                     
-                    print("here")
+                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                    
+                    let jsonString = String(data: data, encoding: .utf8)
+                    print(jsonString)
+                    let jsonData = jsonString!.data(using: .utf8)
+                    let decoder = JSONDecoder()
+                    decoder.userInfo[CodingUserInfoKey.context!] = context
+                    let message = try decoder.decode(MessageN.self, from: jsonData!)
+                    print(message)
+                    
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ChatN")
+                    fetchRequest.predicate = NSPredicate(format: "uuid == %@", chatUUID)
+                    
+                    let fetchedChat = try context.fetch(fetchRequest) as! [ChatN]
+                    let objectUpdate = fetchedChat[0]
+                    let messages = objectUpdate.messages
+                    let updatedMessages = messages?.adding(message)
+                    objectUpdate.messages = updatedMessages as NSSet?
+                    
                     do {
-                        let message  = try JSONDecoder().decode(MessageResponse.self, from: data) as! MessageResponse
-                        print(message)
+                        try context.save()
+                        print("save")
                     } catch {
-                        print("no decode")
+                        print("could not save")
                     }
-                    
-                    
-                    
-                    
-                    //                    DispatchQueue.main.async {
-                    //                        //update UI here
-                    //                        do {
-                    //                            let decoder = JSONDecoder()
-                    //                            let message  = try decoder.decode(MessageN.self, from: data)
-                    //                            print("here")
-                    //
-                    //                        } catch {
-                    //                            print("unable to parse message response object")
-                    //                        }
-                    //
-                    //                        print(decodedResponse)
-                    //                        print("success!")
-                    //self.results = decodedResponse.results
-                    //                        self.messages.append(chatMessage)
-                    //                        self.willChange.send()
-                    //                        self.willChange.send(self)
-                    //                    }
-                    return
+                } catch {
+                    print("could not decode" )
                 }
                 
             }
-            print("bottom")
-            //            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
+           
+            return
             
         }.resume()
+
+        
     }
 }
+
+
+
+//                do {
+//                    print("here")
+//
+//                    let message  = try JSONDecoder().decode([MessageN].self, from: jsonData!)
+//                    print(message)
+//                } catch {
+//                    print("no decode")
+//                }
+//
+
+
+//                if let data = data {
+//
+//
+//                    let chat  = try decoder.decode(MessageN.self, from: jsonData!)
+//                    print(chat)
+//                    try context.save()
+
+
+
+//                DispatchQueue.main.async {
+//
+//                }
+//                //                DispatchQueue.main.async { // Correct
+//                //                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+//                //                do {
+//                //                    let dataJSON = try JSONSerialization.jsonObject(with: data, options: [])
+//                let jsonString = String(data: data, encoding: .utf8)
+//                print(jsonString)
+//                    let jsonData = jsonString!.data(using: .utf8)
+//                    let decoder = JSONDecoder()
+//                    //                        decoder.userInfo[CodingUserInfoKey.context!] = context
+//                    let message = try decoder.decode(MessageN.self, from: jsonData!)
+//                    print(message)
+//                } catch {
+//                    print("unable to break down")
+//                }
+
+//                }
+
+
+
+
+
+
+//                    DispatchQueue.main.async {
+//                        //update UI here
+//                        do {
+//                            let decoder = JSONDecoder()
+//                            let message  = try decoder.decode(MessageN.self, from: data)
+//                            print("here")
+//
+//                        } catch {
+//                            print("unable to parse message response object")
+//                        }
+//
+//                        print(decodedResponse)
+//                        print("success!")
+//self.results = decodedResponse.results
+//                        self.messages.append(chatMessage)
+//                        self.willChange.send()
+//                        self.willChange.send(self)
+//                    }
+
 
 struct ChatController_Previews: PreviewProvider {
     static var previews: some View {

@@ -47,7 +47,7 @@ struct ContentView: View {
                                         }
                                     }
                                 }
-                                .navigationBarTitle("Chat Title", displayMode: .inline)
+                                .navigationBarTitle("\(self.appState.selectedChat?.nameDef ?? "unknown")", displayMode: .inline)
                             }
                             .navigationBarItems(leading:
                                 Button(action: {

@@ -16,7 +16,7 @@ extension Date {
 
 struct ChatRow: View {
     var chatMessage: MessageN
-    
+    @EnvironmentObject var user: User
    
     
     var body: some View{
@@ -29,7 +29,7 @@ struct ChatRow: View {
         
         
         return Group {
-//            if !chatMessage.isMe{
+            if chatMessage.authorDef.usernameDef != user.username{
                
                 VStack{
                     Group{ // originally had this in the Vstack although it didn't orient correctly, moved back we'll see
@@ -79,32 +79,32 @@ struct ChatRow: View {
                         
                     }
                 }
-//            } else {
-//                VStack{
-//                    Group{
-//                        Spacer()
-//                        Text(dateString.string(from:today))
-//                            .frame(maxWidth: .infinity, alignment: .center)
-//                            .padding(5)
-//                    }
-//                    HStack {
-//                        Group {
-//                            Spacer()
-//                            Text(chatMessage.contentDef)
-//                                .bold()
-//                                .foregroundColor(.white)
-//                                .padding(10)
-////                                .background(chatMessage.color)
-//                                .cornerRadius(10)
-//                                .fixedSize(horizontal: false, vertical: true)
-//                                .frame(minWidth: 10, maxWidth: 250, alignment: .bottomTrailing)
-//                            Text(chatMessage.avatar)
-//                                .padding(.trailing, 5)
-//                            
-//                        }
-//                    }
-//                }
-//            }
+            } else {
+                VStack{
+                    Group{
+                        Spacer()
+                        Text(dateString.string(from:today))
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(5)
+                    }
+                    HStack {
+                        Group {
+                            Spacer()
+                            Text(chatMessage.contentDef)
+                                .bold()
+                                .foregroundColor(.white)
+                                .padding(10)
+//                                .background(chatMessage.color)
+                                .cornerRadius(10)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(minWidth: 10, maxWidth: 250, alignment: .bottomTrailing)
+                            Text(chatMessage.avatar)
+                                .padding(.trailing, 5)
+                            
+                        }
+                    }
+                }
+            }
         }
     }
     func reactToMessage(){
