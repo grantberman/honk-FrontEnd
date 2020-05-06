@@ -25,7 +25,7 @@ extension CommunityN {
     @NSManaged public var chats: NSSet?
     
     public var communityName : String {
-        name ?? "unkown"
+        name ?? "unknown"
     }
     
     public var chatArray : [ChatN] {

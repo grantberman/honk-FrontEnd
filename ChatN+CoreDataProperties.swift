@@ -24,6 +24,10 @@ extension ChatN {
     @NSManaged public var messages: NSSet?
     @NSManaged public var inCommunity: CommunityN?
     
+    public var nameDef : String {
+        name ?? "Unknown"
+    }
+    
     public var uuidDef : String {
         uuid ?? ""
     }
