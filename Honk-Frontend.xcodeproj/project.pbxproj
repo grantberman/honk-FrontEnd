@@ -52,6 +52,7 @@
 		C6FA2A572462602A0016C055 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FA2A562462602A0016C055 /* RootView.swift */; };
 		C6FA2A592462846B0016C055 /* MotherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FA2A582462846B0016C055 /* MotherView.swift */; };
 		C6FA2A5B246284FF0016C055 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FA2A5A246284FF0016C055 /* ViewRouter.swift */; };
+		C6FA2A5D2463180D0016C055 /* CreateChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FA2A5C2463180D0016C055 /* CreateChatView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +104,7 @@
 		C6FA2A562462602A0016C055 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		C6FA2A582462846B0016C055 /* MotherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotherView.swift; sourceTree = "<group>"; };
 		C6FA2A5A246284FF0016C055 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
+		C6FA2A5C2463180D0016C055 /* CreateChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChatView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 				C6FA2A5A246284FF0016C055 /* ViewRouter.swift */,
 				93A3DCE424622A1800355382 /* RootView.swift */,
 				93A803182446B9DB00815B21 /* ContentView.swift */,
+				C6FA2A5C2463180D0016C055 /* CreateChatView.swift */,
 				C6FA2A5424625E710016C055 /* CreateCommunityView.swift */,
 				9342EA9E24528BD10031FC07 /* ChatRow.swift */,
 				93A8032824475BD200815B21 /* ChatController.swift */,
@@ -326,6 +329,7 @@
 				93A8032924475BD200815B21 /* ChatController.swift in Sources */,
 				93A3DCE524622A1800355382 /* RootView.swift in Sources */,
 				93A3DCD52460C13E00355382 /* ChatN+CoreDataClass.swift in Sources */,
+				C6FA2A5D2463180D0016C055 /* CreateChatView.swift in Sources */,
 				93C228EF245B631400454511 /* Chat.swift in Sources */,
 				C6A12E04244BB49000AFFF7A /* KeyBoardAvoidance.swift in Sources */,
 				C6FA2A592462846B0016C055 /* MotherView.swift in Sources */,

@@ -47,11 +47,6 @@ struct LoginView: View {
                 //            Color.white.edgesIgnoringSafeArea(.all)
                 // so we can change background color if we want
                 
-                
-                
-                
-                
-                
                 VStack {
                     Group{
                         Image("Honk-Icon")
