@@ -24,8 +24,21 @@ extension ChatN {
     @NSManaged public var messages: NSSet?
     @NSManaged public var inCommunity: CommunityN?
     
+    public var uuidDef : String {
+        uuid ?? ""
+    }
+    
     public var wrappedName: String {
         name ?? "unkown?"
+    }
+    
+    public var chatMessages : [MessageN] {
+        let set = messages as? Set<MessageN> ?? []
+        
+        return set.sorted  {
+            $0.sentTime < $1.sentTime
+        }
+        
     }
 
 }

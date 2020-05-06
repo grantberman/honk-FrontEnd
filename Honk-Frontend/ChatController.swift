@@ -9,8 +9,13 @@
 import Combine
 import SwiftUI
 
-struct Response: Codable {
-    var results: [Result]
+struct MessageResponse: Codable {
+    var uuid : String
+    var author : [UserN]
+    var content : String
+    var created_at : String
+    var deliveries : [MessageDelivery]
+    var reactions : [ReactionN]
 }
 
 struct Result: Codable {
@@ -19,15 +24,13 @@ struct Result: Codable {
     var author:  String
     var created_at : String
     var content : String
-  
+    
 }
 
 class ChatController : ObservableObject {
+    @Environment(\.managedObjectContext) var moc
     
-    var willChange = PassthroughSubject<Void, Never>()
-    
-    
-    @State private var results = [Result]()
+    @EnvironmentObject var user: User
     
     @Published var messages = [
         ChatMessage(message: "Hey honk team, I am a text message that does not go too far over to the right side of the screen. This is very exciting.", avatar: "A", color: .red),
@@ -43,19 +46,19 @@ class ChatController : ObservableObject {
         ChatMessage(message: "Hey honk team, I am a text message that does not go too far over to the right side of the screen. This is very exciting.", avatar: "A", color: .red),
         ChatMessage(message: "Hi", avatar: "B", color: .blue)
         
-
+        
     ]
     
-    func sendMessage(_ chatMessage: ChatMessage) {
-//        messages.append(chatMessage)
-//        willChange.send()
+    func sendMessage(_ content: String, _ chatUUID : String, _ auth: String) {
+        //        messages.append(chatMessage)
+        //        willChange.send()
         
-
-        guard let url = URL(string: "http://localhost:5000/api/messages") else {
+        
+        guard let url = URL(string: "http://honk-api.herokuapp.com/api/messages") else {
             print("Invalid URL")
             return
         }
-        let body: [String: Any] = ["content" : chatMessage.message, "chat_id": 1]
+        let body: [String: Any] = ["content" : content, "chat_uuid": chatUUID]
         
         let finalBody = try! JSONSerialization.data(withJSONObject: body)  //make proper check later
         
@@ -65,44 +68,87 @@ class ChatController : ObservableObject {
         
         
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer sqfOEOYpMfYMSTYxOOqAwQky4XOSr8r8", forHTTPHeaderField: "Authorization") //after
+        request.setValue("Bearer \(auth)", forHTTPHeaderField: "Authorization") //after
         
-//        print(request.allHTTPHeaderFields)
+        //        print(request.allHTTPHeaderFields)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             
-//             guard let data = data else { return }
-//            if let finalData = try? JSONDecoder().decode(Result.self, from:data) {
-//                print(finalData)
-//            }
-//            //            print(finalData ?? error?.localizedDescription ?? "Unknown error")
+            //             guard let data = data else { return }
+            //            if let finalData = try? JSONDecoder().decode(Result.self, from:data) {
+            //                print(finalData)
+            //            }
+            //            //            print(finalData ?? error?.localizedDescription ?? "Unknown error")
             
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
-//                print("Server error! ")
-//                print(response ?? HTTPURLResponse())
+                //                print("Server error! ")
+                //                print(response ?? HTTPURLResponse())
                 let suck = response as? HTTPURLResponse
                 print(suck?.statusCode)
                 return
             }
             
             if let data = data {
-                if let decodedResponse = try? JSONDecoder().decode(Result.self, from: data) {
-                    DispatchQueue.main.async {
-                        //update UI here
-                        print(decodedResponse)
-                        print("success!")
-                        //self.results = decodedResponse.results
-                        self.messages.append(chatMessage)
-                        self.willChange.send()
-//                        self.willChange.send(self)
+                
+                
+                //                DispatchQueue.main.async { // Correct
+                //                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                //                do {
+                //                    let dataJSON = try JSONSerialization.jsonObject(with: data, options: [])
+                let jsonString = String(data: data, encoding: .utf8)
+                print(jsonString)
+                //                    let jsonData = jsonString!.data(using: .utf8)
+                //                    let decoder = JSONDecoder()
+                //                    //                        decoder.userInfo[CodingUserInfoKey.context!] = context
+                //                    let message = try decoder.decode(MessageN.self, from: jsonData!)
+                //                    print(message)
+                //                } catch {
+                //                    print("unable to break down")
+                //                }
+                
+                //                }
+                
+                
+                
+                if ( try? JSONDecoder().decode(MessageResponse.self, from: data)) != nil {
+                    
+                    print("here")
+                    do {
+                        let message  = try JSONDecoder().decode(MessageResponse.self, from: data) as! MessageResponse
+                        print(message)
+                    } catch {
+                        print("no decode")
                     }
+                    
+                    
+                    
+                    
+                    //                    DispatchQueue.main.async {
+                    //                        //update UI here
+                    //                        do {
+                    //                            let decoder = JSONDecoder()
+                    //                            let message  = try decoder.decode(MessageN.self, from: data)
+                    //                            print("here")
+                    //
+                    //                        } catch {
+                    //                            print("unable to parse message response object")
+                    //                        }
+                    //
+                    //                        print(decodedResponse)
+                    //                        print("success!")
+                    //self.results = decodedResponse.results
+                    //                        self.messages.append(chatMessage)
+                    //                        self.willChange.send()
+                    //                        self.willChange.send(self)
+                    //                    }
                     return
                 }
                 
             }
-//            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
+            print("bottom")
+            //            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
             
-            }.resume()
+        }.resume()
     }
 }
 

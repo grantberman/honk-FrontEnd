@@ -12,7 +12,12 @@ class User : ObservableObject {
     var username: String  = ""//should these details be made private or fileprivate?
     var password: String  = ""
     var email: String = ""
-    var communities: [Community] = [] 
+    var display_name = ""
+    var apns = ""
+    var biography = ""
+    var test = false
+    
+    var auth = Authentication()
 }
 
 struct UserCodable: Codable {
