@@ -110,6 +110,9 @@ struct CreateNewCommunity: View {
 //        "invite_uuids": [], - optional
 //        "invite_usernames": [] - optional
 //        }
+        
+        
+        //somehow need to create automatic chat with every user in it
                                       
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
