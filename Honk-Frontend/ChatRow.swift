@@ -14,10 +14,16 @@ extension Date {
     }
 }
 
+
 struct ChatRow: View {
     var chatMessage: MessageN
     @EnvironmentObject var user: User
-   
+    
+    var isMe : Bool  = false
+    //        return chatMessage.authorDef.usernameDef == self.user.username
+    //
+    //    }
+    
     
     var body: some View{
         
@@ -29,84 +35,95 @@ struct ChatRow: View {
         
         
         return Group {
-            if chatMessage.authorDef.usernameDef != user.username{
-               
-                VStack{
-                    Group{ // originally had this in the Vstack although it didn't orient correctly, moved back we'll see
-                        Text(dateString.string(from:today))
-                            .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(5)
+            GeometryReader { geometry in
+                if self.chatMessage.author?.usernameDef != self.user.username{
+                    //            if isMe{
+                    VStack{
+                        Group{ // originally had this in the Vstack although it didn't orient correctly, moved back we'll see
+                            Text(dateString.string(from:today))
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .padding(5)
                         }
-                    HStack {
-                        Group {
-                             Text(chatMessage.avatar)
-                                .padding(.leading, 5)
-                                .frame(alignment: .leading)
-                             Text(chatMessage.contentDef)
-                                 .bold()
-                                 .foregroundColor(.white)
-                                 .padding(10)       //comment this out to 
-//                                 .background(chatMessage.color)
-                                 .cornerRadius(10)
-                            
-                            
-                                 .fixedSize(horizontal: false, vertical: true)
-                                 .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
-                                 .contextMenu{
-                                    Button(action: self.reactToMessage){
-                                        HStack{
-                                            Text("Like")
-                                            Image("thumbs-up")
-                                            .renderingMode(.original)
-                                            .resizable()
-                                            .scaledToFit()
-                                        }
-                                    }.frame(alignment: .leading)
+                        HStack {
+                            Group {
+                                Text(self.chatMessage.avatar)
+                                    .padding(.leading, 5)
+                                    .frame(alignment: .leading)
+                                Text(self.chatMessage.contentDef)
+//                                    .padding(10)
+                                    .bold()
+                                    .foregroundColor(.white)
+                                                                            //comment this out to
+                                    //                                 .background(chatMessage.color)
+                                    .cornerRadius(10)
                                     
-                                    Button(action: self.createSubChat){
+                                    
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
+                                    .contextMenu{
+                                        Button(action: self.reactToMessage){
+                                            HStack{
+                                                Text("Like")
+                                                Image("thumbs-up")
+                                                    .renderingMode(.original)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                            }
+                                        }.frame(alignment: .leading)
                                         
-                                        HStack{
-                                            Text("Create sub chat")
-                                            Image("sub-group")
-                                            .renderingMode(.original)
-                                            .resizable()
-                                            .scaledToFit()
+                                        Button(action: self.createSubChat){
+                                            
+                                            HStack{
+                                                Text("Create sub chat")
+                                                Image("sub-group")
+                                                    .renderingMode(.original)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                            }
                                         }
-                                    }
-                             }
-                            Spacer()
+                                }
+                                Spacer()
+                            }
+                        }.onTapGesture {
+                            print(self.chatMessage.author?.usernameDef)
+                            print(self.user.username)
                         }
-                        
                     }
-                }
-            } else {
-                VStack{
-                    Group{
-                        Spacer()
-                        Text(dateString.string(from:today))
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .padding(5)
-                    }
-                    HStack {
-                        Group {
+                } else {
+                    VStack{
+                        Group{
                             Spacer()
-                            Text(chatMessage.contentDef)
-                                .bold()
-                                .foregroundColor(.white)
-                                .padding(10)
-//                                .background(chatMessage.color)
-                                .cornerRadius(10)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .frame(minWidth: 10, maxWidth: 250, alignment: .bottomTrailing)
-                            Text(chatMessage.avatar)
-                                .padding(.trailing, 5)
-                            
+                            Text(dateString.string(from:today))
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .padding(5)
+                        }
+                        HStack {
+                            Group {
+                                Spacer()
+                                Text(self.chatMessage.contentDef)
+                                    .bold()
+                                    .foregroundColor(.white)
+//                                                                    .padding(10)
+                                    .background(Color.green)
+                                    .cornerRadius(10)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .frame(minWidth: 10, maxWidth: 250, alignment: .bottomTrailing)
+                                Text(self.chatMessage.avatar)
+                                    .padding(.trailing, 5)
+                                
+                            }
+                        }.onTapGesture {
+                            print(self.chatMessage.author?.usernameDef)
+                            print(self.user.username)
                         }
                     }
                 }
             }
+            .frame(maxWidth: 500)
+//            .padding(50)
         }
     }
+    
     func reactToMessage(){
         // in here will be the API call to like
         

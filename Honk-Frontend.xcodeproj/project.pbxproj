@@ -35,7 +35,7 @@
 		93A8031B2446B9DE00815B21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93A8031A2446B9DE00815B21 /* Assets.xcassets */; };
 		93A8031E2446B9DE00815B21 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93A8031D2446B9DE00815B21 /* Preview Assets.xcassets */; };
 		93A803212446B9DE00815B21 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93A8031F2446B9DE00815B21 /* LaunchScreen.storyboard */; };
-		93A8032924475BD200815B21 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A8032824475BD200815B21 /* ChatController.swift */; };
+		93BB634F246360B8005E8DEF /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BB634E246360B8005E8DEF /* RootView.swift */; };
 		93C228ED245B61D700454511 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228EC245B61D700454511 /* SideMenu.swift */; };
 		93C228EF245B631400454511 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228EE245B631400454511 /* Chat.swift */; };
 		93C228F1245B643200454511 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228F0245B643200454511 /* Community.swift */; };
@@ -85,7 +85,7 @@
 		93A8031D2446B9DE00815B21 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		93A803202446B9DE00815B21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		93A803222446B9DE00815B21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		93A8032824475BD200815B21 /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
+		93BB634E246360B8005E8DEF /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		93C228EC245B61D700454511 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		93C228EE245B631400454511 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		93C228F0245B643200454511 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
@@ -148,6 +148,7 @@
 		93A803052446B9DB00815B21 = {
 			isa = PBXGroup;
 			children = (
+				93BB634E246360B8005E8DEF /* RootView.swift */,
 				93A3DCC32460C13E00355382 /* UserN+CoreDataClass.swift */,
 				93A3DCC42460C13E00355382 /* UserN+CoreDataProperties.swift */,
 				93A3DCC52460C13E00355382 /* ReactionDelivery+CoreDataClass.swift */,
@@ -190,7 +191,6 @@
 				C6FA2A5C2463180D0016C055 /* CreateChatView.swift */,
 				C6FA2A5424625E710016C055 /* CreateCommunityView.swift */,
 				9342EA9E24528BD10031FC07 /* ChatRow.swift */,
-				93A8032824475BD200815B21 /* ChatController.swift */,
 				93C228EC245B61D700454511 /* SideMenu.swift */,
 				9339864524567284009206CD /* KeychainItemAccessibility.swift */,
 				9339864424567284009206CD /* KeychainWrapper.swift */,
@@ -327,13 +327,13 @@
 				93A3DCDE2460C13E00355382 /* MessageN+CoreDataProperties.swift in Sources */,
 				C6FA2A5524625E710016C055 /* CreateCommunityView.swift in Sources */,
 				C6FA2A572462602A0016C055 /* RootView.swift in Sources */,
-				93A8032924475BD200815B21 /* ChatController.swift in Sources */,
 				93A3DCD52460C13E00355382 /* ChatN+CoreDataClass.swift in Sources */,
 				C6FA2A5D2463180D0016C055 /* CreateChatView.swift in Sources */,
 				93C228EF245B631400454511 /* Chat.swift in Sources */,
 				C6A12E04244BB49000AFFF7A /* KeyBoardAvoidance.swift in Sources */,
 				C6FA2A592462846B0016C055 /* MotherView.swift in Sources */,
 				93A3DCD22460C13E00355382 /* UserN+CoreDataProperties.swift in Sources */,
+				93BB634F246360B8005E8DEF /* RootView.swift in Sources */,
 				C6A12E02244BB08800AFFF7A /* ReverseScrollView.swift in Sources */,
 				93A3DCD62460C13E00355382 /* ChatN+CoreDataProperties.swift in Sources */,
 				93A3DCD12460C13E00355382 /* UserN+CoreDataClass.swift in Sources */,

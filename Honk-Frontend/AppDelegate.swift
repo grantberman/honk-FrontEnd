@@ -17,12 +17,13 @@ import SwiftUI
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate{
     
     var user = User()
+    var appState = AppState()
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        
+//        readAppState()
         registerForPushNotifications()
         UNUserNotificationCenter.current().delegate = self
         
@@ -44,6 +45,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+        if appState.selectedCommunity != nil{
+            
+            do {
+                print("writinG")
+                let encoder = JSONEncoder()
+                let data = try encoder.encode(appState.selectedCommunity)
+                let userDefaults = UserDefaults.standard
+                
+                userDefaults.set(data, forKey: "community")
+                
+                print("saved to defaults")
+                
+            } catch {
+                print("could not save defaults")
+            }
+        }
+        
+        
+        
+        
     }
     
     // MARK: - Core Data stack
@@ -76,6 +97,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         return container
     }()
+    
+    
+      func readAppState() {
+          print("reading")
+          if let data = UserDefaults.standard.data(forKey: "community"){
+              
+              do {
+                  let decoder = JSONDecoder()
+                  
+                  let community = try decoder.decode(CommunityN.self, from: data)
+                  print(community)
+              
+     
+                  
+                  
+              } catch {
+                  print("did not decode")
+              }
+              
+          }
+          
+          
+          
+      }
+      
     
     // MARK: - Core Data Saving support
     
@@ -135,34 +181,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ application: UIApplication,
-    didReceiveRemoteNotification userInfo: [AnyHashable : Any],
-    fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void){
+                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void){
         print("here")
         completionHandler(UIBackgroundFetchResult.newData)
     }
     
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-//        guard var rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else {
-//            return
-//        }
+        //        guard var rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else {
+        //            return
+        //        }
         
         print("did receive" )
         
         
-//        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-//
-//
-//        let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
-//
-//
-//
-//        let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
-//        sceneDelegate?.window = window
-//        window?.makeKeyAndVisible()
-//
-//
+        //        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        //        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        //
+        //
+        //        let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
+        //
+        //
+        //
+        //        let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+        //        sceneDelegate?.window = window
+        //        window?.makeKeyAndVisible()
+        //
+        //
         
         
         // tell the app that we have finished processing the user’s action / response
@@ -267,7 +313,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             do {
                 let data = try JSONSerialization.data(withJSONObject: messageJSON, options: [])
                 let jsonString = String(data: data, encoding: .utf8)
-//                print(jsonString)
+                //                print(jsonString)
                 let jsonData = jsonString!.data(using: .utf8)
                 
                 

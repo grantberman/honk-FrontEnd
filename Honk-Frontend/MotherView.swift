@@ -15,13 +15,7 @@ struct MotherView: View {
 
     var body: some View {
 
-        VStack {
-            if viewRouter.currentPage == "page1" {
-                LoginView(viewRouter: viewRouter)
-            } else if viewRouter.currentPage == "page2" {
-                ContentView(viewRouter: viewRouter)
-            } 
-        }
+      Text("hello")
 
 
     }

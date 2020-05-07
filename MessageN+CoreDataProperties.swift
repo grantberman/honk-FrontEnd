@@ -9,6 +9,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 
 extension MessageN {
@@ -24,15 +25,18 @@ extension MessageN {
     @NSManaged public var author: UserN?
     @NSManaged public var reactions: NSSet?
     @NSManaged public var inChat: ChatN?
-    
+ 
+    public var isMe : Bool {
+        let user = (UIApplication.shared.delegate as! AppDelegate).user
+        return (self.author?.usernameDef == user.username)
+        
+    }
     
     public var contentDef : String {
         content ?? ""
     }
     
-    public var authorDef : UserN {
-        author ?? UserN()
-    }
+   
 
     
     public var avatar : String {
@@ -41,6 +45,8 @@ extension MessageN {
     
     
     public var created_atDef : String {
+//        let calendar = Calendar.current()
+//        let
         created_at ?? ""
     }
 

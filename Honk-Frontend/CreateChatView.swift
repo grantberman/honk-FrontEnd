@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ChatResult: Codable{
     var name: String
@@ -21,7 +22,7 @@ struct CreateChatView: View {
     @State private var chatName : String = ""
     @State private var userList = [String]()
     @State private var username = ""
-    @Binding  var communityUUID : String
+    var communityUUID : String
     @Binding var isPresented: Bool
     
     
@@ -62,30 +63,17 @@ struct CreateChatView: View {
                         }
                     }
                 }
-                Section {
-                    if self.informationValid(){
-                        
-                        Button(action: {
-                            // API call to create new community
-                            self.isPresented = false
-//                            self.makeCommunity(self.CommunityName, self.CommunityDesription, self.UserList, self.user.auth.token)
-                   print("click")
-                            
-                        }) {
-                            Text("Create new Chat!")
-                        }
-                    }
-                }
+                
             }
             .navigationBarTitle(Text("Create New Chat"), displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
                 self.isPresented = false
                 self.makeChat(self.chatName, self.communityUUID,  self.userList, self.user.auth.token)
             }) {
-                Text("Next").bold()
+                Text("Done").bold()
             }.disabled(!self.informationValid()))
         }
-//
+        //
     }
     // makes sure that required stuff is in it
     private func informationValid() -> Bool {
@@ -130,24 +118,51 @@ struct CreateChatView: View {
                 return
             }
             
-            if let data = data {
-                if (try? JSONDecoder().decode(CommunityResult.self, from: data)) != nil {
-                    do{
-                        let chatResponse = try JSONDecoder().decode(ChatResult.self, from: data)
-                        print(chatResponse)
-                    }catch{
-                        print("could not decode chatResponse")
-                    }
+            guard let data = data else {
+                print ("no data")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                do {
                     
-                    return
+                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                    
+                    let jsonString = String(data: data, encoding: .utf8)
+                    print(jsonString)
+                    let jsonData = jsonString!.data(using: .utf8)
+                    let decoder = JSONDecoder()
+                    decoder.userInfo[CodingUserInfoKey.context!] = context
+                    let chat = try decoder.decode(ChatN.self, from: jsonData!)
+                    print(community_uuid)
+                    
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CommunityN")
+                    fetchRequest.predicate = NSPredicate(format: "uuid == %@", community_uuid)
+                    
+                    let fetchedCommunity = try context.fetch(fetchRequest) as! [CommunityN]
+                    let objectUpdate = fetchedCommunity[0]
+                    let chats = objectUpdate.chats
+                    let updatedChats = chats?.adding(chat)
+                    objectUpdate.chats = updatedChats as NSSet?
+                    
+                    do {
+                        try context.save()
+                        print("save")
+                    } catch {
+                        print("could not save")
+                    }
+                } catch {
+                    print("could not decode" )
                 }
                 
             }
-            //                    print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
+            
+            return
             
         }.resume()
+        
+        
     }
-    
 }
 //
 //struct CreateChatView_Previews: PreviewProvider {

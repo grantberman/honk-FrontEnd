@@ -17,7 +17,6 @@ struct AuthenticationResult: Codable {
 class Authentication: ObservableObject{
     
     var token: String = ""
-    
     @Published var isAuthenticated: Bool = false
     
     func getAuth(_ username: String, _ password: String) {   //after the username and password have been validated as correct, this call gets the users auth token

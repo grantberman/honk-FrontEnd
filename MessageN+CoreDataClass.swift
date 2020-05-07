@@ -13,6 +13,7 @@ import CoreData
 @objc(MessageN)
 public class MessageN: NSManagedObject, Codable{
 
+    
     enum CodingKeys: String, CodingKey {
               case created_at = "created_at"
               case content = "content"

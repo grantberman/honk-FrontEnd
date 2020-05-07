@@ -22,12 +22,12 @@ struct CreateCommunityView: View {
     @State private var CommunityDesription = ""
     @State private var UserList = [String]()
     @State private var Username = ""
-    @State private var communityUUID = ""
+    @EnvironmentObject var appState : AppState
+    
     //    @ObservedObject var viewRouter: ViewRouter
     @EnvironmentObject var user: User
-    @EnvironmentObject var appState: AppState
     @Binding var isPresented: Bool
-    
+    @Binding var sideMenuOpen : Bool
     
     
     var body: some View {
@@ -80,13 +80,10 @@ struct CreateCommunityView: View {
             .navigationBarItems(trailing: Button(action: {
                 self.isPresented = false
                 self.makeCommunity(self.CommunityName, self.CommunityDesription, self.UserList, self.user.auth.token)
+                self.sideMenuOpen = true
             }) {
-                Text("Next").bold()
+                Text("Done").bold()
             }.disabled(!self.informationValid()))
-                .sheet(isPresented: self.$isPresented){
-                    return CreateChatView(communityUUID: self.$communityUUID, isPresented: self.$isPresented).environmentObject(self.user).environmentObject(self.appState)
-                    
-            }
         }
     }
     
@@ -164,9 +161,9 @@ struct CreateCommunityView: View {
                     let decoder = JSONDecoder()
                     decoder.userInfo[CodingUserInfoKey.context!] = context
                     let community = try decoder.decode(CommunityN.self, from: jsonData!)
-                    print(community)
-                    self.communityUUID = community.uuidDef
                     
+                    print(community.uuidDef)
+                    self.appState.selectedCommunity = community
                     
                     do {
                         try context.save()

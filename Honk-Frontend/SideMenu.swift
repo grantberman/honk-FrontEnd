@@ -12,6 +12,8 @@ struct MenuContent: View {
     @EnvironmentObject var user : User
     @EnvironmentObject var appState: AppState
     
+    @State var makeChatIsPresented = false
+    
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(entity: CommunityN.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityN>
     
@@ -24,7 +26,9 @@ struct MenuContent: View {
             List {
                 ForEach(communities, id: \.uuid) { community in
                     Section(header: HStack {
-                        Text(community.communityName)
+                        Text(community.communityName).onTapGesture {
+                            self.appState.selectedCommunity = community
+                        }
                             .font(.headline)
                             .foregroundColor(.white)
                             .padding()
@@ -46,8 +50,17 @@ struct MenuContent: View {
                             }.listStyle(GroupedListStyle())
                             
                             
+                            
                         }
+                        Button (action: {
+                            self.makeChatIsPresented.toggle()
+                        }) {
+                            Text("Create New Chat")
+                        }.sheet(isPresented: self.$makeChatIsPresented){
+                            return CreateChatView(communityUUID: self.appState.selectedCommunity!.uuidDef, isPresented: self.$makeChatIsPresented).environmentObject(self.user).environmentObject(self.appState)
                     }
+                    
+
                     
                 }
 
@@ -60,6 +73,7 @@ struct MenuContent: View {
         
         
     }
+}
 }
 
 
