@@ -60,19 +60,19 @@ struct LoginView: View {
                             .padding()
                             .cornerRadius(20)
                             .foregroundColor(.black)
-                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
+                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: 1)
                         
                         SecureField("password", text: $user.password)
                             .padding()
                             .cornerRadius(20)
                             .foregroundColor(.black)
-                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
+                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: 1)
                         
                         TextField("email", text: $user.email)
                             .padding()
                             .cornerRadius(20)
                             .foregroundColor(.white)
-                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
+                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: 1)
                     }.padding([.leading, .trailing], 27.5)
                     
                     

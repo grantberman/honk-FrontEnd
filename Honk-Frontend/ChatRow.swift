@@ -58,8 +58,6 @@ struct ChatRow: View {
                                  .padding(10)       //comment this out to 
 //                                 .background(chatMessage.color)
                                  .cornerRadius(10)
-                            
-                            
                                  .fixedSize(horizontal: false, vertical: true)
                                  .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
                                  .contextMenu{
