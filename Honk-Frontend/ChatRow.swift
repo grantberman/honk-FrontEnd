@@ -7,6 +7,8 @@
 //
 
 import SwiftUI
+import CoreData
+
 
 struct reactResult: Codable {
     var reaction_type: String
@@ -23,6 +25,8 @@ extension Date {
 struct ChatRow: View {
     var chatMessage: MessageN
     @EnvironmentObject var user: User
+    @Environment(\.managedObjectContext) var moc
+
    
     
     var body: some View{
@@ -59,7 +63,7 @@ struct ChatRow: View {
                                  .fixedSize(horizontal: false, vertical: true)
                                  .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
                                  .contextMenu{
-                                    Button(action: self.reactToMessage("Like", self.user.name, self.user.uuid, self.user.auth.token)){
+                                    Button(action: self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef)){
                                         HStack{
                                             Text("Like")
                                             Image("thumbs-up")
@@ -113,7 +117,9 @@ struct ChatRow: View {
             }
         }
     }
-    private func reactToMessage(_ reaction_type: String, _ reactor: String, reactor_uuid: String, _ auth: String){
+    
+    
+    public func reactToMessage(_ reaction_type: String,  _ auth: String, _ message_uuid: String){
         // in here will be the API call to like
         
         //JSON example
@@ -136,13 +142,13 @@ struct ChatRow: View {
 //            }
 //        ],
         
-        guard let url = URL(string: "https://honk-api.herokuapp.com/api/reactions")
+        guard let url = URL(string: "https://honk-api.herokuapp.com/api/messages/\(message_uuid)/reactions")
                 else {
                     print("Invalid URL")
                     return
             }
             
-            let body: [String: Any] = ["reaction_type": reaction_type, "reactor": reactor, "reactor_uuid": reactor_uuid]
+            let body: [String: Any] = ["reaction_type": reaction_type]
             
             let finalBody = try! JSONSerialization.data(withJSONObject: body)
             
@@ -183,6 +189,15 @@ struct ChatRow: View {
                         let reaction = try decoder.decode(ReactionN.self, from: jsonData!)
                         print(reaction)
                         //self.reactionUUID = reaction.uuidDef
+                        
+                        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "MessageN")
+                        fetchRequest.predicate = NSPredicate(format: "uuid == %@", message_uuid)
+                        
+                        let fetchedChat = try context.fetch(fetchRequest) as! [MessageN]
+                        let objectUpdate = fetchedChat[0]
+                        let reactions = objectUpdate.reactions
+                        let updatedReactions = reactions?.adding(reaction)
+                        objectUpdate.reactions = updatedReactions as NSSet?
                         
                         
                         do {

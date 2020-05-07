@@ -33,6 +33,10 @@ extension MessageN {
     public var authorDef : UserN {
         author ?? UserN()
     }
+    
+    public var uuidDef: String {
+        uuid ?? "unknown"
+    }
 
     
     public var avatar : String {
