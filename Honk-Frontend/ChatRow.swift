@@ -39,27 +39,26 @@ struct ChatRow: View {
                 if self.chatMessage.author?.usernameDef != self.user.username{
                     //            if isMe{
                     VStack{
-                        Group{ // originally had this in the Vstack although it didn't orient correctly, moved back we'll see
-                            Text(dateString.string(from:today))
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .padding(5)
-                        }
                         HStack {
                             Group {
                                 Text(self.chatMessage.avatar)
                                     .padding(.leading, 5)
                                     .frame(alignment: .leading)
                                 Text(self.chatMessage.contentDef)
-//                                    .padding(10)
+                                    
                                     .bold()
+                                    .fixedSize(horizontal: false, vertical: true)
+                                .padding(10)
                                     .foregroundColor(.white)
+                                
                                                                             //comment this out to
                                     //                                 .background(chatMessage.color)
                                     .cornerRadius(10)
                                     
                                     
-                                    .fixedSize(horizontal: false, vertical: true)
-                                    .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
+                                    
+//                                    .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
+//                                    .padding(10)
                                     .contextMenu{
                                         Button(action: self.reactToMessage){
                                             HStack{
@@ -84,38 +83,41 @@ struct ChatRow: View {
                                 }
                                 Spacer()
                             }
-                        }.onTapGesture {
-                            print(self.chatMessage.author?.usernameDef)
-                            print(self.user.username)
+//                        }.onTapGesture {
+//                            print(self.chatMessage.author?.usernameDef)
+//                            print(self.user.username)
                         }
                     }
                 } else {
                     VStack{
-                        Group{
-                            Spacer()
-                            Text(dateString.string(from:today))
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .padding(5)
-                        }
+                        
                         HStack {
                             Group {
                                 Spacer()
                                 Text(self.chatMessage.contentDef)
-                                    .bold()
-                                    .foregroundColor(.white)
-//                                                                    .padding(10)
-                                    .background(Color.green)
-                                    .cornerRadius(10)
+//                                    .bold()
+//                                    .foregroundColor(.white)
+//                                    .padding(10)
+//                                    .background(Color.green)
+//                                    .cornerRadius(10)
+                                    
+                                .bold()
                                     .fixedSize(horizontal: false, vertical: true)
-                                    .frame(minWidth: 10, maxWidth: 250, alignment: .bottomTrailing)
+                                .padding(10)
+                                    .foregroundColor(.white)
+                                    .background(Color.green)
+                                .cornerRadius(10)
+//                                    .frame(minWidth: 10, maxWidth: 250, alignment: .bottomTrailing)
+                                
                                 Text(self.chatMessage.avatar)
                                     .padding(.trailing, 5)
                                 
                             }
-                        }.onTapGesture {
-                            print(self.chatMessage.author?.usernameDef)
-                            print(self.user.username)
-                        }
+                        }.frame(alignment: .bottomTrailing)
+//                            .onTapGesture {
+//                            print(self.chatMessage.author?.usernameDef)
+//                            print(self.user.username)
+//                        }
                     }
                 }
             }

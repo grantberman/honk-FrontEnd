@@ -23,7 +23,6 @@ struct ContentView: View {
     @State var makeCommunityViewIsPresented = false
     
     
-    
     var body: some View {
         
         let drag = DragGesture()
@@ -61,8 +60,10 @@ struct ContentView: View {
                                         }
                                     }
                                 }
-                                .navigationBarTitle("\(self.appState.selectedChat?.nameDef ?? "unknown")", displayMode: .inline)
+                                
                             }
+                                
+                            .navigationBarTitle("\(self.appState.selectedChat?.nameDef ?? "unknown")", displayMode: .inline)
                             .navigationBarItems(leading:
                                 Button(action: {
                                     self.openMenu()
@@ -86,7 +87,7 @@ struct ContentView: View {
                                 
                                 self.sendMessage()
                                 self.composedMessage = ""
-                                }) {
+                            }) {
                                 Text("Send")
                             }.disabled(self.appState.selectedChat == nil)
                         }
