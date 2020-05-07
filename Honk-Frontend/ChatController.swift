@@ -34,8 +34,8 @@ class ChatController : ObservableObject {
     ]
     
     func sendMessage(_ content: String, _ chatUUID : String, _ auth: String) {
-        //        messages.append(chatMessage)
-        //        willChange.send()
+                //messages.append(chatMessage)
+                //willChange.send()
         
         
         guard let url = URL(string: "http://honk-api.herokuapp.com/api/messages") else {

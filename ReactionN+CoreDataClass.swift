@@ -19,6 +19,9 @@ public class ReactionN: NSManagedObject, Codable {
         case reactor = "reactor"
         case deliveries = "deliveries"
     }
+    public var uuidDef : String {
+        uuid ?? "unknown"
+    }
     
     public func encode (to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)

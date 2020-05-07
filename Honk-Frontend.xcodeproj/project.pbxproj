@@ -42,6 +42,7 @@
 		93C228F3245B64CE00454511 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228F2245B64CE00454511 /* User.swift */; };
 		93C228F7245BCD2000454511 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228F6245BCD2000454511 /* AppState.swift */; };
 		93C228FC245BE61A00454511 /* CommunityPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C228FB245BE61A00454511 /* CommunityPayload.swift */; };
+		C666E78B246366AA0008FD7C /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C666E78A246366AA0008FD7C /* RootView.swift */; };
 		C6A12E02244BB08800AFFF7A /* ReverseScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A12E01244BB08800AFFF7A /* ReverseScrollView.swift */; };
 		C6A12E04244BB49000AFFF7A /* KeyBoardAvoidance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A12E03244BB49000AFFF7A /* KeyBoardAvoidance.swift */; };
 		C6A12E06244BB4E100AFFF7A /* KeyBoardAdaptive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A12E05244BB4E100AFFF7A /* KeyBoardAdaptive.swift */; };
@@ -92,6 +93,7 @@
 		93C228F2245B64CE00454511 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		93C228F6245BCD2000454511 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		93C228FB245BE61A00454511 /* CommunityPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPayload.swift; sourceTree = "<group>"; };
+		C666E78A246366AA0008FD7C /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		C6A12E01244BB08800AFFF7A /* ReverseScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseScrollView.swift; sourceTree = "<group>"; };
 		C6A12E03244BB49000AFFF7A /* KeyBoardAvoidance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoardAvoidance.swift; sourceTree = "<group>"; };
 		C6A12E05244BB4E100AFFF7A /* KeyBoardAdaptive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoardAdaptive.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				93A3DCCE2460C13E00355382 /* CommunityN+CoreDataProperties.swift */,
 				93A3DCCF2460C13E00355382 /* MessageN+CoreDataClass.swift */,
 				93A3DCD02460C13E00355382 /* MessageN+CoreDataProperties.swift */,
+				C666E78A246366AA0008FD7C /* RootView.swift */,
 				93A803102446B9DB00815B21 /* Honk-Frontend */,
 				93A8030F2446B9DB00815B21 /* Products */,
 				93BB634B24633115005E8DEF /* Recovered References */,
@@ -334,6 +337,7 @@
 				C6A12E04244BB49000AFFF7A /* KeyBoardAvoidance.swift in Sources */,
 				C6FA2A592462846B0016C055 /* MotherView.swift in Sources */,
 				93A3DCD22460C13E00355382 /* UserN+CoreDataProperties.swift in Sources */,
+				C666E78B246366AA0008FD7C /* RootView.swift in Sources */,
 				C6A12E02244BB08800AFFF7A /* ReverseScrollView.swift in Sources */,
 				93A3DCD62460C13E00355382 /* ChatN+CoreDataProperties.swift in Sources */,
 				93A3DCD12460C13E00355382 /* UserN+CoreDataClass.swift in Sources */,
@@ -481,7 +485,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Honk-Frontend/Honk-Frontend.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Honk-Frontend/Preview Content\"";
-				DEVELOPMENT_TEAM = 3A9BLC8L59;
+				DEVELOPMENT_TEAM = V7K3ZTHUW7;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Honk-Frontend/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -502,7 +506,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Honk-Frontend/Honk-Frontend.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Honk-Frontend/Preview Content\"";
-				DEVELOPMENT_TEAM = 3A9BLC8L59;
+				DEVELOPMENT_TEAM = V7K3ZTHUW7;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Honk-Frontend/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
