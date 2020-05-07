@@ -63,7 +63,8 @@ struct ChatRow: View {
                                  .fixedSize(horizontal: false, vertical: true)
                                  .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
                                  .contextMenu{
-                                    Button(action: self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef)){
+                                    Button(action: { self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef)}){
+                                        EmptyView()
                                         HStack{
                                             Text("Like")
                                             Image("thumbs-up")
@@ -73,7 +74,7 @@ struct ChatRow: View {
                                         }
                                     }.frame(alignment: .leading)
                                     
-                                    Button(action: self.createSubChat){
+                                    Button(action:  self.createSubChat){
                                         
                                         HStack{
                                             Text("Create sub chat")
