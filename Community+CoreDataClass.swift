@@ -10,8 +10,8 @@
 import Foundation
 import CoreData
 
-@objc(CommunityN)
-public class CommunityN: NSManagedObject, Codable {
+@objc(Community)
+public class Community: NSManagedObject, Codable {
     
     enum CodingKeys: String, CodingKey {
         case name = "name"
@@ -39,7 +39,7 @@ public class CommunityN: NSManagedObject, Codable {
     required convenience public init (from decoder: Decoder) throws {
         guard let contextUserInfoKey = CodingUserInfoKey.context,
             let managedObjectContext = decoder.userInfo[contextUserInfoKey] as? NSManagedObjectContext,
-            let entity = NSEntityDescription.entity(forEntityName: "CommunityN", in: managedObjectContext) else { fatalError ("Failed to decode communiyu")}
+            let entity = NSEntityDescription.entity(forEntityName: "Community", in: managedObjectContext) else { fatalError ("Failed to decode community")}
         self.init(entity: entity, insertInto: managedObjectContext)
         let values = try decoder.container(keyedBy: CodingKeys.self)
         do {
@@ -48,8 +48,8 @@ public class CommunityN: NSManagedObject, Codable {
             name = try values.decode(String?.self, forKey: .name)
             about = try values.decode(String?.self, forKey: .about)
             uuid = try values.decode(String?.self, forKey: .uuid)
-            subscribers = NSSet( array: try values.decode([UserN].self, forKey: .subscribers))
-            chats = NSSet( array: try values.decode([ChatN].self, forKey: .chats))
+            subscribers = NSSet( array: try values.decode([User].self, forKey: .subscribers))
+            chats = NSSet( array: try values.decode([Chat].self, forKey: .chats))
             
         } catch {
             print("community decoding error")

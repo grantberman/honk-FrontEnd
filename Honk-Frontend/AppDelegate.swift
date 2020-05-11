@@ -16,7 +16,7 @@ import SwiftUI
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate{
     
-    var user = User()
+    var user = UserLocal()
     var appState = AppState()
     
     
@@ -106,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
               do {
                   let decoder = JSONDecoder()
                   
-                  let community = try decoder.decode(CommunityN.self, from: data)
+                  let community = try decoder.decode(Community.self, from: data)
                   print(community)
               
      
@@ -246,7 +246,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 
                 decoder.userInfo[CodingUserInfoKey.context!] = context
-                let message  = try decoder.decode(MessageN.self, from: jsonData!)
+                let message  = try decoder.decode(Message.self, from: jsonData!)
                 
                 
                 let chatUUID = notification.request.content.userInfo["chat_uuid"] as! String
@@ -254,7 +254,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 fetchRequest.predicate = NSPredicate(format: "uuid == %@", chatUUID)
                 
                 
-                let fetchedChat = try context.fetch(fetchRequest) as! [ChatN]
+                let fetchedChat = try context.fetch(fetchRequest) as! [Chat]
                 let objectUpdate = fetchedChat[0]
                 let messages = objectUpdate.messages
                 let updatedMessages = messages?.adding(message)
@@ -281,15 +281,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 
                 decoder.userInfo[CodingUserInfoKey.context!] = context
-                let chat  = try decoder.decode(ChatN.self, from: jsonData!)
+                let chat  = try decoder.decode(Chat.self, from: jsonData!)
                 
                 
                 let communityUUID = notification.request.content.userInfo["community_uuid"] as! String
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CommunityN")
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Community")
                 fetchRequest.predicate = NSPredicate(format: "uuid == %@", communityUUID)
                 
                 
-                let fetchedCommunity = try context.fetch(fetchRequest) as! [CommunityN]
+                let fetchedCommunity = try context.fetch(fetchRequest) as! [Community]
                 print(fetchedCommunity)
                 
                 let objectUpdate = fetchedCommunity[0]
@@ -318,7 +318,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 
                 decoder.userInfo[CodingUserInfoKey.context!] = context
-                let community  = try decoder.decode(CommunityN.self, from: jsonData!)
+                let community  = try decoder.decode(Community.self, from: jsonData!)
                 print(community)
                 try context.save()
                 

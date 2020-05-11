@@ -11,22 +11,22 @@ import Foundation
 import CoreData
 
 
-extension ReactionN {
+extension Reaction {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<ReactionN> {
-        return NSFetchRequest<ReactionN>(entityName: "ReactionN")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Reaction> {
+        return NSFetchRequest<Reaction>(entityName: "Reaction")
     }
 
     @NSManaged public var reaction_type: String?
     @NSManaged public var uuid: String?
     @NSManaged public var deliveries: NSSet?
-    @NSManaged public var reactedTo: MessageN?
-    @NSManaged public var reactor: UserN?
+    @NSManaged public var reactedTo: Message?
+    @NSManaged public var reactor: User?
 
 }
 
 // MARK: Generated accessors for deliveries
-extension ReactionN {
+extension Reaction {
 
     @objc(addDeliveriesObject:)
     @NSManaged public func addToDeliveries(_ value: ReactionDelivery)

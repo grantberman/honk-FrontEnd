@@ -134,7 +134,7 @@ class Authentication: ObservableObject{
                     let jsonData = jsonString!.data(using: .utf8)
                     let decoder = JSONDecoder()
                     decoder.userInfo[CodingUserInfoKey.context!] = context
-                    let user = try decoder.decode(UserN.self, from: jsonData!)
+                    let user = try decoder.decode(User.self, from: jsonData!)
                     print(user)
                     
                     

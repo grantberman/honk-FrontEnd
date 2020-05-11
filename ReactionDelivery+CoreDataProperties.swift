@@ -19,7 +19,7 @@ extension ReactionDelivery {
 
     @NSManaged public var is_delivered: String?
     @NSManaged public var uuid: String?
-    @NSManaged public var reaction: ReactionN?
-    @NSManaged public var recipient: UserN?
+    @NSManaged public var reaction: Reaction?
+    @NSManaged public var recipient: User?
 
 }

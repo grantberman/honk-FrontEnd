@@ -16,10 +16,12 @@ extension MessageDelivery {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MessageDelivery> {
         return NSFetchRequest<MessageDelivery>(entityName: "MessageDelivery")
     }
-
+    
+    //Message Delivery Object
     @NSManaged public var is_delivered: String?
     @NSManaged public var uuid: String?
-    @NSManaged public var message: MessageN?
-    @NSManaged public var recipient: UserN?
+    @NSManaged public var message: Message?
+    @NSManaged public var recipient: User?
 
 }
+

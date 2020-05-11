@@ -25,7 +25,7 @@ struct CreateCommunityView: View {
     @EnvironmentObject var appState : AppState
     
     //    @ObservedObject var viewRouter: ViewRouter
-    @EnvironmentObject var user: User
+    @EnvironmentObject var user: UserLocal
     @Binding var isPresented: Bool
     @Binding var sideMenuOpen : Bool
     
@@ -160,7 +160,7 @@ struct CreateCommunityView: View {
                     let jsonData = jsonString!.data(using: .utf8)
                     let decoder = JSONDecoder()
                     decoder.userInfo[CodingUserInfoKey.context!] = context
-                    let community = try decoder.decode(CommunityN.self, from: jsonData!)
+                    let community = try decoder.decode(Community.self, from: jsonData!)
                     
                     print(community.uuidDef)
                     self.appState.selectedCommunity = community

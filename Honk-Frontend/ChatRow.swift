@@ -16,8 +16,8 @@ extension Date {
 
 
 struct ChatRow: View {
-    var chatMessage: MessageN
-    @EnvironmentObject var user: User
+    var chatMessage: Message
+    @EnvironmentObject var user: UserLocal
     
     var isMe : Bool  = false
     //        return chatMessage.authorDef.usernameDef == self.user.username

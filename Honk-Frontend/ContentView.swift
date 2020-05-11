@@ -16,10 +16,10 @@ struct ContentView: View {
     @State var composedMessage: String = ""
     @State var menuOpen: Bool = false
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(entity: CommunityN.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityN>
+    @FetchRequest(entity: Community.entity(), sortDescriptors: []) var communities: FetchedResults<Community>
     
     @EnvironmentObject var appState : AppState
-    @EnvironmentObject var user: User
+    @EnvironmentObject var user: UserLocal
     @State var makeCommunityViewIsPresented = false
     
     
@@ -174,16 +174,16 @@ struct ContentView: View {
                     let jsonData = jsonString!.data(using: .utf8)
                     let decoder = JSONDecoder()
                     decoder.userInfo[CodingUserInfoKey.context!] = context
-                    let message = try decoder.decode(MessageN.self, from: jsonData!)
+                    let message = try decoder.decode(Message.self, from: jsonData!)
                     print(message.author)
                     
                     
                     
                     
-                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ChatN")
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
                     fetchRequest.predicate = NSPredicate(format: "uuid == %@", chatUUID)
                     
-                    let fetchedChat = try context.fetch(fetchRequest) as! [ChatN]
+                    let fetchedChat = try context.fetch(fetchRequest) as! [Chat]
                     let objectUpdate = fetchedChat[0]
                     let messages = objectUpdate.messages
                     let updatedMessages = messages?.adding(message)

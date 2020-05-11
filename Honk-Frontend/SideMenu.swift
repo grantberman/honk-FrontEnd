@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct MenuContent: View {
-    @EnvironmentObject var user : User
+    @EnvironmentObject var user : UserLocal
     @EnvironmentObject var appState: AppState
     
     @State var makeChatIsPresented = false
     
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(entity: CommunityN.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityN>
+    @FetchRequest(entity: Community.entity(), sortDescriptors: []) var communities: FetchedResults<Community>
     
     @Binding var menuClose: () -> Void
     

@@ -26,7 +26,7 @@ struct CreateChatView: View {
     @Binding var isPresented: Bool
     
     
-    @EnvironmentObject var user: User
+    @EnvironmentObject var user: UserLocal
     @EnvironmentObject var appState: AppState
     //    @Environment(\.managedObjectContext) var moc
     //    @FetchRequest(entity: CommunityN.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityN>
@@ -133,13 +133,13 @@ struct CreateChatView: View {
                     let jsonData = jsonString!.data(using: .utf8)
                     let decoder = JSONDecoder()
                     decoder.userInfo[CodingUserInfoKey.context!] = context
-                    let chat = try decoder.decode(ChatN.self, from: jsonData!)
+                    let chat = try decoder.decode(Chat.self, from: jsonData!)
                     print(community_uuid)
                     
                     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CommunityN")
                     fetchRequest.predicate = NSPredicate(format: "uuid == %@", community_uuid)
                     
-                    let fetchedCommunity = try context.fetch(fetchRequest) as! [CommunityN]
+                    let fetchedCommunity = try context.fetch(fetchRequest) as! [Community]
                     let objectUpdate = fetchedCommunity[0]
                     let chats = objectUpdate.chats
                     let updatedChats = chats?.adding(chat)
@@ -169,6 +169,6 @@ struct CreateChatView: View {
 //    static var previews: some View {
 //        CreateChatView(is)
 //            .environmentObject(AppState())
-//            .environmentObject(User())
+//            .environmentObject(UserLocal())
 //    }
 //}
