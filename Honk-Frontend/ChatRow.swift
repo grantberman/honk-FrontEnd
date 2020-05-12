@@ -86,19 +86,9 @@ struct ChatRow: View {
                             }
                             Spacer()
                         }
-                    }.onTapGesture {
-                        print(self.chatMessage)
-                        //                            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
-                        //                            fetchRequest.predicate = NSPredicate(format: "uuid == %@", self.chatMessage.uuidDef)
-                        //                            let fetchedChat = try! self.moc.fetch(fetchRequest) as! [Message]
-                        //                            let message = fetchedChat[0]
-                        //                            print(message)
-                        
                     }
                 }
-                //                    .onTapGesture {
-                //                        print(self.chatMessage)
-                //                    }
+
             } else {
                 VStack{
                     
@@ -106,11 +96,7 @@ struct ChatRow: View {
                         Group {
                             Spacer()
                             Text(self.chatMessage.contentDef)
-                                //                                    .bold()
-                                //                                    .foregroundColor(.white)
-                                //                                    .padding(10)
-                                //                                    .background(Color.green)
-                                //                                    .cornerRadius(10)
+
                                 
                                 .bold()
                                 .fixedSize(horizontal: false, vertical: true)
@@ -118,28 +104,18 @@ struct ChatRow: View {
                                 .foregroundColor(.white)
                                 .background(Color.green)
                                 .cornerRadius(10)
-                            //                                    .frame(minWidth: 10, maxWidth: 250, alignment: .bottomTrailing)
+
                             
                             Text(self.chatMessage.avatar)
                                 .padding(.trailing, 5)
                             
                         }
                     }.frame(alignment: .bottomTrailing)
-                        .onTapGesture {
-                            //                                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
-                            //                                fetchRequest.predicate = NSPredicate(format: "uuid == %@", self.chatMessage.uuidDef)
-                            //                                let fetchedChat = try! self.moc.fetch(fetchRequest) as! [Message]
-                            //                                let message = fetchedChat[0]
-                            //                                print(message)
-                            print(self.chatMessage)
-                            //                                print(self.chatMessage)
-                            //                                print(self.author)
-                            //                            print(self.user.username)
-                    }
+                        
                 }
             }
             
-            //            .padding(50)
+
         }
     }
     

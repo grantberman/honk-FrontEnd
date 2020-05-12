@@ -115,20 +115,8 @@ struct ContentView: View {
         
     }
     func generateChatRow(message : Message) -> ChatRow {
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
-//        fetchRequest.returnsObjectsAsFaults = false
-//        fetchRequest.predicate = NSPredicate(format: "uuid == %@", message.uuidDef)
-        
-//        do {
-//            let fetchedChat = try! moc.fetch(fetchRequest) as! [Message]
-//            let message = fetchedChat[0]
-//            print(message)
-//            print("author incoming")
-//        print(message.author?.usernameDef)
+
             return ChatRow (chatMessage: message)
-//        } catch {
-//            print("error creating chat row" )
-//        }
 
 
         
@@ -141,12 +129,7 @@ struct ContentView: View {
         self.menuOpen.toggle()
     }
     
-    func createNewCommunity(){
-        // call to create new community page will be here
-        //NavigationLink(<#LocalizedStringKey#>, destination: CreateCommunityView())
-        
-        
-    }
+
     
     func sendMessage() {
         
@@ -170,21 +153,16 @@ struct ContentView: View {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(self.user.auth.token)", forHTTPHeaderField: "Authorization") //after
         
-        //        print(request.allHTTPHeaderFields)
+
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             
-            //             guard let data = data else { return }
-            //            if let finalData = try? JSONDecoder().decode(Result.self, from:data) {
-            //                print(finalData)
-            //            }
-            //            //            print(finalData ?? error?.localizedDescription ?? "Unknown error")
+
             
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
-                //                print("Server error! ")
-                //                print(response ?? HTTPURLResponse())
-                let suck = response as? HTTPURLResponse
-                print(suck?.statusCode)
+
+                let possibleResponse = response as? HTTPURLResponse
+                print(possibleResponse?.statusCode)
                 return
             }
             
@@ -200,14 +178,12 @@ struct ContentView: View {
                     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
                     
                     let jsonString = String(data: data, encoding: .utf8)
-                    print(jsonString)
+
                     let jsonData = jsonString!.data(using: .utf8)
                     let decoder = JSONDecoder()
                     decoder.userInfo[CodingUserInfoKey.context!] = context
                     let message = try decoder.decode(Message.self, from: jsonData!)
 
-                    
-                    
                     
                     
                     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
@@ -221,8 +197,7 @@ struct ContentView: View {
                     
                     do {
                         try context.save()
-                        print(message)
-                        print("save")
+
                     } catch {
                         print("could not save")
                     }

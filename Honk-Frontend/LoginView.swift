@@ -39,7 +39,7 @@ struct LoginView: View {
     @ViewBuilder
     var body: some View {
         
-//        ContentView()
+
         if auth.isAuthenticated{
             ContentView()
         }
