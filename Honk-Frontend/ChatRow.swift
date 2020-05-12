@@ -61,7 +61,7 @@ struct ChatRow: View {
                                     .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
 //                                    .padding(10)
                                     .contextMenu{
-                                        Button(action: self.reactToMessage){
+                                        Button(action: { self.reactToMessage){
                                             HStack{
                                                 Text("Like")
                                                 Image("thumbs-up")
@@ -70,7 +70,7 @@ struct ChatRow: View {
                                                     .scaledToFit()
                                             }
                                         }.frame(alignment: .leading)
-                                        
+                                        }
                                         Button(action: self.createSubChat){
                                             
                                             HStack{
@@ -130,10 +130,105 @@ struct ChatRow: View {
         }
     }
     
-    func reactToMessage(){
-        // in here will be the API call to like
-        
-    }
+        public func reactToMessage(_ reaction_type: String,  _ auth: String, _ message_uuid: String){
+            // in here will be the API call to like
+            
+            //JSON example
+    //        "reactions": [
+    //            {
+    //                "deliveries": [
+    //                    {
+    //                        "is_delivered": false,
+    //                        "uuid": "1a4337fd4ad94de9beb867b7cd2f05ae"
+    //                    },
+    //                    {
+    //                        "is_delivered": true,
+    //                        "uuid": "0c46b7c5373f4db8a4b23033e2174b89"
+    //                    }
+    //                ],
+    //                "reaction_type": "like",
+    //                "reactor": "grant",
+    //                "reactor_uuid": "1baaf9d0caa547cea4d3bfddbd4e208f",
+    //                "uuid": "4412070f0d3d47ce8f7f02030146b0a0"
+    //            }
+    //        ],
+            
+            guard let url = URL(string: "https://honk-api.herokuapp.com/api/messages/\(message_uuid)/reactions")
+                    else {
+                        print("Invalid URL")
+                        return
+                }
+                
+                let body: [String: Any] = ["reaction_type": reaction_type]
+                
+                let finalBody = try! JSONSerialization.data(withJSONObject: body)
+                
+                //somehow need to create automatic chat with every user in it
+                
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.httpBody = finalBody
+                
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.setValue("Bearer \(auth)", forHTTPHeaderField: "Authorization") //after
+                
+                URLSession.shared.dataTask(with: request) { data, response, error in
+                    
+                    guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
+                        
+                        let httpResponse = response as! HTTPURLResponse
+                        print(httpResponse.statusCode)
+                        return
+                    }
+                    
+                    guard let data = data else {
+                        print ("no data returned")
+                        return
+                    }
+                    
+                    DispatchQueue.main.async {
+                        
+                        do {
+                            
+                            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                            
+                            let jsonString = String(data: data, encoding: .utf8)
+                            print(jsonString)
+                            let jsonData = jsonString!.data(using: .utf8)
+                            let decoder = JSONDecoder()
+                            decoder.userInfo[CodingUserInfoKey.context!] = context
+                            let reaction = try decoder.decode(Reaction.self, from: jsonData!)
+                            print(reaction)
+                            //self.reactionUUID = reaction.uuidDef
+                            
+                            let fetchRequest = FetchRequest<NSFetchRequestResult>(entityName: "MessageN")
+                            fetchRequest.predicate = NSPredicate(format: "uuid == %@", message_uuid)
+                            
+                            let fetchedChat = try context.fetch(fetchRequest) as! [MessageN]
+                            let objectUpdate = fetchedChat[0]
+                            let reactions = objectUpdate.reactions
+                            let updatedReactions = reactions?.adding(reaction)
+                            objectUpdate.reactions = updatedReactions as NSSet?
+                            
+                            
+                            do {
+                                try context.save()
+                                print("save")
+                            } catch {
+                                print("could not save")
+                            }
+                        } catch {
+                            print("could not decode" )
+                        }
+                        
+                    }
+                    
+                    return
+                    
+                }.resume()
+                
+                
+            }
     func createSubChat(){
         // in here will be API call to create new subgroup
     }
