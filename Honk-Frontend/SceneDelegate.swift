@@ -27,8 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Get the managed object context from the shared persistent container.
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//        readAppState()
-//        checkAuth()
+
         
         
         let validUser = user.auth.isAuthenticated ? true : false     //if authenticated is true then it is a valid user, otherwise, it is not.
@@ -36,9 +35,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        //        let contentView = ContentView().environment(\.managedObjectContext, context)
+
                 let loginView = LoginView(isValidUser: validUser).environment(\.managedObjectContext, context)
-        //        let rootView = RootView().environment(\.managedObjectContext, context)
+
 
         
         
@@ -49,17 +48,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             window.rootViewController = UIHostingController(rootView: loginView.environmentObject(user).environmentObject(user.auth).environmentObject(appState))
             
-            
-            //            if validUser {
-            //                window.rootViewController = UIHostingController(rootView: contentView.environmentObject(chatController).environmentObject(user).environmentObject(user.auth
-            //                ).environmentObject(appState))
-            //            }
-            //            else {
-            //                window.rootViewController = UIHostingController(rootView: loginView.environmentObject(chatController).environmentObject(user).environmentObject(user.auth
-            //                ).environmentObject(appState))
-            //            }
-            
-            //            window.rootViewController = UIHostingController(rootView: rootView.environmentObject(user).environmentObject(user.auth))
+   
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -71,30 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not neccessarily discarded (see `application:didDiscardSceneSessions` instead).
         
-        //        if appState.selectedChat != nil {
-        //            let chat = appState.selectedChat as! ChatN
-        //            print(chat.nameDef)
-        //            let chatData : Data = try  NSKeyedArchiver.archivedData(withRootObject: appState.selectedChat ?? nil , requiringSecureCoding: false)
-        //
-        //            UserDefaults.standard.set(chatData, forKey: "chat")
-        //        }
-        //        print("write to defaults")
-
-        
-        //        do {
-//            print("writinG")
-//            let encoder = JSONEncoder()
-//            let data = try encoder.encode(appState.selectedCommunity)
-//                        let userDefaults = UserDefaults.standard
-//
-//            userDefaults.set(data, forKey: "community")
-//
-//            print("saved to defaults")
-//
-//        } catch {
-//            print("could not save defaults")
-//        }
-        //
+    
     }
     
     func sceneDidBecomeActive(_ scene: UIScene) {
@@ -106,23 +72,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
         
-//        if appState.selectedCommunity != nil{
-//
-//                      do {
-//                          print("writinG")
-//                          let encoder = JSONEncoder()
-//                          let data = try encoder.encode(appState.selectedCommunity)
-//                          print(data)
-//                          let userDefaults = UserDefaults.standard
-//
-//                          userDefaults.set(data, forKey: "community")
-//
-//                          print("saved to defaults")
-//
-//                      } catch {
-//                          print("could not save defaults")
-//                      }
-//                  }
+
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
@@ -132,24 +82,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneDidEnterBackground(_ scene: UIScene) {
         
-//        print("now inactive")
-//        if appState.selectedCommunity != nil{
-//
-//               do {
-//                   print("writinG")
-//                   let encoder = JSONEncoder()
-//                   let data = try encoder.encode(appState.selectedCommunity)
-//                   print(data)
-//                   let userDefaults = UserDefaults.standard
-//
-//                   userDefaults.set(data, forKey: "community")
-//
-//                   print("saved to defaults")
-//
-//               } catch {
-//                   print("could not save defaults")
-//               }
-//           }
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
@@ -164,15 +96,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let username = KeychainWrapper.standard.string(forKey: "username") ?? ""
         let password = KeychainWrapper.standard.string(forKey: "password") ?? ""
-        print(username)
-        print(password)
+
         if username != "" && password != "" {
             //if there are saved credentials
-            print("user and pass exist!")
+
             user.username = username
             user.password = password
             print(username + password)
-            print("function call below")
             user.auth.getAuth( username, password )
         }
     }

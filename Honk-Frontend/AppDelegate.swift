@@ -45,24 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
 //        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-//        if appState.selectedCommunity != nil{
-//            
-//            do {
-//                print("writinG")
-//                let encoder = JSONEncoder()
-//                let data = try encoder.encode(appState.selectedCommunity)
-//                print(data)
-//                let userDefaults = UserDefaults.standard
-//                
-//                userDefaults.set(data, forKey: "community")
-//                
-//                print("saved to defaults")
-//                
-//            } catch {
-//                print("could not save defaults")
-//            }
-//        }
-//        
+   
         
         
         
@@ -103,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func readAppState() {
         print("reading")
         if let communityUUID = UserDefaults.standard.string(forKey: "community"){
-//            print(data)
+
             do {
                 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
                 let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Community")
@@ -119,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
             
         if let chatUUID = UserDefaults.standard.string(forKey: "chat"){
-        //            print(data)
+
                     do {
                         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
                         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
@@ -133,46 +116,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         print("could not get chat")
                     }
             
-//            do {
-//                let decoder = JSONDecoder()
-//
-//                decoder.userInfo[CodingUserInfoKey.context!] = context
-//                let community = try decoder.decode(Community.self, from: data)
-//
-//                self.appState.selectedCommunity = community
-////                print(community.subscribers)
-//                try context.save()
-//
-//
-//
-//
-//            } catch {
-//                print("did not decode")
-//            }
             
         }
-//        if let data = UserDefaults.standard.data(forKey: "chat"){
-//
-//                    do {
-//                        let decoder = JSONDecoder()
-//                        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//                        decoder.userInfo[CodingUserInfoKey.context!] = context
-//                        let chat = try decoder.decode(Chat.self, from: data)
-//
-//                        self.appState.selectedChat = chat
-//                        print(chat.inCommunity)
-//
-//
-//
-//
-//                    } catch {
-//                        print("did not decode")
-//                    }
-//
-//                }
-
-        
-        
+ 
         
     }
     
@@ -243,26 +189,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        //        guard var rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else {
-        //            return
-        //        }
-        
-        print("did receive" )
+    
         
         
-        //        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        //        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        //
-        //
-        //        let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
-        //
-        //
-        //
-        //        let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
-        //        sceneDelegate?.window = window
-        //        window?.makeKeyAndVisible()
-        //
-        //
         
         
         // tell the app that we have finished processing the user’s action / response
@@ -270,9 +199,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         completionHandler()
     }
     
-    
-    
-    // tell the app that we have finished processing the user’s action / response
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)
         -> Void) {
@@ -361,7 +287,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             
         case "new_community":
-            print(notification.request.content.userInfo["community"])
+            
+        
             let messageJSON = notification.request.content.userInfo["community"] as! NSDictionary
             //1. create message object
             do {
@@ -385,13 +312,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         default:
             break
         }
-        //        print(notification.request.content.categoryIdentifier)
-        //        let notifInfo = notification.request.content.userInfo
-        //
-        //        if let notifBody = notifInfo["aps"] as? [String:AnyObject] {
-        //            print(notifBody)
-        //        }
-        //        print("here")
+      
         completionHandler([.alert, .badge, .sound])
     }
     

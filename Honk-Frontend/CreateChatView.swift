@@ -28,9 +28,7 @@ struct CreateChatView: View {
     
     @EnvironmentObject var user: UserLocal
     @EnvironmentObject var appState: AppState
-    //    @Environment(\.managedObjectContext) var moc
-    //    @FetchRequest(entity: CommunityN.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityN>
-    
+
     
     
     var body: some View {
@@ -73,9 +71,9 @@ struct CreateChatView: View {
                 Text("Done").bold()
             }.disabled(!self.informationValid()))
         }
-        //
+   
     }
-    // makes sure that required stuff is in it
+    
     private func informationValid() -> Bool {
         
         if chatName.isEmpty{
@@ -127,12 +125,12 @@ struct CreateChatView: View {
                     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
                     
                     let jsonString = String(data: data, encoding: .utf8)
-                    print(jsonString)
+
                     let jsonData = jsonString!.data(using: .utf8)
                     let decoder = JSONDecoder()
                     decoder.userInfo[CodingUserInfoKey.context!] = context
                     let chat = try decoder.decode(Chat.self, from: jsonData!)
-                    print(community_uuid)
+
                     
                     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Community")
                     fetchRequest.predicate = NSPredicate(format: "uuid == %@", community_uuid)
