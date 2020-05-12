@@ -35,7 +35,7 @@ struct ChatRow: View {
         
         
         return Group {
-            GeometryReader { geometry in
+            //GeometryReader { geometry in
                 if self.chatMessage.author?.usernameDef != self.user.username{
                     //            if isMe{
                     VStack{
@@ -48,8 +48,9 @@ struct ChatRow: View {
                                     
                                     .bold()
                                     .fixedSize(horizontal: false, vertical: true)
-                                .padding(10)
+                                    .padding(10)
                                     .foregroundColor(.white)
+                                    .background(Color.blue)
                                 
                                                                             //comment this out to
                                     //                                 .background(chatMessage.color)
@@ -57,7 +58,7 @@ struct ChatRow: View {
                                     
                                     
                                     
-//                                    .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
+                                    .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
 //                                    .padding(10)
                                     .contextMenu{
                                         Button(action: self.reactToMessage){
@@ -81,6 +82,9 @@ struct ChatRow: View {
                                             }
                                         }
                                 }
+//                                if (hasLikes){
+//                                    Image("thumbs-up")
+//                                }
                                 Spacer()
                             }
 //                        }.onTapGesture {
@@ -120,8 +124,8 @@ struct ChatRow: View {
 //                        }
                     }
                 }
-            }
-            .frame(maxWidth: 500)
+            //}
+            //.frame(maxWidth: 500)
 //            .padding(50)
         }
     }
@@ -133,7 +137,13 @@ struct ChatRow: View {
     func createSubChat(){
         // in here will be API call to create new subgroup
     }
+    func getReactions(){
+        // this is the API call to get the likes to display them
+    }
 }
+
+
+
 //
 //struct ChatRow_Previews: PreviewProvider {
 //    static var previews: some View {
