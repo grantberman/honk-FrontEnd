@@ -235,8 +235,3 @@ struct ChatRow: View {
 
 
 
-
-
-
-
-
