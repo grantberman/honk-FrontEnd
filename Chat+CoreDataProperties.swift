@@ -11,10 +11,10 @@ import Foundation
 import CoreData
 
 
-extension ChatN {
+extension Chat {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<ChatN> {
-        return NSFetchRequest<ChatN>(entityName: "ChatN")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Chat> {
+        return NSFetchRequest<Chat>(entityName: "Chat")
     }
 
     @NSManaged public var created_at: String?
@@ -22,7 +22,7 @@ extension ChatN {
     @NSManaged public var name: String?
     @NSManaged public var members: NSSet?
     @NSManaged public var messages: NSSet?
-    @NSManaged public var inCommunity: CommunityN?
+    @NSManaged public var inCommunity: Community?
     
     public var nameDef : String {
         name ?? "Unknown"
@@ -36,25 +36,32 @@ extension ChatN {
         name ?? "unkown?"
     }
     
-    public var chatMessages : [MessageN] {
-        let set = messages as? Set<MessageN> ?? []
+//    public var chatMessages : [Message] {
+//        let set = messages as? Set<Message> ?? []
+//
+//        return set.sorted  {
+//            $0.sentTime < $1.sentTime
+//        }
+//
+//    }
+    public var chatMessages : [Message] {
+        let set = messages as? Set<Message> ?? []
         
-        return set.sorted  {
-            $0.sentTime < $1.sentTime
+        return set.sorted {
+            $0.uuidDef < $1.uuidDef 
         }
-        
     }
 
 }
 
 // MARK: Generated accessors for members
-extension ChatN {
+extension Chat {
 
     @objc(addMembersObject:)
-    @NSManaged public func addToMembers(_ value: UserN)
+    @NSManaged public func addToMembers(_ value: User)
 
     @objc(removeMembersObject:)
-    @NSManaged public func removeFromMembers(_ value: UserN)
+    @NSManaged public func removeFromMembers(_ value: User)
 
     @objc(addMembers:)
     @NSManaged public func addToMembers(_ values: NSSet)
@@ -65,13 +72,13 @@ extension ChatN {
 }
 
 // MARK: Generated accessors for messages
-extension ChatN {
+extension Chat {
 
     @objc(addMessagesObject:)
-    @NSManaged public func addToMessages(_ value: MessageN)
+    @NSManaged public func addToMessages(_ value: Message)
 
     @objc(removeMessagesObject:)
-    @NSManaged public func removeFromMessages(_ value: MessageN)
+    @NSManaged public func removeFromMessages(_ value: Message)
 
     @objc(addMessages:)
     @NSManaged public func addToMessages(_ values: NSSet)

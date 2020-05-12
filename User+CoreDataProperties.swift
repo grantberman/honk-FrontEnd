@@ -11,10 +11,10 @@ import Foundation
 import CoreData
 
 
-extension UserN {
+extension User {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<UserN> {
-        return NSFetchRequest<UserN>(entityName: "UserN")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<User> {
+        return NSFetchRequest<User>(entityName: "User")
     }
 
     @NSManaged public var biography: String?
@@ -22,17 +22,18 @@ extension UserN {
     @NSManaged public var display_name: String?
     @NSManaged public var username: String?
     @NSManaged public var uuid: String?
-    @NSManaged public var authored: MessageN?
+    @NSManaged public var authored: NSSet?
     @NSManaged public var receivedReaction: ReactionDelivery?
     @NSManaged public var recievedMessage: MessageDelivery?
-    @NSManaged public var membersOf: ChatN?
-    @NSManaged public var subscribedTo: CommunityN?
-    @NSManaged public var reaction: ReactionN?
+    @NSManaged public var memberOf: Chat?
+    @NSManaged public var subscribedTo: Community?
+    @NSManaged public var reaction: Reaction?
     
     
     public var displayName : String {
         display_name ?? "Unkown"
     }
+    
     public var usernameDef : String {
         username ?? "Unknown"
     }

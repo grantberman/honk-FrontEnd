@@ -110,7 +110,7 @@ class NotificationHub : NSObject, UNUserNotificationCenterDelegate {
 
 
                    decoder.userInfo[CodingUserInfoKey.context!] = context
-                   let message  = try decoder.decode(MessageN.self, from: jsonData!)
+                   let message  = try decoder.decode(Message.self, from: jsonData!)
 
 
                    let chatUUID = notification.request.content.userInfo["chat_uuid"] as! String
@@ -118,7 +118,7 @@ class NotificationHub : NSObject, UNUserNotificationCenterDelegate {
                    fetchRequest.predicate = NSPredicate(format: "uuid == %@", chatUUID)
 
 
-                   let fetchedChat = try context.fetch(fetchRequest) as! [ChatN]
+                   let fetchedChat = try context.fetch(fetchRequest) as! [Chat]
                    let objectUpdate = fetchedChat[0]
                    let messages = objectUpdate.messages
                    let updatedMessages = messages?.adding(message)
@@ -145,7 +145,7 @@ class NotificationHub : NSObject, UNUserNotificationCenterDelegate {
 
 
                decoder.userInfo[CodingUserInfoKey.context!] = context
-               let chat  = try decoder.decode(ChatN.self, from: jsonData!)
+               let chat  = try decoder.decode(Chat.self, from: jsonData!)
 
 
                let communityUUID = notification.request.content.userInfo["community_uuid"] as! String
@@ -153,7 +153,7 @@ class NotificationHub : NSObject, UNUserNotificationCenterDelegate {
                fetchRequest.predicate = NSPredicate(format: "uuid == %@", communityUUID)
 
 
-               let fetchedCommunity = try context.fetch(fetchRequest) as! [CommunityN]
+               let fetchedCommunity = try context.fetch(fetchRequest) as! [Community]
                let objectUpdate = fetchedCommunity[0]
                let chats = objectUpdate.chats
                let updatedChats = chats?.adding(chat)

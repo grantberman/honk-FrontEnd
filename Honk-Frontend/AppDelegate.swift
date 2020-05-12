@@ -16,13 +16,14 @@ import SwiftUI
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate{
     
-    var user = User()
+    var user = UserLocal()
+    var appState = AppState()
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        
+        readAppState()
         registerForPushNotifications()
         UNUserNotificationCenter.current().delegate = self
         
@@ -43,7 +44,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+//        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+   
+        
+        
+        
     }
     
     // MARK: - Core Data stack
@@ -76,6 +81,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         return container
     }()
+    
+    
+    func readAppState() {
+        print("reading")
+        if let communityUUID = UserDefaults.standard.string(forKey: "community"){
+
+            do {
+                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Community")
+                fetchRequest.predicate = NSPredicate(format: "uuid == %@", communityUUID)
+                
+                
+                let fetchedCommunity = try context.fetch(fetchRequest) as! [Community]
+                self.appState.selectedCommunity = fetchedCommunity[0]
+            }
+            catch {
+                print("could not get community")
+            }
+        }
+            
+        if let chatUUID = UserDefaults.standard.string(forKey: "chat"){
+
+                    do {
+                        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
+                        fetchRequest.predicate = NSPredicate(format: "uuid == %@", chatUUID)
+                        
+                        
+                        let fetchedChat = try context.fetch(fetchRequest) as! [Chat]
+                        self.appState.selectedChat = fetchedChat[0]
+                    }
+                    catch {
+                        print("could not get chat")
+                    }
+            
+            
+        }
+ 
+        
+    }
+    
     
     // MARK: - Core Data Saving support
     
@@ -135,34 +181,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ application: UIApplication,
-    didReceiveRemoteNotification userInfo: [AnyHashable : Any],
-    fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void){
+                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void){
         print("here")
         completionHandler(UIBackgroundFetchResult.newData)
     }
     
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-//        guard var rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else {
-//            return
-//        }
-        
-        print("did receive" )
+    
         
         
-//        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-//
-//
-//        let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window
-//
-//
-//
-//        let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
-//        sceneDelegate?.window = window
-//        window?.makeKeyAndVisible()
-//
-//
         
         
         // tell the app that we have finished processing the user’s action / response
@@ -170,9 +199,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         completionHandler()
     }
     
-    
-    
-    // tell the app that we have finished processing the user’s action / response
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)
         -> Void) {
@@ -191,7 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         case "new_message":
             
             
-            let messageJSON = notification.request.content.userInfo["message"] as! NSDictionary
+            let messageJSON = notification.request.content.userInfo["messages"] as! NSDictionary
             //1. create message object
             do {
                 let data = try JSONSerialization.data(withJSONObject: messageJSON, options: [])
@@ -200,15 +226,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 
                 decoder.userInfo[CodingUserInfoKey.context!] = context
-                let message  = try decoder.decode(MessageN.self, from: jsonData!)
+                let message  = try decoder.decode(Message.self, from: jsonData!)
                 
                 
                 let chatUUID = notification.request.content.userInfo["chat_uuid"] as! String
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ChatN")
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
                 fetchRequest.predicate = NSPredicate(format: "uuid == %@", chatUUID)
                 
                 
-                let fetchedChat = try context.fetch(fetchRequest) as! [ChatN]
+                let fetchedChat = try context.fetch(fetchRequest) as! [Chat]
                 let objectUpdate = fetchedChat[0]
                 let messages = objectUpdate.messages
                 let updatedMessages = messages?.adding(message)
@@ -235,15 +261,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 
                 decoder.userInfo[CodingUserInfoKey.context!] = context
-                let chat  = try decoder.decode(ChatN.self, from: jsonData!)
+                let chat  = try decoder.decode(Chat.self, from: jsonData!)
                 
                 
                 let communityUUID = notification.request.content.userInfo["community_uuid"] as! String
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CommunityN")
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Community")
                 fetchRequest.predicate = NSPredicate(format: "uuid == %@", communityUUID)
                 
                 
-                let fetchedCommunity = try context.fetch(fetchRequest) as! [CommunityN]
+                let fetchedCommunity = try context.fetch(fetchRequest) as! [Community]
                 print(fetchedCommunity)
                 
                 let objectUpdate = fetchedCommunity[0]
@@ -261,18 +287,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             
         case "new_community":
-            print(notification.request.content.userInfo["community"])
+            
+        
             let messageJSON = notification.request.content.userInfo["community"] as! NSDictionary
             //1. create message object
             do {
                 let data = try JSONSerialization.data(withJSONObject: messageJSON, options: [])
                 let jsonString = String(data: data, encoding: .utf8)
-//                print(jsonString)
+                //                print(jsonString)
                 let jsonData = jsonString!.data(using: .utf8)
                 
                 
                 decoder.userInfo[CodingUserInfoKey.context!] = context
-                let community  = try decoder.decode(CommunityN.self, from: jsonData!)
+                let community  = try decoder.decode(Community.self, from: jsonData!)
                 print(community)
                 try context.save()
                 
@@ -285,13 +312,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         default:
             break
         }
-        //        print(notification.request.content.categoryIdentifier)
-        //        let notifInfo = notification.request.content.userInfo
-        //
-        //        if let notifBody = notifInfo["aps"] as? [String:AnyObject] {
-        //            print(notifBody)
-        //        }
-        //        print("here")
+      
         completionHandler([.alert, .badge, .sound])
     }
     

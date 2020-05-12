@@ -42,7 +42,7 @@ public class ReactionDelivery: NSManagedObject, Codable{
             
             is_delivered = try values.decode(String?.self, forKey: .is_delivered)
             uuid = try values.decode(String?.self, forKey: .uuid)
-            recipient = try values.decode(UserN?.self, forKey: .recipient)
+            recipient = try values.decode(User?.self, forKey: .recipient)
             
         } catch {
             print("reaction delivery decoding error ")

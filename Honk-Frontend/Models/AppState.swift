@@ -10,7 +10,7 @@ import Foundation
 
 class AppState: ObservableObject{
     
-    var selectedCommunity: CommunityN? = nil
-    var selectedChat: ChatN? = nil
+    var selectedCommunity: Community? = nil
+    var selectedChat: Chat? = nil
     
 }
