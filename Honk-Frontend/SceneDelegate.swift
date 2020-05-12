@@ -79,19 +79,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //            UserDefaults.standard.set(chatData, forKey: "chat")
         //        }
         //        print("write to defaults")
-        do {
-            print("writinG")
-            let encoder = JSONEncoder()
-            let data = try encoder.encode(appState.selectedCommunity)
-                        let userDefaults = UserDefaults.standard
 
-            userDefaults.set(data, forKey: "community")
-
-            print("saved to defaults")
-            
-        } catch {
-            print("could not save defaults")
-        }
+        
+        //        do {
+//            print("writinG")
+//            let encoder = JSONEncoder()
+//            let data = try encoder.encode(appState.selectedCommunity)
+//                        let userDefaults = UserDefaults.standard
+//
+//            userDefaults.set(data, forKey: "community")
+//
+//            print("saved to defaults")
+//
+//        } catch {
+//            print("could not save defaults")
+//        }
         //
     }
     
@@ -103,6 +105,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
+        
+//        if appState.selectedCommunity != nil{
+//
+//                      do {
+//                          print("writinG")
+//                          let encoder = JSONEncoder()
+//                          let data = try encoder.encode(appState.selectedCommunity)
+//                          print(data)
+//                          let userDefaults = UserDefaults.standard
+//
+//                          userDefaults.set(data, forKey: "community")
+//
+//                          print("saved to defaults")
+//
+//                      } catch {
+//                          print("could not save defaults")
+//                      }
+//                  }
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
@@ -112,8 +132,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneDidEnterBackground(_ scene: UIScene) {
         
-        
-        
+//        print("now inactive")
+//        if appState.selectedCommunity != nil{
+//
+//               do {
+//                   print("writinG")
+//                   let encoder = JSONEncoder()
+//                   let data = try encoder.encode(appState.selectedCommunity)
+//                   print(data)
+//                   let userDefaults = UserDefaults.standard
+//
+//                   userDefaults.set(data, forKey: "community")
+//
+//                   print("saved to defaults")
+//
+//               } catch {
+//                   print("could not save defaults")
+//               }
+//           }
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.

@@ -89,8 +89,6 @@ struct CreateChatView: View {
     
     //API call to make new chat
     private func makeChat(_ name: String, _ community_uuid: String, _ invite_usernames: [String], _ auth: String){
-        
-        
         guard let url = URL(string: "https://honk-api.herokuapp.com/api/chats")
             else {
                 print("Invalid URL")
@@ -136,7 +134,7 @@ struct CreateChatView: View {
                     let chat = try decoder.decode(Chat.self, from: jsonData!)
                     print(community_uuid)
                     
-                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CommunityN")
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Community")
                     fetchRequest.predicate = NSPredicate(format: "uuid == %@", community_uuid)
                     
                     let fetchedCommunity = try context.fetch(fetchRequest) as! [Community]

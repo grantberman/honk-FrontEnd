@@ -15,7 +15,7 @@ struct ContentView: View {
     
     @State var composedMessage: String = ""
     @State var menuOpen: Bool = false
-    @Environment(\.managedObjectContext) var moc
+    let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     @FetchRequest(entity: Community.entity(), sortDescriptors: []) var communities: FetchedResults<Community>
     
     @EnvironmentObject var appState : AppState
@@ -47,18 +47,24 @@ struct ContentView: View {
                         return CreateCommunityView(isPresented: self.$makeCommunityViewIsPresented, sideMenuOpen: self.$menuOpen).environmentObject(self.user).environmentObject(self.appState)
                     }
                 }
-                else{
+                else  {
                     
                     VStack{
                         NavigationView {
+                            
                             ReverseScrollView {
                                 
                                 VStack{
-                                    ForEach (self.appState.selectedChat?.chatMessages ?? [], id: \.self) { msg in
-                                        VStack{
-                                            ChatRow(chatMessage: msg)
+                                    if (self.appState.selectedChat != nil) {
+                                        ForEach (self.appState.selectedChat?.chatMessages ?? [], id: \.self) { msg in
+                                            
+                                            VStack{
+                                                self.generateChatRow(message: msg)
+//                                                ChatRow(chatMessage: msg)
+                                            }
                                         }
                                     }
+
                                 }
                                 
                             }
@@ -66,6 +72,7 @@ struct ContentView: View {
                             .navigationBarTitle("\(self.appState.selectedChat?.nameDef ?? "unknown")", displayMode: .inline)
                             .navigationBarItems(leading:
                                 Button(action: {
+                                    print(self.appState.selectedChat)
                                     self.openMenu()
                                     do {
                                         try self.moc.save()
@@ -73,7 +80,6 @@ struct ContentView: View {
                                         print("no save")
                                     }
                                     print("Edit button pressed...")
-                                    print("'" + self.user.username + "'")
                                 }) {
                                     Text("Edit")
                                 }
@@ -103,10 +109,34 @@ struct ContentView: View {
                          menuClose: self.openMenu)
             }.gesture(drag)
             
+            
         }
         
         
     }
+    func generateChatRow(message : Message) -> ChatRow {
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
+//        fetchRequest.returnsObjectsAsFaults = false
+//        fetchRequest.predicate = NSPredicate(format: "uuid == %@", message.uuidDef)
+        
+//        do {
+//            let fetchedChat = try! moc.fetch(fetchRequest) as! [Message]
+//            let message = fetchedChat[0]
+//            print(message)
+//            print("author incoming")
+//        print(message.author?.usernameDef)
+            return ChatRow (chatMessage: message)
+//        } catch {
+//            print("error creating chat row" )
+//        }
+
+
+        
+        
+        
+    }
+    
+    
     func openMenu() {
         self.menuOpen.toggle()
     }
@@ -175,7 +205,7 @@ struct ContentView: View {
                     let decoder = JSONDecoder()
                     decoder.userInfo[CodingUserInfoKey.context!] = context
                     let message = try decoder.decode(Message.self, from: jsonData!)
-                    print(message.author)
+
                     
                     
                     

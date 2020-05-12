@@ -162,7 +162,7 @@ struct CreateCommunityView: View {
                     decoder.userInfo[CodingUserInfoKey.context!] = context
                     let community = try decoder.decode(Community.self, from: jsonData!)
                     
-                    print(community.uuidDef)
+                    print(community.chatArray[0].inCommunity?.name)
                     self.appState.selectedCommunity = community
                     
                     do {

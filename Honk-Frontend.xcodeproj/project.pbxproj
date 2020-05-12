@@ -44,8 +44,6 @@
 		C6A12E08244BB70E00AFFF7A /* UIResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A12E07244BB70E00AFFF7A /* UIResponder.swift */; };
 		C6FA2A5524625E710016C055 /* CreateCommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FA2A5424625E710016C055 /* CreateCommunityView.swift */; };
 		C6FA2A572462602A0016C055 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FA2A562462602A0016C055 /* RootView.swift */; };
-		C6FA2A592462846B0016C055 /* MotherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FA2A582462846B0016C055 /* MotherView.swift */; };
-		C6FA2A5B246284FF0016C055 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FA2A5A246284FF0016C055 /* ViewRouter.swift */; };
 		C6FA2A5D2463180D0016C055 /* CreateChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FA2A5C2463180D0016C055 /* CreateChatView.swift */; };
 /* End PBXBuildFile section */
 
@@ -90,8 +88,6 @@
 		C6A12E07244BB70E00AFFF7A /* UIResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIResponder.swift; sourceTree = "<group>"; };
 		C6FA2A5424625E710016C055 /* CreateCommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityView.swift; sourceTree = "<group>"; };
 		C6FA2A562462602A0016C055 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
-		C6FA2A582462846B0016C055 /* MotherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotherView.swift; sourceTree = "<group>"; };
-		C6FA2A5A246284FF0016C055 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		C6FA2A5C2463180D0016C055 /* CreateChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChatView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,9 +169,7 @@
 				93A803112446B9DB00815B21 /* AppDelegate.swift */,
 				93A3DCDF2460F8AE00355382 /* NotificationCenter.swift */,
 				93A803132446B9DB00815B21 /* SceneDelegate.swift */,
-				C6FA2A582462846B0016C055 /* MotherView.swift */,
 				93757FD7244BBAE40027D96E /* LoginView.swift */,
-				C6FA2A5A246284FF0016C055 /* ViewRouter.swift */,
 				93A803182446B9DB00815B21 /* ContentView.swift */,
 				C6FA2A5C2463180D0016C055 /* CreateChatView.swift */,
 				C6FA2A5424625E710016C055 /* CreateCommunityView.swift */,
@@ -295,7 +289,6 @@
 				93A3DCDB2460C13E00355382 /* Community+CoreDataClass.swift in Sources */,
 				93A3DCD42460C13E00355382 /* ReactionDelivery+CoreDataProperties.swift in Sources */,
 				93C228F3245B64CE00454511 /* UserLocal.swift in Sources */,
-				C6FA2A5B246284FF0016C055 /* ViewRouter.swift in Sources */,
 				93A3DCD82460C13E00355382 /* Reaction+CoreDataProperties.swift in Sources */,
 				93A3DCD92460C13E00355382 /* MessageDelivery+CoreDataClass.swift in Sources */,
 				93A803192446B9DB00815B21 /* ContentView.swift in Sources */,
@@ -307,7 +300,6 @@
 				93A3DCD52460C13E00355382 /* Chat+CoreDataClass.swift in Sources */,
 				C6FA2A5D2463180D0016C055 /* CreateChatView.swift in Sources */,
 				C6A12E04244BB49000AFFF7A /* KeyBoardAvoidance.swift in Sources */,
-				C6FA2A592462846B0016C055 /* MotherView.swift in Sources */,
 				93A3DCD22460C13E00355382 /* User+CoreDataProperties.swift in Sources */,
 				93BB634F246360B8005E8DEF /* RootView.swift in Sources */,
 				C6A12E02244BB08800AFFF7A /* ReverseScrollView.swift in Sources */,

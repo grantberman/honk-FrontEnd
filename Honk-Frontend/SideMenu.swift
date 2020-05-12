@@ -14,7 +14,7 @@ struct MenuContent: View {
     
     @State var makeChatIsPresented = false
     
-    @Environment(\.managedObjectContext) var moc
+    let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     @FetchRequest(entity: Community.entity(), sortDescriptors: []) var communities: FetchedResults<Community>
     
     @Binding var menuClose: () -> Void
@@ -28,6 +28,22 @@ struct MenuContent: View {
                     Section(header: HStack {
                         Text(community.communityName).onTapGesture {
                             self.appState.selectedCommunity = community
+//                            print("community selected")
+
+                            do {
+//                                print("writing community")
+                                let encoder = JSONEncoder()
+                                let data = try encoder.encode(community)
+                                let string = String(data: data, encoding: .utf8)!
+                                let userDefaults = UserDefaults.standard
+                                
+                                userDefaults.set(community.uuid, forKey: "community")
+                                
+//                                print("saved to defaults")
+                                
+                            } catch {
+                                print("could not save defaults")
+                            }
                         }
                             .font(.headline)
                             .foregroundColor(.white)
@@ -45,6 +61,23 @@ struct MenuContent: View {
                         ForEach(community.chatArray, id: \.self) { chat in VStack {
                             Text(chat.wrappedName).onTapGesture {
                                 self.appState.selectedChat = chat
+                                let userDefaults = UserDefaults.standard
+                                userDefaults.set(chat.uuid, forKey: "chat")
+//                                print(chat)
+//                                do {
+//
+//                                    let encoder = JSONEncoder()
+//                                    let data = try encoder.encode(chat)
+//                                    let string = String(data: data, encoding: .utf8)!
+//
+//                                    let userDefaults = UserDefaults.standard
+//                                    userDefaults.set(data, forKey: "chat")
+//                                    
+//                                    print("saved to defaults")
+//                                    
+//                                } catch {
+//                                    print("could not save defaults")
+//                                }
                                 self.menuClose()
                             }
                             }.listStyle(GroupedListStyle())
@@ -65,15 +98,16 @@ struct MenuContent: View {
                 }
 
 
-            }
+                }
+            
                         .navigationBarTitle("" , displayMode: .inline)
 
                         .navigationBarHidden(true)
+            }
+        
+        
         }
-        
-        
     }
-}
 }
 
 

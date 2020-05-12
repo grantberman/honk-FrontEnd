@@ -37,7 +37,9 @@ extension Message {
         content ?? ""
     }
     
-   
+    public var uuidDef : String {
+        uuid ?? "unknown";
+    }
 
     
     public var avatar : String {

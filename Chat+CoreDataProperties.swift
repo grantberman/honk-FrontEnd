@@ -36,13 +36,20 @@ extension Chat {
         name ?? "unkown?"
     }
     
+//    public var chatMessages : [Message] {
+//        let set = messages as? Set<Message> ?? []
+//
+//        return set.sorted  {
+//            $0.sentTime < $1.sentTime
+//        }
+//
+//    }
     public var chatMessages : [Message] {
         let set = messages as? Set<Message> ?? []
         
-        return set.sorted  {
-            $0.sentTime < $1.sentTime
+        return set.sorted {
+            $0.uuidDef < $1.uuidDef 
         }
-        
     }
 
 }
