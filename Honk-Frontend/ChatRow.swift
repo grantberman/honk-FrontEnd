@@ -61,16 +61,16 @@ struct ChatRow: View {
                                     .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
 //                                    .padding(10)
                                     .contextMenu{
-                                        Button(action: { self.reactToMessage){
+                                    Button(action: { self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef)}){
+                                            EmptyView()
                                             HStack{
                                                 Text("Like")
                                                 Image("thumbs-up")
-                                                    .renderingMode(.original)
-                                                    .resizable()
-                                                    .scaledToFit()
+                                                .renderingMode(.original)
+                                                .resizable()
+                                                .scaledToFit()
                                             }
                                         }.frame(alignment: .leading)
-                                        }
                                         Button(action: self.createSubChat){
                                             
                                             HStack{
@@ -201,7 +201,7 @@ struct ChatRow: View {
                             print(reaction)
                             //self.reactionUUID = reaction.uuidDef
                             
-                            let fetchRequest = FetchRequest<NSFetchRequestResult>(entityName: "MessageN")
+                            let fetchRequest = FetchRequest<NSFetchRequestResult>(entityName: "Message")
                             fetchRequest.predicate = NSPredicate(format: "uuid == %@", message_uuid)
                             
                             let fetchedChat = try context.fetch(fetchRequest) as! [MessageN]
