@@ -250,7 +250,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 
                 let chatUUID = notification.request.content.userInfo["chat_uuid"] as! String
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ChatN")
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
                 fetchRequest.predicate = NSPredicate(format: "uuid == %@", chatUUID)
                 
                 

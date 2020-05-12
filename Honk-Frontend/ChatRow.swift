@@ -7,6 +7,9 @@
 //
 
 import SwiftUI
+import CoreData
+
+
 
 extension Date {
     func currentTimeMillis() -> Int64 {
@@ -18,8 +21,14 @@ extension Date {
 struct ChatRow: View {
     var chatMessage: Message
     @EnvironmentObject var user: UserLocal
+    @Binding var hasReacted: Bool
+    @State var hiddenTrigger = false
     
+    
+    var hasLikes: Bool = false
     var isMe : Bool  = false
+    
+    
     //        return chatMessage.authorDef.usernameDef == self.user.username
     //
     //    }
@@ -32,7 +41,9 @@ struct ChatRow: View {
         dateString.dateFormat = "HH:mm E, d MMM y"
         
         // I think will have to do a get call somewhere if we don't want the date to display if the same one did on the last text
-        
+//        var likeNumber = getReactions(self.chatMessage.uuidDef, self.user.auth.token)
+//        print("message is")
+//        print(likeNumber)
         
         return Group {
             //GeometryReader { geometry in
@@ -58,10 +69,13 @@ struct ChatRow: View {
                                     
                                     
                                     
-                                    .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
+                                    //.frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
 //                                    .padding(10)
                                     .contextMenu{
-                                    Button(action: { self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef)}){
+                                    Button(action: { self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef, self.chatMessage.inChat!.uuidDef)
+                                        self.hasReacted.toggle() // a state change to force rerender
+                                        self.hiddenTrigger = self.hasReacted
+                                    }){
                                             EmptyView()
                                             HStack{
                                                 Text("Like")
@@ -82,14 +96,9 @@ struct ChatRow: View {
                                             }
                                         }
                                 }
-//                                if (hasLikes){
-//                                    Image("thumbs-up")
-//                                }
-                                Spacer()
+                                updateReact().frame(maxWidth: 30, maxHeight: 30, alignment: .leading)
                             }
-//                        }.onTapGesture {
-//                            print(self.chatMessage.author?.usernameDef)
-//                            print(self.user.username)
+                            Spacer()
                         }
                     }
                 } else {
@@ -98,6 +107,8 @@ struct ChatRow: View {
                         HStack {
                             Group {
                                 Spacer()
+                                    updateReact()
+                                    .frame(maxWidth: 30, maxHeight: 30, alignment: .trailing)
                                 Text(self.chatMessage.contentDef)
 //                                    .bold()
 //                                    .foregroundColor(.white)
@@ -111,47 +122,58 @@ struct ChatRow: View {
                                     .foregroundColor(.white)
                                     .background(Color.green)
                                 .cornerRadius(10)
-//                                    .frame(minWidth: 10, maxWidth: 250, alignment: .bottomTrailing)
-                                
+                                .contextMenu{
+                                    Button(action: { self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef, self.chatMessage.inChat!.uuidDef)
+                                        self.hasReacted.toggle() // a state change to force rerender
+                                        self.hiddenTrigger = self.hasReacted
+                                    }){
+                                            EmptyView()
+                                            HStack{
+                                                Text("Like")
+                                                Image("thumbs-up")
+                                                .renderingMode(.original)
+                                                .resizable()
+                                                .scaledToFit()
+                                                }
+                                        }.frame(alignment: .leading)
+                                        Button(action: self.createSubChat){
+                                                HStack{
+                                                Text("Create sub chat")
+                                                Image("sub-group")
+                                                .renderingMode(.original)
+                                                .resizable()
+                                                .scaledToFit()
+                                                }
+                                        }
+                                }
                                 Text(self.chatMessage.avatar)
                                     .padding(.trailing, 5)
                                 
                             }
                         }.frame(alignment: .bottomTrailing)
-//                            .onTapGesture {
-//                            print(self.chatMessage.author?.usernameDef)
-//                            print(self.user.username)
-//                        }
-                    }
                 }
-            //}
-            //.frame(maxWidth: 500)
-//            .padding(50)
+            }
         }
     }
     
-        public func reactToMessage(_ reaction_type: String,  _ auth: String, _ message_uuid: String){
-            // in here will be the API call to like
-            
-            //JSON example
-    //        "reactions": [
-    //            {
-    //                "deliveries": [
-    //                    {
-    //                        "is_delivered": false,
-    //                        "uuid": "1a4337fd4ad94de9beb867b7cd2f05ae"
-    //                    },
-    //                    {
-    //                        "is_delivered": true,
-    //                        "uuid": "0c46b7c5373f4db8a4b23033e2174b89"
-    //                    }
-    //                ],
-    //                "reaction_type": "like",
-    //                "reactor": "grant",
-    //                "reactor_uuid": "1baaf9d0caa547cea4d3bfddbd4e208f",
-    //                "uuid": "4412070f0d3d47ce8f7f02030146b0a0"
-    //            }
-    //        ],
+    public func updateReact() -> some View{
+        
+        //self.hasReacted = !self.hasReacted
+        return Group{
+            if (self.chatMessage.reactions?.count ?? 0 > 0){
+            Text(String(describing: self.chatMessage.reactions!.count))
+            Image("thumbs-up")
+                .renderingMode(.original)
+                .resizable()
+                .scaledToFit()
+                .aspectRatio(contentMode: .fit)
+                }
+        }
+    }
+    
+    public func reactToMessage(_ reaction_type: String,  _ auth: String, _ message_uuid: String, _ chat_uuid: String){
+            //  the API call to like
+        
             
             guard let url = URL(string: "https://honk-api.herokuapp.com/api/messages/\(message_uuid)/reactions")
                     else {
@@ -163,7 +185,6 @@ struct ChatRow: View {
                 
                 let finalBody = try! JSONSerialization.data(withJSONObject: body)
                 
-                //somehow need to create automatic chat with every user in it
                 
                 var request = URLRequest(url: url)
                 request.httpMethod = "POST"
@@ -191,25 +212,30 @@ struct ChatRow: View {
                         do {
                             
                             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-                            
                             let jsonString = String(data: data, encoding: .utf8)
                             print(jsonString)
                             let jsonData = jsonString!.data(using: .utf8)
+                            
+                            
+                            
                             let decoder = JSONDecoder()
                             decoder.userInfo[CodingUserInfoKey.context!] = context
-                            let reaction = try decoder.decode(Reaction.self, from: jsonData!)
-                            print(reaction)
-                            //self.reactionUUID = reaction.uuidDef
+                            let message = try decoder.decode(Message.self, from: jsonData!)
+                            print("first message is")
+                            print(message)
                             
-                            let fetchRequest = FetchRequest<NSFetchRequestResult>(entityName: "Message")
-                            fetchRequest.predicate = NSPredicate(format: "uuid == %@", message_uuid)
-                            
-                            let fetchedChat = try context.fetch(fetchRequest) as! [MessageN]
+                            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
+                            fetchRequest.predicate = NSPredicate(format: "uuid == %@", chat_uuid)
+                
+                
+                            let fetchedChat = try context.fetch(fetchRequest) as! [Chat]
                             let objectUpdate = fetchedChat[0]
-                            let reactions = objectUpdate.reactions
-                            let updatedReactions = reactions?.adding(reaction)
-                            objectUpdate.reactions = updatedReactions as NSSet?
-                            
+                            let messages = objectUpdate.messages
+                            let updatedMessages = messages?.adding(message)
+                            objectUpdate.messages = updatedMessages as NSSet?
+                            try context.save()
+                            print("message is")
+                            print(message)
                             
                             do {
                                 try context.save()
@@ -232,8 +258,59 @@ struct ChatRow: View {
     func createSubChat(){
         // in here will be API call to create new subgroup
     }
-    func getReactions(){
+    func getReactions(_ message_uuid: String, _ auth: String){
         // this is the API call to get the likes to display them
+        
+        guard let url = URL(string: "http://honk-api.herokuapp.com/api/messages/\(message_uuid)") else {
+            print("Invalid URL")
+            return
+        }
+        
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(auth)", forHTTPHeaderField: "Authorization") //after
+        
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            
+            
+            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
+                
+                let httpResponse = response as! HTTPURLResponse
+                print(httpResponse.statusCode)
+                return
+            }
+            
+            if let data = data {
+                if (try? JSONDecoder().decode(Message.self, from: data)) != nil {
+                    
+                    //                    let group = DispatchGroup()
+                    do {
+                       
+                        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                                                  
+                            let jsonString = String(data: data, encoding: .utf8)
+                            let jsonData = jsonString!.data(using: .utf8)
+                            let decoder = JSONDecoder()
+                                decoder.userInfo[CodingUserInfoKey.context!] = context
+                            let message = try decoder.decode(Message.self, from: jsonData!)
+                            print("message is \(message)")
+                        
+                    } catch {
+                        print( "could not get response" )
+                    }
+                    
+                  
+                    return
+                }
+                
+            }
+           
+            
+        }.resume()
     }
 }
 
