@@ -10,8 +10,8 @@
 import Foundation
 import CoreData
 
-@objc(ReactionN)
-public class ReactionN: NSManagedObject, Codable {
+@objc(Reaction)
+public class Reaction: NSManagedObject, Codable {
     
     enum CodingKeys: String, CodingKey {
         case reaction_type = "reaction_type"
@@ -35,14 +35,14 @@ public class ReactionN: NSManagedObject, Codable {
     required convenience public init (from decoder: Decoder) throws {
         guard let contextUserInfoKey = CodingUserInfoKey.context,
             let managedObjectContext = decoder.userInfo[contextUserInfoKey] as? NSManagedObjectContext,
-            let entity = NSEntityDescription.entity(forEntityName: "ReactionN", in: managedObjectContext) else { fatalError ("Failed to decode reaction")}
+            let entity = NSEntityDescription.entity(forEntityName: "Reaction", in: managedObjectContext) else { fatalError ("Failed to decode reaction")}
         self.init(entity: entity, insertInto: managedObjectContext)
         let values = try decoder.container(keyedBy: CodingKeys.self)
         do {
             
             reaction_type = try values.decode(String?.self, forKey: .reaction_type)
             uuid = try values.decode(String?.self, forKey: .uuid)
-            reactor = try values.decode(UserN?.self, forKey: .reactor)
+            reactor = try values.decode(User?.self, forKey: .reactor)
             deliveries = NSSet (array: try values.decode([ReactionDelivery].self, forKey: .deliveries))
         } catch {
             print("reaction delivery error")

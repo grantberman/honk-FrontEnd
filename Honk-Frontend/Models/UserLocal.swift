@@ -8,7 +8,7 @@
 
 import Foundation
 
-class User : ObservableObject {
+class UserLocal   : ObservableObject {
     var username: String  = ""//should these details be made private or fileprivate?
     var password: String  = ""
     var email: String = ""

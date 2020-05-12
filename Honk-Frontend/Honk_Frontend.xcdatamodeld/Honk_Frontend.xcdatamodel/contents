@@ -1,25 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="ChatN" representedClassName="ChatN" syncable="YES">
+    <entity name="Chat" representedClassName="Chat" syncable="YES">
         <attribute name="created_at" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
-        <relationship name="inCommunity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CommunityN" inverseName="chats" inverseEntity="CommunityN"/>
-        <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserN" inverseName="membersOf" inverseEntity="UserN"/>
-        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageN" inverseName="inChat" inverseEntity="MessageN"/>
+        <relationship name="inCommunity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Community" inverseName="chats" inverseEntity="Community"/>
+        <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="memberOf" inverseEntity="User"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="inChat" inverseEntity="Message"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="uuid"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="CommunityN" representedClassName="CommunityN" syncable="YES">
+    <entity name="Community" representedClassName="Community" syncable="YES">
         <attribute name="about" optional="YES" attributeType="String"/>
         <attribute name="created_at" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
-        <relationship name="chats" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ChatN" inverseName="inCommunity" inverseEntity="ChatN"/>
-        <relationship name="subscribers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserN" inverseName="subscribedTo" inverseEntity="UserN"/>
+        <relationship name="chats" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Chat" inverseName="inCommunity" inverseEntity="Chat"/>
+        <relationship name="subscribers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="subscribedTo" inverseEntity="User"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="uuid"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Message" representedClassName="Message" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="created_at" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+        <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="authored" inverseEntity="User"/>
+        <relationship name="deliveries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageDelivery" inverseName="message" inverseEntity="MessageDelivery"/>
+        <relationship name="inChat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="messages" inverseEntity="Chat"/>
+        <relationship name="reactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reaction" inverseName="reactedTo" inverseEntity="Reaction"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="uuid"/>
@@ -29,22 +43,20 @@
     <entity name="MessageDelivery" representedClassName="MessageDelivery" syncable="YES">
         <attribute name="is_delivered" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
-        <relationship name="message" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MessageN" inverseName="deliveries" inverseEntity="MessageN"/>
-        <relationship name="recipient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserN" inverseName="recievedMessage" inverseEntity="UserN"/>
+        <relationship name="message" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message" inverseName="deliveries" inverseEntity="Message"/>
+        <relationship name="recipient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="recievedMessage" inverseEntity="User"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="uuid"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="MessageN" representedClassName="MessageN" syncable="YES">
-        <attribute name="content" optional="YES" attributeType="String"/>
-        <attribute name="created_at" optional="YES" attributeType="String"/>
+    <entity name="Reaction" representedClassName="Reaction" syncable="YES">
+        <attribute name="reaction_type" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
-        <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserN" inverseName="authored" inverseEntity="UserN"/>
-        <relationship name="deliveries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageDelivery" inverseName="message" inverseEntity="MessageDelivery"/>
-        <relationship name="inChat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatN" inverseName="messages" inverseEntity="ChatN"/>
-        <relationship name="reactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReactionN" inverseName="reactedTo" inverseEntity="ReactionN"/>
+        <relationship name="deliveries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReactionDelivery" inverseName="reaction" inverseEntity="ReactionDelivery"/>
+        <relationship name="reactedTo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message" inverseName="reactions" inverseEntity="Message"/>
+        <relationship name="reactor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="reaction" inverseEntity="User"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="uuid"/>
@@ -54,38 +66,26 @@
     <entity name="ReactionDelivery" representedClassName="ReactionDelivery" syncable="YES">
         <attribute name="is_delivered" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
-        <relationship name="reaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReactionN" inverseName="deliveries" inverseEntity="ReactionN"/>
-        <relationship name="recipient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserN" inverseName="receivedReaction" inverseEntity="UserN"/>
+        <relationship name="reaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Reaction" inverseName="deliveries" inverseEntity="Reaction"/>
+        <relationship name="recipient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="receivedReaction" inverseEntity="User"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="uuid"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="ReactionN" representedClassName="ReactionN" syncable="YES">
-        <attribute name="reaction_type" optional="YES" attributeType="String"/>
-        <attribute name="uuid" optional="YES" attributeType="String"/>
-        <relationship name="deliveries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReactionDelivery" inverseName="reaction" inverseEntity="ReactionDelivery"/>
-        <relationship name="reactedTo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MessageN" inverseName="reactions" inverseEntity="MessageN"/>
-        <relationship name="reactor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserN" inverseName="reaction" inverseEntity="UserN"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="uuid"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
-    </entity>
-    <entity name="UserN" representedClassName="UserN" syncable="YES">
+    <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="biography" optional="YES" attributeType="String"/>
         <attribute name="created_at" optional="YES" attributeType="String"/>
         <attribute name="display_name" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
-        <relationship name="authored" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MessageN" inverseName="author" inverseEntity="MessageN"/>
-        <relationship name="membersOf" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatN" inverseName="members" inverseEntity="ChatN"/>
-        <relationship name="reaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReactionN" inverseName="reactor" inverseEntity="ReactionN"/>
+        <relationship name="authored" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="author" inverseEntity="Message"/>
+        <relationship name="memberOf" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="members" inverseEntity="Chat"/>
+        <relationship name="reaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Reaction" inverseName="reactor" inverseEntity="Reaction"/>
         <relationship name="receivedReaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReactionDelivery" inverseName="recipient" inverseEntity="ReactionDelivery"/>
         <relationship name="recievedMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MessageDelivery" inverseName="recipient" inverseEntity="MessageDelivery"/>
-        <relationship name="subscribedTo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CommunityN" inverseName="subscribers" inverseEntity="CommunityN"/>
+        <relationship name="subscribedTo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Community" inverseName="subscribers" inverseEntity="Community"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="uuid"/>
@@ -93,12 +93,12 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="MessageDelivery" positionX="-54" positionY="-9" width="128" height="103"/>
-        <element name="ReactionDelivery" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="MessageN" positionX="-54" positionY="0" width="128" height="148"/>
-        <element name="ReactionN" positionX="-45" positionY="9" width="128" height="118"/>
-        <element name="UserN" positionX="-27" positionY="45" width="128" height="208"/>
-        <element name="ChatN" positionX="-18" positionY="99" width="128" height="133"/>
-        <element name="CommunityN" positionX="0" positionY="117" width="128" height="133"/>
+        <element name="Chat" positionX="-358.10546875" positionY="176.39453125" width="128" height="133"/>
+        <element name="Community" positionX="-651.33984375" positionY="167.78125" width="128" height="133"/>
+        <element name="Message" positionX="-404.63671875" positionY="-56.77734375" width="128" height="148"/>
+        <element name="MessageDelivery" positionX="-52.9375" positionY="13.1015625" width="128" height="103"/>
+        <element name="Reaction" positionX="-369.6015625" positionY="-226.796875" width="128" height="118"/>
+        <element name="ReactionDelivery" positionX="-52.39453125" positionY="-160.26953125" width="128" height="103"/>
+        <element name="User" positionX="-692.09375" positionY="-117.43359375" width="140.33984375" height="208"/>
     </elements>
 </model>

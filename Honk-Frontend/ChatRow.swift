@@ -7,17 +7,26 @@
 //
 
 import SwiftUI
-
+import CoreData
 extension Date {
     func currentTimeMillis() -> Int64 {
         return Int64(self.timeIntervalSince1970 * 1000)
     }
 }
 
+
 struct ChatRow: View {
-    var chatMessage: MessageN
-    @EnvironmentObject var user: User
-   
+    var chatMessage : Message;
+    //    var author : User;
+    @EnvironmentObject var user: UserLocal
+    let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    
+    var isMe : Bool  = false
+    //        return chatMessage.authorDef.usernameDef == self.user.username
+    //
+    //    }
+    
     
     var body: some View{
         
@@ -25,41 +34,42 @@ struct ChatRow: View {
         let dateString = DateFormatter()
         dateString.dateFormat = "HH:mm E, d MMM y"
         
+        
         // I think will have to do a get call somewhere if we don't want the date to display if the same one did on the last text
         
         
         return Group {
-            if chatMessage.authorDef.usernameDef != user.username{
-               
+            if self.chatMessage.author?.usernameDef != self.user.username{
+                //            if isMe{
                 VStack{
-                    Group{ // originally had this in the Vstack although it didn't orient correctly, moved back we'll see
-                        Text(dateString.string(from:today))
-                            .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(5)
-                        }
                     HStack {
                         Group {
-                             Text(chatMessage.avatar)
+                            Text(self.chatMessage.avatar)
                                 .padding(.leading, 5)
                                 .frame(alignment: .leading)
-                             Text(chatMessage.contentDef)
-                                 .bold()
-                                 .foregroundColor(.white)
-                                 .padding(10)       //comment this out to 
-//                                 .background(chatMessage.color)
-                                 .cornerRadius(10)
-                            
-                            
-                                 .fixedSize(horizontal: false, vertical: true)
-                                 .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
-                                 .contextMenu{
+                            Text(self.chatMessage.contentDef)
+                                
+                                .bold()
+                                .fixedSize(horizontal: false, vertical: true)
+                                .padding(10)
+                                .foregroundColor(.white)
+                                
+                                //comment this out to
+                                //                                 .background(chatMessage.color)
+                                .cornerRadius(10)
+                                
+                                
+                                
+                                //                                    .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
+                                //                                    .padding(10)
+                                .contextMenu{
                                     Button(action: self.reactToMessage){
                                         HStack{
                                             Text("Like")
                                             Image("thumbs-up")
-                                            .renderingMode(.original)
-                                            .resizable()
-                                            .scaledToFit()
+                                                .renderingMode(.original)
+                                                .resizable()
+                                                .scaledToFit()
                                         }
                                     }.frame(alignment: .leading)
                                     
@@ -68,45 +78,47 @@ struct ChatRow: View {
                                         HStack{
                                             Text("Create sub chat")
                                             Image("sub-group")
-                                            .renderingMode(.original)
-                                            .resizable()
-                                            .scaledToFit()
+                                                .renderingMode(.original)
+                                                .resizable()
+                                                .scaledToFit()
                                         }
                                     }
-                             }
+                            }
                             Spacer()
                         }
-                        
                     }
                 }
+
             } else {
                 VStack{
-                    Group{
-                        Spacer()
-                        Text(dateString.string(from:today))
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .padding(5)
-                    }
+                    
                     HStack {
                         Group {
                             Spacer()
-                            Text(chatMessage.contentDef)
+                            Text(self.chatMessage.contentDef)
+
+                                
                                 .bold()
-                                .foregroundColor(.white)
-                                .padding(10)
-//                                .background(chatMessage.color)
-                                .cornerRadius(10)
                                 .fixedSize(horizontal: false, vertical: true)
-                                .frame(minWidth: 10, maxWidth: 250, alignment: .bottomTrailing)
-                            Text(chatMessage.avatar)
+                                .padding(10)
+                                .foregroundColor(.white)
+                                .background(Color.green)
+                                .cornerRadius(10)
+
+                            
+                            Text(self.chatMessage.avatar)
                                 .padding(.trailing, 5)
                             
                         }
-                    }
+                    }.frame(alignment: .bottomTrailing)
+                        
                 }
             }
+            
+
         }
     }
+    
     func reactToMessage(){
         // in here will be the API call to like
         

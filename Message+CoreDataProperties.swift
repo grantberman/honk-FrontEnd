@@ -9,29 +9,36 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 
-extension MessageN {
+extension Message {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<MessageN> {
-        return NSFetchRequest<MessageN>(entityName: "MessageN")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Message> {
+        return NSFetchRequest<Message>(entityName: "Message")
     }
-
+    
+    //Message Object
     @NSManaged public var created_at: String?
     @NSManaged public var content: String?
     @NSManaged public var uuid: String?
     @NSManaged public var deliveries: NSSet?
-    @NSManaged public var author: UserN?
+    @NSManaged public var author: User?
     @NSManaged public var reactions: NSSet?
-    @NSManaged public var inChat: ChatN?
-    
+    @NSManaged public var inChat: Chat?
+ 
+    public var isMe : Bool {
+        let user = (UIApplication.shared.delegate as! AppDelegate).user
+        return (self.author?.usernameDef == user.username)
+        
+    }
     
     public var contentDef : String {
         content ?? ""
     }
     
-    public var authorDef : UserN {
-        author ?? UserN()
+    public var uuidDef : String {
+        uuid ?? "unknown";
     }
 
     
@@ -41,6 +48,8 @@ extension MessageN {
     
     
     public var created_atDef : String {
+//        let calendar = Calendar.current()
+//        let
         created_at ?? ""
     }
 
@@ -58,7 +67,7 @@ extension MessageN {
 }
 
 // MARK: Generated accessors for deliveries
-extension MessageN {
+extension Message {
 
     @objc(addDeliveriesObject:)
     @NSManaged public func addToDeliveries(_ value: MessageDelivery)
@@ -75,13 +84,13 @@ extension MessageN {
 }
 
 // MARK: Generated accessors for reactions
-extension MessageN {
+extension Message {
 
     @objc(addReactionsObject:)
-    @NSManaged public func addToReactions(_ value: ReactionN)
+    @NSManaged public func addToReactions(_ value: Reaction)
 
     @objc(removeReactionsObject:)
-    @NSManaged public func removeFromReactions(_ value: ReactionN)
+    @NSManaged public func removeFromReactions(_ value: Reaction)
 
     @objc(addReactions:)
     @NSManaged public func addToReactions(_ values: NSSet)

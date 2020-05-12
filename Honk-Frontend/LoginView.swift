@@ -20,9 +20,10 @@ struct LoginResult: Codable {
 
 struct LoginView: View {
     
-    @EnvironmentObject var user: User
+
+
+    @EnvironmentObject var user: UserLocal
     @EnvironmentObject var auth: Authentication
-    @ObservedObject var viewRouter: ViewRouter
 
     
     @State var isValidUser : Bool  = false {
@@ -38,15 +39,15 @@ struct LoginView: View {
     @ViewBuilder
     var body: some View {
         
-        
+
         if auth.isAuthenticated{
-            ContentView(viewRouter: viewRouter)
+            ContentView()
         }
         else {
             ZStack{
                 //            Color.white.edgesIgnoringSafeArea(.all)
                 // so we can change background color if we want
-                
+
                 VStack {
                     Group{
                         Image("Honk-Icon")
@@ -60,23 +61,24 @@ struct LoginView: View {
                             .padding()
                             .cornerRadius(20)
                             .foregroundColor(.black)
-                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                        
+                            .border(Color.white)
+
                         SecureField("password", text: $user.password)
                             .padding()
-                            .cornerRadius(20)
+
                             .foregroundColor(.black)
-                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                        
+
+                        .cornerRadius(5)
+                        .border(Color.white)
                         TextField("email", text: $user.email)
                             .padding()
                             .cornerRadius(20)
                             .foregroundColor(.white)
-                            .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
+                            .border(Color.white)
                     }.padding([.leading, .trailing], 27.5)
-                    
-                    
-                    
+
+
+
                     HStack {
                         Button(action: signIn) {
                             Text("Sign In")
@@ -85,10 +87,10 @@ struct LoginView: View {
                                 .padding()
                                 .frame(width: 175, height: 50)
                                 .background(Color.blue)
-                                .cornerRadius(15.0)
+                                .cornerRadius(5.0)
                         }
-                        
-                        
+
+
                         Button(action: register) {
                             Text("Create Account")
                                 .font(.headline)
@@ -97,7 +99,7 @@ struct LoginView: View {
                                 .frame(width: 175, height: 50)
                                 .fixedSize(horizontal: true, vertical: false)
                                 .background(Color.blue)
-                                .cornerRadius(15.0)
+                                .cornerRadius(5.0)
                         }
                     }
                 }.onAppear{
@@ -120,7 +122,6 @@ struct LoginView: View {
     
     
     func signIn() {
-        self.viewRouter.currentPage = "page2"
         self.user.auth.getAuth(user.username, user.password)
     }
     
@@ -137,9 +138,9 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(viewRouter: ViewRouter(), isValidUser: false)
+        LoginView(isValidUser: false)
             .environmentObject(Authentication())// these are for testing
-            .environmentObject(User())
+            .environmentObject(UserLocal())
     }
 }
 

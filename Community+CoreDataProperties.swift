@@ -11,10 +11,10 @@ import Foundation
 import CoreData
 
 
-extension CommunityN {
+extension Community {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<CommunityN> {
-        return NSFetchRequest<CommunityN>(entityName: "CommunityN")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Community> {
+        return NSFetchRequest<Community>(entityName: "Community")
     }
 
     @NSManaged public var created_at: String?
@@ -28,8 +28,8 @@ extension CommunityN {
         name ?? "unknown"
     }
     
-    public var chatArray : [ChatN] {
-        let set = chats as? Set<ChatN> ?? []
+    public var chatArray : [Chat] {
+        let set = chats as? Set<Chat> ?? []
         
             return set.sorted {
                 $0.wrappedName < $1.wrappedName
@@ -45,13 +45,13 @@ extension CommunityN {
 }
 
 // MARK: Generated accessors for subscribers
-extension CommunityN {
+extension Community {
 
     @objc(addSubscribersObject:)
-    @NSManaged public func addToSubscribers(_ value: UserN)
+    @NSManaged public func addToSubscribers(_ value: User)
 
     @objc(removeSubscribersObject:)
-    @NSManaged public func removeFromSubscribers(_ value: UserN)
+    @NSManaged public func removeFromSubscribers(_ value: User)
 
     @objc(addSubscribers:)
     @NSManaged public func addToSubscribers(_ values: NSSet)
@@ -62,13 +62,13 @@ extension CommunityN {
 }
 
 // MARK: Generated accessors for chats
-extension CommunityN {
+extension Community {
 
     @objc(addChatsObject:)
-    @NSManaged public func addToChats(_ value: ChatN)
+    @NSManaged public func addToChats(_ value: Chat)
 
     @objc(removeChatsObject:)
-    @NSManaged public func removeFromChats(_ value: ChatN)
+    @NSManaged public func removeFromChats(_ value: Chat)
 
     @objc(addChats:)
     @NSManaged public func addToChats(_ values: NSSet)

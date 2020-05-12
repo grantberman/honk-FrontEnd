@@ -9,19 +9,18 @@
 import SwiftUI
 import CoreData
 
+
+
 struct ContentView: View {
     
     @State var composedMessage: String = ""
     @State var menuOpen: Bool = false
-    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(entity: CommunityN.entity(), sortDescriptors: []) var communities: FetchedResults<CommunityN>
-
-    @EnvironmentObject var appState : AppState
-    @EnvironmentObject var chatController : ChatController
-    @EnvironmentObject var user: User
-    @ObservedObject var viewRouter: ViewRouter
-    @State var makeCommunityViewIsPresented = false
+    let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    @FetchRequest(entity: Community.entity(), sortDescriptors: []) var communities: FetchedResults<Community>
     
+    @EnvironmentObject var appState : AppState
+    @EnvironmentObject var user: UserLocal
+    @State var makeCommunityViewIsPresented = false
     
     
     var body: some View {
@@ -45,26 +44,35 @@ struct ContentView: View {
                     }) {
                         Text("Create New Community")
                     }.sheet(isPresented: self.$makeCommunityViewIsPresented){
-                        return CreateCommunityView(isPresented: self.$makeCommunityViewIsPresented).environmentObject(self.user).environmentObject(self.appState)
+                        return CreateCommunityView(isPresented: self.$makeCommunityViewIsPresented, sideMenuOpen: self.$menuOpen).environmentObject(self.user).environmentObject(self.appState)
                     }
-                    }
-                else{
-                
+                }
+                else  {
+                    
                     VStack{
                         NavigationView {
+                            
                             ReverseScrollView {
                                 
                                 VStack{
-                                    ForEach (self.appState.selectedChat?.chatMessages ?? [], id: \.self) { msg in
-                                        VStack{
-                                            ChatRow(chatMessage: msg)
+                                    if (self.appState.selectedChat != nil) {
+                                        ForEach (self.appState.selectedChat?.chatMessages ?? [], id: \.self) { msg in
+                                            
+                                            VStack{
+                                                self.generateChatRow(message: msg)
+//                                                ChatRow(chatMessage: msg)
+                                            }
                                         }
                                     }
+
                                 }
-                                .navigationBarTitle("\(self.appState.selectedChat?.nameDef ?? "unknown")", displayMode: .inline)
+                                
                             }
+                                
+                            .navigationBarTitle("\(self.appState.selectedChat?.nameDef ?? "unknown")", displayMode: .inline)
                             .navigationBarItems(leading:
                                 Button(action: {
+                                    print(self.appState.selectedChat)
                                     self.openMenu()
                                     do {
                                         try self.moc.save()
@@ -81,7 +89,11 @@ struct ContentView: View {
                         
                         HStack{
                             TextField("Message...", text: self.$composedMessage).frame(minHeight: CGFloat(30))
-                            Button(action: self.sendMessage) {
+                            Button(action: {
+                                
+                                self.sendMessage()
+                                self.composedMessage = ""
+                            }) {
                                 Text("Send")
                             }.disabled(self.appState.selectedChat == nil)
                         }
@@ -91,40 +103,125 @@ struct ContentView: View {
                     }
                 }
                 
-
+                
                 SideMenu(width: 270,
                          isOpen: self.menuOpen,
                          menuClose: self.openMenu)
             }.gesture(drag)
             
+            
         }
         
-
+        
     }
+    func generateChatRow(message : Message) -> ChatRow {
+
+            return ChatRow (chatMessage: message)
+
+
+        
+        
+        
+    }
+    
+    
     func openMenu() {
         self.menuOpen.toggle()
     }
     
-    func createNewCommunity(){
-        // call to create new community page will be here
-        //NavigationLink(<#LocalizedStringKey#>, destination: CreateCommunityView())
-        self.viewRouter.currentPage = "page3"
 
-    }
-        
-    
     
     func sendMessage() {
+        
+        
+        let chatUUID = self.appState.selectedChat!.uuidDef
+        let authToken = self.user.auth.token
+        
+        guard let url = URL(string: "http://honk-api.herokuapp.com/api/messages") else {
+            print("Invalid URL")
+            return
+        }
+        let body: [String: Any] = ["content" : self.composedMessage, "chat_uuid": chatUUID]
+        
+        let finalBody = try! JSONSerialization.data(withJSONObject: body)  //make proper check later
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = finalBody
+        
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(self.user.auth.token)", forHTTPHeaderField: "Authorization") //after
+        
 
-        chatController.sendMessage(composedMessage, self.appState.selectedChat!.uuidDef, self.user.auth.token)
-        composedMessage = ""
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+
+            
+            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
+
+                let possibleResponse = response as? HTTPURLResponse
+                print(possibleResponse?.statusCode)
+                return
+            }
+            
+            guard let data = data  else {
+                print(" no data" )
+                return
+            }
+            
+            DispatchQueue.main.async{
+                
+                do {
+                    
+                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                    
+                    let jsonString = String(data: data, encoding: .utf8)
+
+                    let jsonData = jsonString!.data(using: .utf8)
+                    let decoder = JSONDecoder()
+                    decoder.userInfo[CodingUserInfoKey.context!] = context
+                    let message = try decoder.decode(Message.self, from: jsonData!)
+
+                    
+                    
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
+                    fetchRequest.predicate = NSPredicate(format: "uuid == %@", chatUUID)
+                    
+                    let fetchedChat = try context.fetch(fetchRequest) as! [Chat]
+                    let objectUpdate = fetchedChat[0]
+                    let messages = objectUpdate.messages
+                    let updatedMessages = messages?.adding(message)
+                    objectUpdate.messages = updatedMessages as NSSet?
+                    
+                    do {
+                        try context.save()
+
+                    } catch {
+                        print("could not save")
+                    }
+                } catch {
+                    print("could not decode" )
+                }
+                
+            }
+            
+            return
+            
+        }.resume()
+        
+        
     }
+    
     
 }
 
+
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(viewRouter: ViewRouter())
-            .environmentObject(ChatController()).environmentObject(AppState())
+        ContentView()
+            .environmentObject(AppState())
     }
 }
