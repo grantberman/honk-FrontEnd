@@ -82,7 +82,7 @@
         <attribute name="uuid" optional="YES" attributeType="String"/>
         <relationship name="authored" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="author" inverseEntity="Message"/>
         <relationship name="memberOf" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="members" inverseEntity="Chat"/>
-        <relationship name="reaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Reaction" inverseName="reactor" inverseEntity="Reaction"/>
+        <relationship name="reaction" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reaction" inverseName="reactor" inverseEntity="Reaction"/>
         <relationship name="receivedReaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReactionDelivery" inverseName="recipient" inverseEntity="ReactionDelivery"/>
         <relationship name="recievedMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MessageDelivery" inverseName="recipient" inverseEntity="MessageDelivery"/>
         <relationship name="subscribedTo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Community" inverseName="subscribers" inverseEntity="Community"/>

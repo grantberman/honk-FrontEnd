@@ -40,10 +40,32 @@ extension Message {
     public var uuidDef : String {
         uuid ?? "unknown";
     }
+    public var reactionsDef : [Reaction] {
+        let set = reactions as? Set<Reaction> ?? []
+        return Array(set)
+            
+//            set.sorted {
+//            $0.uuid! < $1.uuid!
+//        }
+    }
 
     
     public var avatar : String {
-        return "T"      //change this be based off of the display name
+        return String(author?.usernameDef.prefix(1).uppercased() ?? "U")
+    }
+    
+    public var reactionUsernames : [String] {
+        var reactionUsernames = [String]()
+        let set = reactions as? Set<Reaction> ?? []
+        let setArray = Array(set)
+        for reaction in setArray {
+            if !reactionUsernames.contains(reaction.reactor!.usernameDef) {
+                reactionUsernames.append(reaction.reactor?.username ?? "")
+            }
+            
+        }
+        return reactionUsernames
+
     }
     
     
