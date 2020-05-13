@@ -208,7 +208,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             case "message":
                 
                 // Get the URL for the request
-                guard let url = URL(string: "https://honk-api.herokuapp.com/api/messages/unread")
+                guard let url = URL(string: "https://honk-staging.herokuapp.com/api/messages/unread")
                   else {
                       print("Invalid URL")
                       return
@@ -288,7 +288,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                             try context.save()
                                           
                                             // Construct a PUT request to mark the message as read on the server
-                                            guard let url = URL(string: "https://honk-api.herokuapp.com/api/messages/\(messageUUID)") else { return }
+                                            guard let url = URL(string: "https://honk-staging.herokuapp.com/api/messages/\(messageUUID)") else { return }
                                             var request = URLRequest(url: url)
                                             request.httpMethod = "PUT"
                                             request.setValue("Bearer \(self.user.auth.token)", forHTTPHeaderField: "Authorization")
@@ -331,7 +331,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 let communityUUID = communityUUIDRaw as! String
                 
                 // Prepare a request to get the right community from the server (community GET endpoint)
-                guard let url = URL(string: "https://honk-api.herokuapp.com/api/communities/\(communityUUID)")
+                guard let url = URL(string: "https://honk-staging.herokuapp.com/api/communities/\(communityUUID)")
                     else {
                         print("Invalid URL")
                         return
@@ -391,7 +391,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     let chats = objectUpdate.chats
                 
                     // Create an API request to get the chat object
-                    guard let url = URL(string: "https://honk-api.herokuapp.com/api/chats/\(chatUUID)")
+                    guard let url = URL(string: "https://honk-staging.herokuapp.com/api/chats/\(chatUUID)")
                         else {
                             print("Invalid URL")
                             return

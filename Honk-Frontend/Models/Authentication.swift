@@ -21,7 +21,7 @@ class Authentication: ObservableObject{
     
     func getAuth(_ username: String, _ password: String) {   //after the username and password have been validated as correct, this call gets the users auth token
         //        print(username + " " + password)
-        guard let url = URL(string: "http://honk-api.herokuapp.com/api/tokens") else {
+        guard let url = URL(string: "http://honk-staging.herokuapp.com/api/tokens") else {
             print("Invalid URL")
             return
         }
@@ -90,7 +90,7 @@ class Authentication: ObservableObject{
     func register(_ username: String, _ password: String, _ email: String, _ token: String) {
         
         
-        guard let url = URL(string: "http://honk-api.herokuapp.com/api/users") else {
+        guard let url = URL(string: "http://honk-staging.herokuapp.com/api/users") else {
             print("Invalid URL")
             return
         }

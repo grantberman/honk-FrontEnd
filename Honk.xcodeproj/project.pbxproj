@@ -70,7 +70,7 @@
 		93A3DCCF2460C13E00355382 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = "<group>"; };
 		93A3DCD02460C13E00355382 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		93A3DCDF2460F8AE00355382 /* NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenter.swift; sourceTree = "<group>"; };
-		93A8030E2446B9DB00815B21 /* Honk-Frontend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Honk-Frontend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		93A8030E2446B9DB00815B21 /* Honk-FrontEnd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Honk-FrontEnd.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A803112446B9DB00815B21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93A803132446B9DB00815B21 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		93A803162446B9DB00815B21 /* Honk_Frontend.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Honk_Frontend.xcdatamodel; sourceTree = "<group>"; };
@@ -159,7 +159,7 @@
 		93A8030F2446B9DB00815B21 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				93A8030E2446B9DB00815B21 /* Honk-Frontend.app */,
+				93A8030E2446B9DB00815B21 /* Honk-FrontEnd.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -211,9 +211,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		93A8030D2446B9DB00815B21 /* Honk-Frontend */ = {
+		93A8030D2446B9DB00815B21 /* Honk */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 93A803252446B9DE00815B21 /* Build configuration list for PBXNativeTarget "Honk-Frontend" */;
+			buildConfigurationList = 93A803252446B9DE00815B21 /* Build configuration list for PBXNativeTarget "Honk" */;
 			buildPhases = (
 				93A8030A2446B9DB00815B21 /* Sources */,
 				93A8030B2446B9DB00815B21 /* Frameworks */,
@@ -223,9 +223,9 @@
 			);
 			dependencies = (
 			);
-			name = "Honk-Frontend";
+			name = Honk;
 			productName = "Honk-Frontend";
-			productReference = 93A8030E2446B9DB00815B21 /* Honk-Frontend.app */;
+			productReference = 93A8030E2446B9DB00815B21 /* Honk-FrontEnd.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -243,7 +243,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 93A803092446B9DB00815B21 /* Build configuration list for PBXProject "Honk-Frontend" */;
+			buildConfigurationList = 93A803092446B9DB00815B21 /* Build configuration list for PBXProject "Honk" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -256,7 +256,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				93A8030D2446B9DB00815B21 /* Honk-Frontend */,
+				93A8030D2446B9DB00815B21 /* Honk */,
 			);
 		};
 /* End PBXProject section */
@@ -461,7 +461,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Midd.Honk-Frontend";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Honk-FrontEnd";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -482,7 +482,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Midd.Honk-Frontend";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Honk-FrontEnd";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -491,7 +491,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		93A803092446B9DB00815B21 /* Build configuration list for PBXProject "Honk-Frontend" */ = {
+		93A803092446B9DB00815B21 /* Build configuration list for PBXProject "Honk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				93A803232446B9DE00815B21 /* Debug */,
@@ -500,7 +500,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		93A803252446B9DE00815B21 /* Build configuration list for PBXNativeTarget "Honk-Frontend" */ = {
+		93A803252446B9DE00815B21 /* Build configuration list for PBXNativeTarget "Honk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				93A803262446B9DE00815B21 /* Debug */,
