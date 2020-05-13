@@ -47,23 +47,45 @@ extension Message {
     }
     
     
-    public var created_atDef : String {
-//        let calendar = Calendar.current()
-//        let
-        created_at ?? ""
-    }
+//    public var created_atDef : String {
+//        print(created_at)
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.Z"
+//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+//        let dt = dateFormatter.date(from: created_at!)
+//        dateFormatter.timeZone = TimeZone.current
+//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+//
+//        return dateFormatter.string(from: dt)
+//
+////        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+////        dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+////        let date = dateFormatter.date(from: created_at!)
+////        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+////        dateFormatter.timeZone = NSTimeZone.local
+////        let timeStamp = dateFormatter.string(from: date!)
+////        print(timeStamp)
+////        return timeStamp
+//
+//    }
 
-    public var sentTime:  Date  {
-        let dateFormatter = ISO8601DateFormatter()
-        if let date = dateFormatter.date(from: created_atDef) {
-            return date
-        }
-        else {
-            let date = Date()
-            return date
-        }
-        
-    }
+//    public var sentTime:  Date  {
+//        let dateFormatter = DateFormatter()
+////        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+////        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+////        let date = dateFormatter.date(from: created_at ?? String(Date()))
+////        return date
+////
+//        if let date = dateFormatter.date(from: created_atDef) {
+//            return date
+//        }
+//        else {
+//            print("default date")
+//            let date = Date()
+//            return date
+//        }
+//        
+//    }
 }
 
 // MARK: Generated accessors for deliveries
