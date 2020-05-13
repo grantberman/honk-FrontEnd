@@ -18,6 +18,20 @@ class UserLocal   : ObservableObject {
     var test = false
     
     var auth = Authentication()
+    
+    init() {
+        let username = KeychainWrapper.standard.string(forKey: "username") ?? ""
+        let password = KeychainWrapper.standard.string(forKey: "password") ?? ""
+      
+        if username != "" && password != "" {
+            //if there are saved credentials
+            print("user and pass exist!")
+            self.username = username
+            self.password = password
+            
+            self.auth.getAuth( username, password )
+        }
+    }
 }
 
 struct UserCodable: Codable {
