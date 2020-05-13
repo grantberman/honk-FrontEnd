@@ -71,7 +71,7 @@ struct ChatRow: View {
                                 //                                    .frame(minWidth: 10, maxWidth: 300,  alignment: .leading)
                                 //                                    .padding(10)
                                 .contextMenu{
-                                    Button(action: self.reactToMessage){
+                                    Button(action: { self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef, self.chatMessage.inChat!.uuidDef)}){
                                         HStack{
                                             Text("Like")
                                             Image("thumbs-up")
@@ -128,6 +128,7 @@ struct ChatRow: View {
                             }
                             Spacer()
                         }
+                    }
                     }
                 } else {
                     VStack{
