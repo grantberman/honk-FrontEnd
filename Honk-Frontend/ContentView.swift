@@ -15,6 +15,9 @@ struct ContentView: View {
     
     @State var composedMessage: String = ""
     @State var menuOpen: Bool = false
+    @State var refreshing = false
+    
+    var didSave = NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave)
     let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     @FetchRequest(entity: Community.entity(), sortDescriptors: []) var communities: FetchedResults<Community>
     
@@ -58,11 +61,15 @@ struct ContentView: View {
                                 VStack{
                                     if (self.appState.selectedChat != nil) {
                                         ForEach (self.appState.selectedChat?.chatMessages ?? [], id: \.self) { msg in
-                                            
-                                            VStack{
-                                                self.generateChatRow(message: msg)
-//                                                ChatRow(chatMessage: msg)
+                                            HStack {
+                                                Text(self.refreshing ? "" : "")
+                                                VStack{
+                                                    self.generateChatRow(message: msg)
+                                                }
+                                            }.onReceive(self.didSave) { _ in
+                                                self.refreshing.toggle()
                                             }
+
                                         }
                                     }
 
@@ -193,6 +200,7 @@ struct ContentView: View {
                     let messages = objectUpdate.messages
                     let updatedMessages = messages?.adding(message)
                     objectUpdate.messages = updatedMessages as NSSet?
+                    self.didSave
                     
                     do {
                         try context.save()
