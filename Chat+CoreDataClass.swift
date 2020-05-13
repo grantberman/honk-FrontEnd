@@ -19,6 +19,7 @@ public class Chat: NSManagedObject, Codable{
         case uuid = "uuid"
         case members = "members"
         case messages = "messages"
+        case inCommunity = "inCommunity"
         
     }
     
@@ -28,6 +29,14 @@ public class Chat: NSManagedObject, Codable{
             try container.encode(created_at ?? "", forKey: .created_at)
             try container.encode(name ?? "", forKey: .name)
             try container.encode(uuid ?? "", forKey: .uuid)
+//            try container.encode(inCommunity as! Community, forKey: .inCommunity)
+            let members = self.members?.allObjects as? [User]
+            let messages = self.messages?.allObjects as? [Message]
+            try container.encode(members, forKey: .members)
+            try container.encode(messages, forKey: .messages)
+            
+            
+            
         }
         catch {
             print("Error: Chat Encdoing")

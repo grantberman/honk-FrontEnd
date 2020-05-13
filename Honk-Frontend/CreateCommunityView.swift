@@ -24,7 +24,6 @@ struct CreateCommunityView: View {
     @State private var Username = ""
     @EnvironmentObject var appState : AppState
     
-    //    @ObservedObject var viewRouter: ViewRouter
     @EnvironmentObject var user: UserLocal
     @Binding var isPresented: Bool
     @Binding var sideMenuOpen : Bool
@@ -118,15 +117,7 @@ struct CreateCommunityView: View {
         let body: [String: Any] = ["name": name, "description": description, "invite_usernames": invite_usernames]
         
         let finalBody = try! JSONSerialization.data(withJSONObject: body)
-        //        Body: {
-        //        "name": "Tavern2",
-        //        "description": "a place to drink”,
-        //        "invite_uuids": [], - optional
-        //        "invite_usernames": [] - optional
-        //        }
-        
-        
-        //somehow need to create automatic chat with every user in it
+
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -156,13 +147,13 @@ struct CreateCommunityView: View {
                     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
                     
                     let jsonString = String(data: data, encoding: .utf8)
-                    print(jsonString)
+
                     let jsonData = jsonString!.data(using: .utf8)
                     let decoder = JSONDecoder()
                     decoder.userInfo[CodingUserInfoKey.context!] = context
                     let community = try decoder.decode(Community.self, from: jsonData!)
                     
-                    print(community.uuidDef)
+
                     self.appState.selectedCommunity = community
                     
                     do {

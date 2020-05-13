@@ -20,6 +20,8 @@ struct LoginResult: Codable {
 
 struct LoginView: View {
     
+
+
     @EnvironmentObject var user: UserLocal
     @EnvironmentObject var auth: Authentication
 
@@ -37,7 +39,7 @@ struct LoginView: View {
     @ViewBuilder
     var body: some View {
         
-        
+
         if auth.isAuthenticated{
             ContentView()
         }
@@ -45,7 +47,7 @@ struct LoginView: View {
             ZStack{
                 //            Color.white.edgesIgnoringSafeArea(.all)
                 // so we can change background color if we want
-                
+
                 VStack {
                     Group{
                         Image("Honk-Icon")
@@ -60,12 +62,12 @@ struct LoginView: View {
                             .cornerRadius(20)
                             .foregroundColor(.black)
                             .border(Color.white)
-                        
+
                         SecureField("password", text: $user.password)
                             .padding()
-                            
+
                             .foregroundColor(.black)
-                            
+
                         .cornerRadius(5)
                         .border(Color.white)
                         TextField("email", text: $user.email)
@@ -74,9 +76,9 @@ struct LoginView: View {
                             .foregroundColor(.white)
                             .border(Color.white)
                     }.padding([.leading, .trailing], 27.5)
-                    
-                    
-                    
+
+
+
                     HStack {
                         Button(action: signIn) {
                             Text("Sign In")
@@ -87,8 +89,8 @@ struct LoginView: View {
                                 .background(Color.blue)
                                 .cornerRadius(5.0)
                         }
-                        
-                        
+
+
                         Button(action: register) {
                             Text("Create Account")
                                 .font(.headline)

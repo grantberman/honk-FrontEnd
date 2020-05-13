@@ -80,7 +80,7 @@
         <attribute name="display_name" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
-        <relationship name="authored" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message" inverseName="author" inverseEntity="Message"/>
+        <relationship name="authored" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="author" inverseEntity="Message"/>
         <relationship name="memberOf" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="members" inverseEntity="Chat"/>
         <relationship name="reaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Reaction" inverseName="reactor" inverseEntity="Reaction"/>
         <relationship name="receivedReaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReactionDelivery" inverseName="recipient" inverseEntity="ReactionDelivery"/>
@@ -95,10 +95,10 @@
     <elements>
         <element name="Chat" positionX="-358.10546875" positionY="176.39453125" width="128" height="133"/>
         <element name="Community" positionX="-651.33984375" positionY="167.78125" width="128" height="133"/>
-        <element name="MessageDelivery" positionX="-52.9375" positionY="13.1015625" width="128" height="103"/>
         <element name="Message" positionX="-404.63671875" positionY="-56.77734375" width="128" height="148"/>
-        <element name="ReactionDelivery" positionX="-52.39453125" positionY="-160.26953125" width="128" height="103"/>
+        <element name="MessageDelivery" positionX="-52.9375" positionY="13.1015625" width="128" height="103"/>
         <element name="Reaction" positionX="-369.6015625" positionY="-226.796875" width="128" height="118"/>
-        <element name="User" positionX="-692.09375" positionY="-117.43359375" width="140.33984375" height="118"/>
+        <element name="ReactionDelivery" positionX="-52.39453125" positionY="-160.26953125" width="128" height="103"/>
+        <element name="User" positionX="-692.09375" positionY="-117.43359375" width="140.33984375" height="208"/>
     </elements>
 </model>

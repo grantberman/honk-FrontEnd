@@ -22,7 +22,7 @@ extension User {
     @NSManaged public var display_name: String?
     @NSManaged public var username: String?
     @NSManaged public var uuid: String?
-    @NSManaged public var authored: Message?
+    @NSManaged public var authored: NSSet?
     @NSManaged public var receivedReaction: ReactionDelivery?
     @NSManaged public var recievedMessage: MessageDelivery?
     @NSManaged public var memberOf: Chat?
