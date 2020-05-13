@@ -222,7 +222,7 @@ struct ChatRow: View {
         //  the API call to like
         
         
-        guard let url = URL(string: "https://honk-api.herokuapp.com/api/messages/\(message_uuid)/reactions")
+        guard let url = URL(string: "https://honk-staging.herokuapp.com/api/messages/\(message_uuid)/reactions")
             else {
                 print("Invalid URL")
                 return
@@ -314,7 +314,7 @@ struct ChatRow: View {
     func getReactions(_ message_uuid: String, _ auth: String){
         // this is the API call to get the likes to display them
         
-        guard let url = URL(string: "http://honk-api.herokuapp.com/api/messages/\(message_uuid)") else {
+        guard let url = URL(string: "http://honk-staging.herokuapp.com/api/messages/\(message_uuid)") else {
             print("Invalid URL")
             return
         }

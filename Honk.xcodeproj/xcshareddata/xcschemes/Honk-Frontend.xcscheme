@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "93A8030D2446B9DB00815B21"
-               BuildableName = "Honk-Frontend.app"
-               BlueprintName = "Honk-Frontend"
-               ReferencedContainer = "container:Honk-Frontend.xcodeproj">
+               BuildableName = "Honk.app"
+               BlueprintName = "Honk"
+               ReferencedContainer = "container:Honk.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "93A8030D2446B9DB00815B21"
-            BuildableName = "Honk-Frontend.app"
-            BlueprintName = "Honk-Frontend"
-            ReferencedContainer = "container:Honk-Frontend.xcodeproj">
+            BuildableName = "Honk.app"
+            BlueprintName = "Honk"
+            ReferencedContainer = "container:Honk.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "93A8030D2446B9DB00815B21"
-            BuildableName = "Honk-Frontend.app"
-            BlueprintName = "Honk-Frontend"
-            ReferencedContainer = "container:Honk-Frontend.xcodeproj">
+            BuildableName = "Honk.app"
+            BlueprintName = "Honk"
+            ReferencedContainer = "container:Honk.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
