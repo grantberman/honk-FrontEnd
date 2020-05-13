@@ -87,14 +87,14 @@ class Authentication: ObservableObject{
     }
     
     
-    func register(_ username: String, _ password: String, _ email: String) {
+    func register(_ username: String, _ password: String, _ email: String, _ token: String) {
         
         
         guard let url = URL(string: "http://honk-api.herokuapp.com/api/users") else {
             print("Invalid URL")
             return
         }
-        let body: [String: String] = ["username" : username, "password": password, "email": email]
+        let body: [String: String] = ["username" : username, "password": password, "email": email, "apns": token]
         
         
         
