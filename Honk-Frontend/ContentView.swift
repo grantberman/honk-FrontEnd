@@ -101,10 +101,10 @@ struct ContentView: View {
                                     print("info button pressed...")
                                 }){
                                     Text("Info")
-                                    
                                 }.sheet(isPresented: self.$makeInfoIsPresented){
                                     return InfoView(isPresented: self.$makeInfoIsPresented)
                                         .environmentObject( self.appState)
+                                        .environmentObject(self.user)
                                     
                                 }
                             )
