@@ -87,6 +87,8 @@ struct ChatRow: View {
                             Spacer()
                         }
                     }
+                }.onTapGesture {
+                    print(self.chatMessage.created_at)
                 }
 
             } else {
@@ -112,6 +114,8 @@ struct ChatRow: View {
                         }
                     }.frame(alignment: .bottomTrailing)
                         
+                }.onTapGesture {
+                    print(self.chatMessage.created_at)
                 }
             }
             
