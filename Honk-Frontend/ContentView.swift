@@ -116,8 +116,7 @@ struct ContentView: View {
         
     }
     func generateChatRow(message : Message) -> ChatRow {
-
-            return ChatRow (chatMessage: message)
+        return ChatRow (chatMessage: message)
 
 
         

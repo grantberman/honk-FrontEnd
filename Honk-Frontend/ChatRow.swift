@@ -8,6 +8,7 @@
 
 import SwiftUI
 import CoreData
+import Combine
 extension Date {
     func currentTimeMillis() -> Int64 {
         return Int64(self.timeIntervalSince1970 * 1000)
@@ -16,13 +17,17 @@ extension Date {
 
 
 struct ChatRow: View {
-    var chatMessage : Message;
+   
     //    var author : User;
     @EnvironmentObject var user: UserLocal
     let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    //@Binding var hasReacted: Bool
-   // @State var hiddenTrigger = false
     
+    let objectWillChange = ObservableObjectPublisher()
+    var chatMessage : Message {// this makes it show like messages when something else is clicked, not quite fully what we want but close. If the keyboard is up it rerenders immediently but if not then it needs a click somewhere
+           willSet{
+               objectWillChange.send()
+           }
+       }
     
     var hasLikes: Bool = false
     var isMe : Bool  = false
@@ -87,8 +92,6 @@ struct ChatRow: View {
 //                                    .padding(10)
                                     .contextMenu{
                                     Button(action: { self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef, self.chatMessage.inChat!.uuidDef)
-                                        //self.hasReacted.toggle() // a state change to force rerender
-                                        //self.hiddenTrigger = self.hasReacted
                                     }){
                                             EmptyView()
                                             HStack{
@@ -165,8 +168,6 @@ struct ChatRow: View {
                                 .cornerRadius(10)
                                 .contextMenu{
                                     Button(action: { self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef, self.chatMessage.inChat!.uuidDef)
-                                        //self.hasReacted.toggle() // a state change to force rerender
-                                        //self.hiddenTrigger = self.hasReacted
                                     }){
                                             EmptyView()
                                             HStack{
