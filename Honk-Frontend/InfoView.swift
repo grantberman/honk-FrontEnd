@@ -11,6 +11,8 @@ import SwiftUI
 struct InfoView: View {
     @Binding var isPresented: Bool
     @EnvironmentObject var appState: AppState
+    
+    //var mostLikes = 0
 
     
     var body: some View {
@@ -22,8 +24,10 @@ struct InfoView: View {
                 .font(.title)
                 .padding(20)
                 Group{
-                    Text("Top messenger: ")
-                    Text("Messages per week: ")
+                    Text("Messages in chat: " + String(describing: appState.selectedChat!.chatMessages.count))
+                    
+                   
+                    //Text("Messages per week: " + String(describing: appState.selectedChat?.chatMessages))
                 }.padding(10)
             }.navigationBarTitle(Text("Info"), displayMode: .inline)
                 .navigationBarItems(trailing: Button(action: {
@@ -34,5 +38,22 @@ struct InfoView: View {
         }
 
     }
+//
+//    public func getMostLikes() -> Message{
+//        var mostLikes = 0
+//        ForEach(self.appState.selectedChat!.chatMessages, id:\.self ){
+//            selectedMessage in
+//            Group{
+//                if (selectedMessage.reactions.count > mostLikes){
+//                    mostLikes
+//
+//                }
+//                else{
+//
+//                }
+//
+//            }
+//        }
+//    }
 }
 
