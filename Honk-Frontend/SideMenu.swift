@@ -13,11 +13,13 @@ struct MenuContent: View {
     @EnvironmentObject var appState: AppState
     
     @State var makeChatIsPresented = false
+    @State var makeCommunityIsPresented = false
     
     let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     @FetchRequest(entity: Community.entity(), sortDescriptors: []) var communities: FetchedResults<Community>
     
     @Binding var menuClose: () -> Void
+    @Binding var sideMenuIsOpen : Bool
     
     @ViewBuilder
     var body: some View {
@@ -28,10 +30,10 @@ struct MenuContent: View {
                     Section(header: HStack {
                         Text(community.communityName).onTapGesture {
                             self.appState.selectedCommunity = community
-
-
+                            
+                            
                             do {
-
+                                
                                 let encoder = JSONEncoder()
                                 let data = try encoder.encode(community)
                                 let string = String(data: data, encoding: .utf8)!
@@ -44,11 +46,11 @@ struct MenuContent: View {
                                 print("could not save defaults")
                             }
                         }
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-
-                            Spacer()
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        
+                        Spacer()
                     }
                     .background(Color.blue)
                     .listRowInsets(EdgeInsets(
@@ -59,13 +61,14 @@ struct MenuContent: View {
                     ) {
                         ForEach(community.chatArray, id: \.self) { chat in VStack {
                             Text(chat.wrappedName).onTapGesture {
+                                self.appState.selectedCommunity = chat.inCommunity
                                 self.appState.selectedChat = chat
                                 let userDefaults = UserDefaults.standard
                                 userDefaults.set(chat.uuid, forKey: "chat")
-
+                                
                                 self.menuClose()
                             }
-                            }.listStyle(GroupedListStyle())
+                        }.listStyle(GroupedListStyle())
                             
                             
                             
@@ -74,31 +77,45 @@ struct MenuContent: View {
                             self.makeChatIsPresented.toggle()
                         }) {
                             Text("Create New Chat")
+         
+    
                         }.sheet(isPresented: self.$makeChatIsPresented){
-                            return CreateChatView(communityUUID: self.appState.selectedCommunity!.uuidDef, isPresented: self.$makeChatIsPresented).environmentObject(self.user).environmentObject(self.appState)
+                            return CreateChatView(communityUUID: community.uuid!, isPresented: self.$makeChatIsPresented).environmentObject(self.user).environmentObject(self.appState)
+                            
+                        }
+                        
+                        
+                        
                     }
                     
-
+                    
+                }.navigationBarTitle("" , displayMode: .inline)
+                    .navigationBarHidden(true)
+                
+                Button (action: {
+                    self.makeChatIsPresented.toggle()
+                    print(self.makeChatIsPresented)
+                }) {
+                    Text("Create New Community")
+                    .bold()
+                        .foregroundColor(.blue)
+                }.sheet(isPresented: self.$makeChatIsPresented){
+                    return CreateCommunityView(isPresented: self.$makeChatIsPresented).environmentObject(self.user).environmentObject(self.appState)
                     
                 }
-
-
-                }
-            
-                        .navigationBarTitle("" , displayMode: .inline)
-
-                        .navigationBarHidden(true)
             }
-        
-        
+
+            
+            
         }
+        //        }
     }
 }
 
 
 struct SideMenu: View {
     let width: CGFloat
-    let isOpen: Bool
+    @Binding var sideMenuIsOpen: Bool
     @State var menuClose: () -> Void
     
     var body: some View {
@@ -107,17 +124,17 @@ struct SideMenu: View {
                 EmptyView()
             }
             .background(Color.gray.opacity(0.3))
-            .opacity(self.isOpen ? 1.0 : 0.0)
+            .opacity(self.sideMenuIsOpen ? 1.0 : 0.0)
             .animation(Animation.easeIn.delay(0.25))
             .onTapGesture {
                 self.menuClose()
             }
             
             HStack {
-                MenuContent(menuClose: $menuClose)
+                MenuContent(menuClose: $menuClose, sideMenuIsOpen: self.$sideMenuIsOpen)
                     .frame(width: self.width)
                     .background(Color.white)
-                    .offset(x: self.isOpen ? 0 : -self.width)
+                    .offset(x: self.sideMenuIsOpen ? 0 : -self.width)
                     .animation(.default)
                 
                 Spacer()

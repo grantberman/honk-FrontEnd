@@ -19,9 +19,11 @@ struct ChatResult: Codable{
 
 struct CreateChatView: View {
     
+    @State var initList : [String]?
     @State private var chatName : String = ""
     @State private var userList = [String]()
     @State private var username = ""
+    
     var communityUUID : String
     @Binding var isPresented: Bool
     
@@ -42,8 +44,15 @@ struct CreateChatView: View {
                         HStack{
                             TextField("Username", text: $username)
                             Button(action: {
-                                self.userList.append(self.username)
-                                self.username = ""
+                                if (self.initList != nil) {
+                                    self.userList.append(self.username)
+                                    self.username = ""
+                                }
+                                else {
+                                    self.initList?.append(self.username)
+                                    self.username = ""
+                                }
+
                             }){
                                 Text("Add user")
                             }.disabled(username == "")
@@ -145,6 +154,7 @@ struct CreateChatView: View {
                     let chats = objectUpdate.chats
                     let updatedChats = chats?.adding(chat)
                     objectUpdate.chats = updatedChats as NSSet?
+                    self.appState.selectedChat = chat
                     
                     do {
                         try context.save()
