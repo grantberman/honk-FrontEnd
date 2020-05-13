@@ -15,7 +15,7 @@ struct ContentView: View {
     
     @State var composedMessage: String = ""
     @State var menuOpen: Bool = false
-    @Environment(\.managedObjectContext) var moc
+    let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     @FetchRequest(entity: Community.entity(), sortDescriptors: []) var communities: FetchedResults<Community>
     
     @EnvironmentObject var appState : AppState
@@ -48,18 +48,24 @@ struct ContentView: View {
                         return CreateCommunityView(isPresented: self.$makeCommunityViewIsPresented, sideMenuOpen: self.$menuOpen).environmentObject(self.user).environmentObject(self.appState)
                     }
                 }
-                else{
+                else  {
                     
                     VStack{
                         NavigationView {
+                            
                             ReverseScrollView {
                                 
                                 VStack{
-                                    ForEach (self.appState.selectedChat?.chatMessages ?? [], id: \.self) { msg in
-                                        VStack{
-                                            ChatRow(chatMessage: msg)
+                                    if (self.appState.selectedChat != nil) {
+                                        ForEach (self.appState.selectedChat?.chatMessages ?? [], id: \.self) { msg in
+                                            
+                                            VStack{
+                                                self.generateChatRow(message: msg)
+//                                                ChatRow(chatMessage: msg)
+                                            }
                                         }
                                     }
+
                                 }
                                 
                             }
@@ -67,6 +73,7 @@ struct ContentView: View {
                             .navigationBarTitle("\(self.appState.selectedChat?.nameDef ?? "unknown")", displayMode: .inline)
                             .navigationBarItems(leading:
                                 Button(action: {
+                                    print(self.appState.selectedChat)
                                     self.openMenu()
                                     do {
                                         try self.moc.save()
@@ -74,7 +81,6 @@ struct ContentView: View {
                                         print("no save")
                                     }
                                     print("Edit button pressed...")
-                                    print("'" + self.user.username + "'")
                                 }) {
                                     Text("Edit")
                                 }
@@ -104,20 +110,27 @@ struct ContentView: View {
                          menuClose: self.openMenu)
             }.gesture(drag)
             
+            
         }
         
         
     }
+    func generateChatRow(message : Message) -> ChatRow {
+
+            return ChatRow (chatMessage: message)
+
+
+        
+        
+        
+    }
+    
+    
     func openMenu() {
         self.menuOpen.toggle()
     }
     
-    func createNewCommunity(){
-        // call to create new community page will be here
-        //NavigationLink(<#LocalizedStringKey#>, destination: CreateCommunityView())
-        
-        
-    }
+
     
     func sendMessage() {
         
@@ -141,21 +154,16 @@ struct ContentView: View {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(self.user.auth.token)", forHTTPHeaderField: "Authorization") //after
         
-        //        print(request.allHTTPHeaderFields)
+
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             
-            //             guard let data = data else { return }
-            //            if let finalData = try? JSONDecoder().decode(Result.self, from:data) {
-            //                print(finalData)
-            //            }
-            //            //            print(finalData ?? error?.localizedDescription ?? "Unknown error")
+
             
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {     //read possible server error
-                //                print("Server error! ")
-                //                print(response ?? HTTPURLResponse())
-                let suck = response as? HTTPURLResponse
-                print(suck?.statusCode)
+
+                let possibleResponse = response as? HTTPURLResponse
+                print(possibleResponse?.statusCode)
                 return
             }
             
@@ -171,14 +179,12 @@ struct ContentView: View {
                     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
                     
                     let jsonString = String(data: data, encoding: .utf8)
-                    print(jsonString)
+
                     let jsonData = jsonString!.data(using: .utf8)
                     let decoder = JSONDecoder()
                     decoder.userInfo[CodingUserInfoKey.context!] = context
                     let message = try decoder.decode(Message.self, from: jsonData!)
-                    print(message.author)
-                    
-                    
+
                     
                     
                     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
@@ -192,8 +198,7 @@ struct ContentView: View {
                     
                     do {
                         try context.save()
-                        print(message)
-                        print("save")
+
                     } catch {
                         print("could not save")
                     }

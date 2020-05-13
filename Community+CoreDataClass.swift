@@ -29,6 +29,10 @@ public class Community: NSManagedObject, Codable {
             try container.encode(name ?? "", forKey: .name)
             try container.encode(uuid ?? "", forKey: .uuid)
             try container.encode(about ?? "", forKey: .about)
+            let chats = self.chats?.allObjects as? [Chat]
+            try container.encode(chats, forKey: .chats)
+            let subscribers = self.subscribers?.allObjects as? [User]
+            try container.encode(subscribers, forKey: .subscribers)
         }
         catch {
             print("community error")
