@@ -205,7 +205,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             /*
              * In the case of new message notifications, we will request all unread messages from the unread endpoint
              */
-            case "new_message":
+            case "message":
                 
                 // Get the URL for the request
                 guard let url = URL(string: "https://honk-staging.herokuapp.com/api/messages/unread")
@@ -322,6 +322,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                       }
                   }
                 }.resume()
+            
+            
+            case "community":
+                
+                // Get the new community uuid
+                guard let communityUUIDRaw = userInfo["community_uuid"] else {return}
+                let communityUUID = communityUUIDRaw as! String
+                
+                // Prepare a request to get the right community from the server (community GET endpoint)
+                guard let url = URL(string: "https://honk-staging.herokuapp.com/api/communities/\(communityUUID)")
+                    else {
+                        print("Invalid URL")
+                        return
+                    }
+                var request = URLRequest(url: url)
+                request.httpMethod = "GET"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.setValue("Bearer \(self.user.auth.token)", forHTTPHeaderField: "Authorization")
+            
+                print("about to make request")
+                // Issue the request to the server
+                URLSession.shared.dataTask(with: request) { data, response, error in
+                    print("in url session body")
+                    guard let httpResponse = response as? HTTPURLResponse,
+                        (200...299).contains(httpResponse.statusCode) else {
+                            return
+                    }
+                    
+                    // Get the payload from the request
+                    guard let data = data else {
+                        return
+                    }
+                    
+                    // Save the community returned to CoreData
+                    DispatchQueue.main.async {
+                        do {
+                            let jsonString = String(data: data, encoding: .utf8)
+                            let jsonData = jsonString!.data(using: .utf8)
+                            decoder.userInfo[CodingUserInfoKey.context!] = context
+                            let _ = try decoder.decode(Community.self, from:jsonData!)
+                            try context.save()
+                            print("saved to core data")
+                            print(jsonString)
+                        }
+                        catch {
+                            print("error community to core data")
+                        }
+                        UIApplication.shared.endBackgroundTask(taskID)
+                    }
+                }.resume()
+                
+            
+                
             
             // Default case for a not listed category type
             default:
