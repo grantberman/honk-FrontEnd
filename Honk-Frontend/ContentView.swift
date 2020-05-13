@@ -70,10 +70,9 @@ struct ContentView: View {
                                 
                             }
                                 
-                            .navigationBarTitle("\(self.appState.selectedChat?.nameDef ?? "unknown")", displayMode: .inline)
+                            .navigationBarTitle("\(self.appState.selectedChat?.nameDef ?? "No chat selected")", displayMode: .inline)
                             .navigationBarItems(leading:
                                 Button(action: {
-                                    print(self.appState.selectedChat)
                                     self.openMenu()
                                     do {
                                         try self.moc.save()
@@ -106,7 +105,7 @@ struct ContentView: View {
                 
                 
                 SideMenu(width: 270,
-                         isOpen: self.menuOpen,
+                         sideMenuIsOpen: self.$menuOpen,
                          menuClose: self.openMenu)
             }.gesture(drag)
             
