@@ -86,9 +86,10 @@ struct ChatRow: View {
                                         }
                                     }
                                             .sheet(isPresented: self.$makeChatIsPresented) {
-                                        return CreateChatView(initList: self.chatMessage.reactionUsernames, communityUUID: (self.chatMessage.inChat?.inCommunity?.uuid)!, isPresented: self.$makeChatIsPresented)
+                                                return CreateChatView(initList: self.chatMessage.reactionUsernames, communityUUID: (self.chatMessage.inChat?.inCommunity?.uuid)!, isPresented: self.$makeChatIsPresented)
                                             .environmentObject(self.user).environmentObject(self.appState)
                                     }
+                            }
                                     Group{
                                         if(self.chatMessage.reactions?.count ?? 0 > 0){
                                             Text(self.refreshing ? "" : "")
@@ -108,7 +109,7 @@ struct ChatRow: View {
                                     .frame(maxWidth: 30, maxHeight: 30, alignment: .leading)
                             }
                             Spacer()
-                        }
+                        
                     }
                 }
             } else {
@@ -174,7 +175,7 @@ struct ChatRow: View {
                                         }
                                     }
                                             .sheet(isPresented: self.$makeChatIsPresented) {
-                                        return CreateChatView(initList: self.chatMessage.reactionUsernames, communityUUID: (self.chatMessage.inChat?.inCommunity?.uuid)!, isPresented: self.$makeChatIsPresented)
+                                                return CreateChatView(initList: self.chatMessage.reactionUsernames, communityUUID: (self.chatMessage.inChat?.inCommunity?.uuid)!, isPresented: self.$makeChatIsPresented)
                                             .environmentObject(self.user).environmentObject(self.appState)
                                     }
                             }
