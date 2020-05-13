@@ -138,7 +138,7 @@ struct ContentView: View {
         let chatUUID = self.appState.selectedChat!.uuidDef
         let authToken = self.user.auth.token
         
-        guard let url = URL(string: "http://honk-staging.herokuapp.com/api/messages") else {
+        guard let url = URL(string: "http://honk-api.herokuapp.com/api/messages") else {
             print("Invalid URL")
             return
         }
