@@ -61,7 +61,7 @@ struct CreateChatView: View {
                         VStack{
                             
                             List{
-                                ForEach(self.userList, id:\.self){ user in
+                                ForEach(self.initList ?? self.userList, id:\.self){ user in
                                     VStack{
                                         Text(user)
                                     }.padding(10)
@@ -79,6 +79,8 @@ struct CreateChatView: View {
             }) {
                 Text("Done").bold()
             }.disabled(!self.informationValid()))
+        }.onAppear() {
+            print("appeared")
         }
    
     }
@@ -88,7 +90,7 @@ struct CreateChatView: View {
         if chatName.isEmpty{
             return false
         }
-        if userList.isEmpty{
+        if initList?.isEmpty  ?? userList.isEmpty{
             return false
         }
         return true

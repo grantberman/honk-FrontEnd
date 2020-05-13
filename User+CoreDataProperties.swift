@@ -27,7 +27,7 @@ extension User {
     @NSManaged public var recievedMessage: MessageDelivery?
     @NSManaged public var memberOf: Chat?
     @NSManaged public var subscribedTo: Community?
-    @NSManaged public var reaction: Reaction?
+    @NSManaged public var reaction: NSSet?
     
     
     public var displayName : String {
@@ -35,7 +35,7 @@ extension User {
     }
     
     public var usernameDef : String {
-        username ?? "Unknown"
+        username ?? ""
     }
     
     
