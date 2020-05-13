@@ -21,6 +21,7 @@ struct ContentView: View {
     @EnvironmentObject var appState : AppState
     @EnvironmentObject var user: UserLocal
     @State var makeCommunityViewIsPresented = false
+    //@State var updateMessages = false
     
     
     var body: some View {
@@ -69,10 +70,9 @@ struct ContentView: View {
                                 
                             }
                                 
-                            .navigationBarTitle("\(self.appState.selectedChat?.nameDef ?? "unknown")", displayMode: .inline)
+                            .navigationBarTitle("\(self.appState.selectedChat?.nameDef ?? "No chat selected")", displayMode: .inline)
                             .navigationBarItems(leading:
                                 Button(action: {
-                                    print(self.appState.selectedChat)
                                     self.openMenu()
                                     do {
                                         try self.moc.save()
@@ -90,7 +90,7 @@ struct ContentView: View {
                         HStack{
                             TextField("Message...", text: self.$composedMessage).frame(minHeight: CGFloat(30))
                             Button(action: {
-                                
+                                //self.updateMessages.toggle()
                                 self.sendMessage()
                                 self.composedMessage = ""
                             }) {
@@ -105,7 +105,7 @@ struct ContentView: View {
                 
                 
                 SideMenu(width: 270,
-                         isOpen: self.menuOpen,
+                         sideMenuIsOpen: self.$menuOpen,
                          menuClose: self.openMenu)
             }.gesture(drag)
             
@@ -219,9 +219,9 @@ struct ContentView: View {
 
 
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .environmentObject(AppState())
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//            .environmentObject(AppState())
+//    }
+//}

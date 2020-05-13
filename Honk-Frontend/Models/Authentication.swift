@@ -137,6 +137,8 @@ class Authentication: ObservableObject{
                     let user = try decoder.decode(User.self, from: jsonData!)
                     print(user)
                     
+                    self.isAuthenticated = true
+                    self.writeKeychain(username, password)
                     
                     do {
                         try context.save()

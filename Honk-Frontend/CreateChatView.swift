@@ -87,6 +87,11 @@ struct CreateChatView: View {
     
     //API call to make new chat
     private func makeChat(_ name: String, _ community_uuid: String, _ invite_usernames: [String], _ auth: String){
+
+        
+        
+
+
         guard let url = URL(string: "https://honk-api.herokuapp.com/api/chats")
             else {
                 print("Invalid URL")
