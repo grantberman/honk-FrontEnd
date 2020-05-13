@@ -25,6 +25,8 @@ struct ContentView: View {
     @EnvironmentObject var user: UserLocal
     @State var makeCommunityViewIsPresented = false
     //@State var updateMessages = false
+    @State var makeInfoIsPresented = false
+
     
     
     var body: some View {
@@ -89,6 +91,21 @@ struct ContentView: View {
                                     print("Edit button pressed...")
                                 }) {
                                     Text("Edit")
+                                }, trailing: Button(action: {
+                                    do{
+                                        try self.moc.save()
+                                    } catch {
+                                        print("no save")
+                                    }
+                                    self.makeInfoIsPresented.toggle()
+                                    print("info button pressed...")
+                                }){
+                                    Text("Info")
+                                    
+                                }.sheet(isPresented: self.$makeInfoIsPresented){
+                                    return InfoView(isPresented: self.$makeInfoIsPresented)
+                                        .environmentObject( self.appState)
+                                    
                                 }
                             )
                         }.padding()
@@ -123,18 +140,12 @@ struct ContentView: View {
     }
     func generateChatRow(message : Message) -> ChatRow {
         return ChatRow (chatMessage: message)
-
-
-        
-        
-        
     }
     
     
     func openMenu() {
         self.menuOpen.toggle()
     }
-    
 
     
     func sendMessage() {

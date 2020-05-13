@@ -61,20 +61,17 @@ struct LoginView: View {
                             .padding()
                             .cornerRadius(20)
                             .foregroundColor(.black)
-                            .border(Color.white)
-
+                            .border(Color.gray)
                         SecureField("password", text: $user.password)
                             .padding()
-
+                            .cornerRadius(20)
                             .foregroundColor(.black)
-
-                        .cornerRadius(5)
-                        .border(Color.white)
+                            .border(Color.gray)
                         TextField("email", text: $user.email)
                             .padding()
                             .cornerRadius(20)
-                            .foregroundColor(.white)
-                            .border(Color.white)
+                            .foregroundColor(.black)
+                            .border(Color.gray)
                     }.padding([.leading, .trailing], 27.5)
 
 
