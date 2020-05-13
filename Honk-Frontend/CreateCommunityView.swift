@@ -26,7 +26,6 @@ struct CreateCommunityView: View {
     
     @EnvironmentObject var user: UserLocal
     @Binding var isPresented: Bool
-    @Binding var sideMenuOpen : Bool
     
     
     var body: some View {
@@ -79,7 +78,6 @@ struct CreateCommunityView: View {
             .navigationBarItems(trailing: Button(action: {
                 self.isPresented = false
                 self.makeCommunity(self.CommunityName, self.CommunityDesription, self.UserList, self.user.auth.token)
-                self.sideMenuOpen = true
             }) {
                 Text("Done").bold()
             }.disabled(!self.informationValid()))

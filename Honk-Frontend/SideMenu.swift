@@ -100,7 +100,7 @@ struct MenuContent: View {
                     .bold()
                         .foregroundColor(.blue)
                 }.sheet(isPresented: self.$makeChatIsPresented){
-                    return CreateCommunityView(isPresented: self.$makeChatIsPresented, sideMenuOpen: self.$sideMenuIsOpen).environmentObject(self.user).environmentObject(self.appState)
+                    return CreateCommunityView(isPresented: self.$makeChatIsPresented).environmentObject(self.user).environmentObject(self.appState)
                     
                 }
             }

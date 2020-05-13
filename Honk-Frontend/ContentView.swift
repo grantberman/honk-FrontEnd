@@ -45,7 +45,7 @@ struct ContentView: View {
                     }) {
                         Text("Create New Community")
                     }.sheet(isPresented: self.$makeCommunityViewIsPresented){
-                        return CreateCommunityView(isPresented: self.$makeCommunityViewIsPresented, sideMenuOpen: self.$menuOpen).environmentObject(self.user).environmentObject(self.appState)
+                        return CreateCommunityView(isPresented: self.$makeCommunityViewIsPresented).environmentObject(self.user).environmentObject(self.appState)
                     }
                 }
                 else  {
@@ -115,8 +115,7 @@ struct ContentView: View {
         
     }
     func generateChatRow(message : Message) -> ChatRow {
-
-            return ChatRow (chatMessage: message)
+        return ChatRow (chatMessage: message)
 
 
         

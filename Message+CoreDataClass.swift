@@ -53,5 +53,10 @@ public class Message: NSManagedObject, Codable{
                 print("message decoding error")
             }
         }
+    
+    override public func willChangeValue(forKey key: String) {
+        super.willChangeValue(forKey: key)
+        self.objectWillChange.send()
+    }
     }
 

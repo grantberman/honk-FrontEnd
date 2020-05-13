@@ -6,8 +6,10 @@
 //  Copyright © 2020 Grant Berman. All rights reserved.
 //
 
+
 import SwiftUI
 import CoreData
+import Combine
 extension Date {
     func currentTimeMillis() -> Int64 {
         return Int64(self.timeIntervalSince1970 * 1000)
@@ -16,16 +18,25 @@ extension Date {
 
 
 struct ChatRow: View {
-    var chatMessage : Message;
+   
     //    var author : User;
     @EnvironmentObject var user: UserLocal
-    let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    //@Binding var hasReacted: Bool
-   // @State var hiddenTrigger = false
+    @State  var refreshing = false
+    @State var makeChatIsPresented = false
     
+     var didSave = NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave)
+    let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    let objectWillChange = ObservableObjectPublisher()
+    var chatMessage : Message {// this makes it show like messages when something else is clicked, not quite fully what we want but close. If the keyboard is up it rerenders immediently but if not then it needs a click somewhere
+           willSet{
+               objectWillChange.send()
+           }
+       }
     
     var hasLikes: Bool = false
     var isMe : Bool  = false
+    
     
     
     //        return chatMessage.authorDef.usernameDef == self.user.username
@@ -87,8 +98,6 @@ struct ChatRow: View {
 //                                    .padding(10)
                                     .contextMenu{
                                     Button(action: { self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef, self.chatMessage.inChat!.uuidDef)
-                                        //self.hasReacted.toggle() // a state change to force rerender
-                                        //self.hiddenTrigger = self.hasReacted
                                     }){
                                             EmptyView()
                                             HStack{
@@ -99,7 +108,9 @@ struct ChatRow: View {
                                                 .scaledToFit()
                                             }
                                         }.frame(alignment: .leading)
-                                        Button(action: self.createSubChat){
+                                        Button(action: {
+                                            self.makeChatIsPresented.toggle()
+                                        }){
                                             
                                             HStack{
                                                 Text("Create sub chat")
@@ -107,13 +118,15 @@ struct ChatRow: View {
                                                     .renderingMode(.original)
                                                     .resizable()
                                                     .scaledToFit()
-                                            }
+                                            }.sheet(isPresented: self.$makeChatIsPresented) {
+                                            return CreateChatView(communityUUID: (self.chatMessage.inChat?.inCommunity?.uuid)!, isPresented: self.$makeChatIsPresented)
+                                        }
                                         }
                                 }
                                 //updateReact()
                                 Group{
                                     if(self.chatMessage.reactions?.count ?? 0 > 0){
-                                   
+                                    Text(self.refreshing ? "" : "")
                                     Image("thumbs-up")
                                         .renderingMode(.original)
                                         .resizable()
@@ -123,6 +136,9 @@ struct ChatRow: View {
                                     Text(String(describing: self.chatMessage.reactions!.count))
                                         .frame(alignment: .bottomLeading)
                                     }
+                                }.onReceive(self.didSave) { _ in
+                                    self.refreshing.toggle()
+                                    
                                 }
                                 .frame(maxWidth: 30, maxHeight: 30, alignment: .leading)
                             }
@@ -139,6 +155,7 @@ struct ChatRow: View {
                                     //updateReact()
                                     Group{
                                         if(self.chatMessage.reactions?.count ?? 0 > 0){
+                                        Text(self.refreshing ? "" : "")
                                         Text(String(describing: self.chatMessage.reactions!.count))
                                             .frame(alignment: .bottomTrailing)
                                             
@@ -148,6 +165,9 @@ struct ChatRow: View {
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fit)
                                             }
+                                    }.onReceive(self.didSave) { _ in
+                                        self.refreshing.toggle()
+                                        
                                     }
                                     .frame(maxWidth: 30, maxHeight: 30, alignment: .trailing)
                                 Text(self.chatMessage.contentDef)
@@ -165,8 +185,6 @@ struct ChatRow: View {
                                 .cornerRadius(10)
                                 .contextMenu{
                                     Button(action: { self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef, self.chatMessage.inChat!.uuidDef)
-                                        //self.hasReacted.toggle() // a state change to force rerender
-                                        //self.hiddenTrigger = self.hasReacted
                                     }){
                                             EmptyView()
                                             HStack{
@@ -211,6 +229,12 @@ struct ChatRow: View {
                 }
         }
     }
+    func createSubgroup() {
+        
+    }
+    
+    
+    
     
     public func reactToMessage(_ reaction_type: String,  _ auth: String, _ message_uuid: String, _ chat_uuid: String){
             //  the API call to like
@@ -275,8 +299,10 @@ struct ChatRow: View {
                             let updatedMessages = messages?.adding(message)
                             objectUpdate.messages = updatedMessages as NSSet?
                             try context.save()
+                            self.didSave
                             print("message is")
                             print(message)
+                            
                             
                             do {
                                 try context.save()
