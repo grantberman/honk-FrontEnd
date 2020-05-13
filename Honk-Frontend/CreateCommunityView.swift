@@ -59,20 +59,7 @@ struct CreateCommunityView: View {
                         }
                     }
                 }
-                Section {
-                    if self.informationValid(){
-                        
-                        Button(action: {
-                            // API call to create new community
-                            self.isPresented = false
-                            self.makeCommunity(self.CommunityName, self.CommunityDesription, self.UserList, self.user.auth.token)
-                            
-                            
-                        }) {
-                            Text("Create new Community!")
-                        }
-                    }
-                }
+
             }
             .navigationBarTitle(Text("Create New Community"), displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {

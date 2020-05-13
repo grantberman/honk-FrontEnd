@@ -88,9 +88,8 @@ struct ContentView: View {
                                     } catch {
                                         print("no save")
                                     }
-                                    print("Edit button pressed...")
                                 }) {
-                                    Text("Edit")
+                                    Text("Menu")
                                 }, trailing: Button(action: {
                                     do{
                                         try self.moc.save()
