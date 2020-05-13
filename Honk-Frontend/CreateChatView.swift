@@ -25,6 +25,7 @@ struct CreateChatView: View {
     @State private var username = ""
     
     var communityUUID : String
+//    var isSubgroup : Bool
     @Binding var isPresented: Bool
     
     
@@ -44,12 +45,13 @@ struct CreateChatView: View {
                         HStack{
                             TextField("Username", text: $username)
                             Button(action: {
+                                print(self.initList)
                                 if (self.initList != nil) {
-                                    self.userList.append(self.username)
+                                    self.initList?.append(self.username)
                                     self.username = ""
                                 }
                                 else {
-                                    self.initList?.append(self.username)
+                                    self.userList.append(self.username)
                                     self.username = ""
                                 }
 
@@ -61,11 +63,22 @@ struct CreateChatView: View {
                         VStack{
                             
                             List{
-                                ForEach(self.initList ?? self.userList, id:\.self){ user in
-                                    VStack{
-                                        Text(user)
-                                    }.padding(10)
+                                if initList != nil {
+                                    ForEach(self.initList!, id:\.self){ user in
+                                        VStack{
+                                            Text(user)
+                                        }.padding(10)
+                                    }
                                 }
+                                    
+                                else {
+                                    ForEach(self.userList, id:\.self){ user in
+                                        VStack{
+                                            Text(user)
+                                        }.padding(10)
+                                    }
+                                }
+
                             }
                         }
                     }
@@ -75,14 +88,17 @@ struct CreateChatView: View {
             .navigationBarTitle(Text("Create New Chat"), displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
                 self.isPresented = false
+                if self.initList != nil {
+                    self.makeChat(self.chatName, self.communityUUID,  self.initList!, self.user.auth.token)
+                }
+                else {
                 self.makeChat(self.chatName, self.communityUUID,  self.userList, self.user.auth.token)
+                }
+
             }) {
                 Text("Done").bold()
             }.disabled(!self.informationValid()))
-        }.onAppear() {
-            print("appeared")
         }
-   
     }
     
     private func informationValid() -> Bool {

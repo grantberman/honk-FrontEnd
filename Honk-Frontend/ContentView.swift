@@ -88,9 +88,8 @@ struct ContentView: View {
                                     } catch {
                                         print("no save")
                                     }
-                                    print("Edit button pressed...")
                                 }) {
-                                    Text("Edit")
+                                    Text("Menu")
                                 }, trailing: Button(action: {
                                     do{
                                         try self.moc.save()
@@ -102,7 +101,9 @@ struct ContentView: View {
                                 }){
                                     Text("Info")
                                     
-                                }.sheet(isPresented: self.$makeInfoIsPresented){
+                                }.sheet(isPresented: self.$makeInfoIsPresented, onDismiss: {
+                                    self.makeInfoIsPresented = false
+                                }){
                                     return InfoView(isPresented: self.$makeInfoIsPresented)
                                         .environmentObject( self.appState)
                                     
@@ -114,7 +115,6 @@ struct ContentView: View {
                         HStack{
                             TextField("Message...", text: self.$composedMessage).frame(minHeight: CGFloat(30))
                             Button(action: {
-                                //self.updateMessages.toggle()
                                 self.sendMessage()
                                 self.composedMessage = ""
                             }) {
