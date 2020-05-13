@@ -341,10 +341,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 request.setValue("Bearer \(self.user.auth.token)", forHTTPHeaderField: "Authorization")
             
-                print("about to make request")
+            
                 // Issue the request to the server
                 URLSession.shared.dataTask(with: request) { data, response, error in
-                    print("in url session body")
                     guard let httpResponse = response as? HTTPURLResponse,
                         (200...299).contains(httpResponse.statusCode) else {
                             return
@@ -374,7 +373,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }.resume()
                 
             
+            case "chat":
                 
+                // Harvest the chat and community UUIDs for this chat from the notification payload
+                guard let communityUUIDRaw = userInfo["community_uuid"] else {return}
+                guard let chatUUIDRaw = userInfo["chat_uuid"] else {return}
+                let communityUUID = communityUUIDRaw as! String
+                let chatUUID = chatUUIDRaw as! String
+            
+                // Fetch the community from CoreData that will correspond to this new chat object
+                do {
+
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Community")
+                    fetchRequest.predicate = NSPredicate(format: "uuid == %@", communityUUID)
+                    let fetchedCommunity = try context.fetch(fetchRequest) as! [Community]
+                    let objectUpdate = fetchedCommunity[0]
+                    let chats = objectUpdate.chats
+                
+                    // Create an API request to get the chat object
+                    guard let url = URL(string: "https://honk-staging.herokuapp.com/api/chats/\(chatUUID)")
+                        else {
+                            print("Invalid URL")
+                            return
+                    }
+                    var request = URLRequest(url: url)
+                    request.httpMethod = "GET"
+                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                    request.setValue("Bearer \(self.user.auth.token)", forHTTPHeaderField: "Authorization")
+                    
+                    // Issue the request to the server
+                    URLSession.shared.dataTask(with: request) { data, response, error in
+                        guard let httpResponse = response as? HTTPURLResponse,
+                            (200...299).contains(httpResponse.statusCode) else {
+                                return
+                        }
+                        
+                        // Get the payload from the request
+                        guard let data = data else {
+                            return
+                        }
+                        
+                        // Save the chat to CoreData and create a relationship between it and the community
+                        DispatchQueue.main.async {
+                            do {
+                                let jsonString = String(data: data, encoding: .utf8)
+                                let jsonData = jsonString!.data(using: .utf8)
+                                decoder.userInfo[CodingUserInfoKey.context!] = context
+                                let chat = try decoder.decode(Chat.self, from: jsonData!)
+                                let updatedChats = chats?.adding(chat)
+                                objectUpdate.chats = updatedChats as NSSet?
+                                try context.save()
+                                print("successful save to core data")
+                            }
+                            catch {
+                                print("save to core data failed")
+                            }
+                            UIApplication.shared.endBackgroundTask(taskID)
+                        }
+                    }.resume()
+                } catch {
+                    print("fetch community failed")
+            }
             
             // Default case for a not listed category type
             default:
@@ -423,89 +482,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         -> Void) {
         
         
-        
-        guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
-            fatalError("Unable to read managed object context.")
-        }
-        
-        print("will present")
-        
-        let decoder = JSONDecoder()
-        
-        switch notification.request.content.categoryIdentifier {
-   
-            
-            
-            
-        case "new_chat":
-            
-            
-            let messageJSON = notification.request.content.userInfo["chat"] as! NSDictionary
-            //1. create message object
-            do {
-                let data = try JSONSerialization.data(withJSONObject: messageJSON, options: [])
-                let jsonString = String(data: data, encoding: .utf8)
-                let jsonData = jsonString!.data(using: .utf8)
-                
-                
-                decoder.userInfo[CodingUserInfoKey.context!] = context
-                let chat  = try decoder.decode(Chat.self, from: jsonData!)
-                
-                
-                let communityUUID = notification.request.content.userInfo["community_uuid"] as! String
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Community")
-                fetchRequest.predicate = NSPredicate(format: "uuid == %@", communityUUID)
-                
-                
-                let fetchedCommunity = try context.fetch(fetchRequest) as! [Community]
-                print(fetchedCommunity)
-                
-                let objectUpdate = fetchedCommunity[0]
-                let chats = objectUpdate.chats
-                let updatedChats = chats?.adding(chat)
-                objectUpdate.chats = updatedChats as NSSet?
-                try context.save()
-                print("saved")
-                
-            } catch {
-                print("could not add new chat to community" )
-            }
-            
-            
-            
-            
-        case "new_community":
-            print(notification.request.content.userInfo["community"])
-            let messageJSON = notification.request.content.userInfo["community"] as! NSDictionary
-            //1. create message object
-            do {
-                let data = try JSONSerialization.data(withJSONObject: messageJSON, options: [])
-                let jsonString = String(data: data, encoding: .utf8)
-                //                print(jsonString)
-                let jsonData = jsonString!.data(using: .utf8)
-                
-                
-                decoder.userInfo[CodingUserInfoKey.context!] = context
-                let community  = try decoder.decode(Community.self, from: jsonData!)
-                print(community)
-                try context.save()
-                
-            } catch {
-                print("could not add new chat to community" )
-            }
-            
-            
-            
-        default:
-            break
-        }
-        //        print(notification.request.content.categoryIdentifier)
-        //        let notifInfo = notification.request.content.userInfo
-        //
-        //        if let notifBody = notifInfo["aps"] as? [String:AnyObject] {
-        //            print(notifBody)
-        //        }
-        //        print("here")
+     
         completionHandler([.alert, .badge, .sound])
     }
     
