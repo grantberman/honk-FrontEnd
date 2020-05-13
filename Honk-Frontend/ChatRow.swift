@@ -21,8 +21,8 @@ extension Date {
 struct ChatRow: View {
     var chatMessage: Message
     @EnvironmentObject var user: UserLocal
-    @Binding var hasReacted: Bool
-    @State var hiddenTrigger = false
+    //@Binding var hasReacted: Bool
+   // @State var hiddenTrigger = false
     
     
     var hasLikes: Bool = false
@@ -73,8 +73,8 @@ struct ChatRow: View {
 //                                    .padding(10)
                                     .contextMenu{
                                     Button(action: { self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef, self.chatMessage.inChat!.uuidDef)
-                                        self.hasReacted.toggle() // a state change to force rerender
-                                        self.hiddenTrigger = self.hasReacted
+                                        //self.hasReacted.toggle() // a state change to force rerender
+                                        //self.hiddenTrigger = self.hasReacted
                                     }){
                                             EmptyView()
                                             HStack{
@@ -96,7 +96,21 @@ struct ChatRow: View {
                                             }
                                         }
                                 }
-                                updateReact().frame(maxWidth: 30, maxHeight: 30, alignment: .leading)
+                                //updateReact()
+                                Group{
+                                    if(self.chatMessage.reactions?.count ?? 0 > 0){
+                                   
+                                    Image("thumbs-up")
+                                        .renderingMode(.original)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
+                                        
+                                    Text(String(describing: self.chatMessage.reactions!.count))
+                                        .frame(alignment: .bottomLeading)
+                                    }
+                                }
+                                .frame(maxWidth: 30, maxHeight: 30, alignment: .leading)
                             }
                             Spacer()
                         }
@@ -107,7 +121,19 @@ struct ChatRow: View {
                         HStack {
                             Group {
                                 Spacer()
-                                    updateReact()
+                                    //updateReact()
+                                    Group{
+                                        if(self.chatMessage.reactions?.count ?? 0 > 0){
+                                        Text(String(describing: self.chatMessage.reactions!.count))
+                                            .frame(alignment: .bottomTrailing)
+                                            
+                                        Image("thumbs-up")
+                                            .renderingMode(.original)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fit)
+                                            }
+                                    }
                                     .frame(maxWidth: 30, maxHeight: 30, alignment: .trailing)
                                 Text(self.chatMessage.contentDef)
 //                                    .bold()
@@ -124,8 +150,8 @@ struct ChatRow: View {
                                 .cornerRadius(10)
                                 .contextMenu{
                                     Button(action: { self.reactToMessage("Like", self.user.auth.token, self.chatMessage.uuidDef, self.chatMessage.inChat!.uuidDef)
-                                        self.hasReacted.toggle() // a state change to force rerender
-                                        self.hiddenTrigger = self.hasReacted
+                                        //self.hasReacted.toggle() // a state change to force rerender
+                                        //self.hiddenTrigger = self.hasReacted
                                     }){
                                             EmptyView()
                                             HStack{
