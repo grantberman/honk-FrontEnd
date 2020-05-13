@@ -35,9 +35,6 @@ struct ChatRow: View {
     var isMe : Bool  = false
     
     
-
-    
-    
     var body: some View{
         
 
