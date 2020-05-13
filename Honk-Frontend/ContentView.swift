@@ -21,6 +21,7 @@ struct ContentView: View {
     @EnvironmentObject var appState : AppState
     @EnvironmentObject var user: UserLocal
     @State var makeCommunityViewIsPresented = false
+    //@State var updateMessages = false
     
     
     var body: some View {
@@ -90,7 +91,7 @@ struct ContentView: View {
                         HStack{
                             TextField("Message...", text: self.$composedMessage).frame(minHeight: CGFloat(30))
                             Button(action: {
-                                
+                                //self.updateMessages.toggle()
                                 self.sendMessage()
                                 self.composedMessage = ""
                             }) {
@@ -137,7 +138,7 @@ struct ContentView: View {
         let chatUUID = self.appState.selectedChat!.uuidDef
         let authToken = self.user.auth.token
         
-        guard let url = URL(string: "http://honk-api.herokuapp.com/api/messages") else {
+        guard let url = URL(string: "http://honk-staging.herokuapp.com/api/messages") else {
             print("Invalid URL")
             return
         }
@@ -219,9 +220,9 @@ struct ContentView: View {
 
 
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .environmentObject(AppState())
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//            .environmentObject(AppState())
+//    }
+//}
