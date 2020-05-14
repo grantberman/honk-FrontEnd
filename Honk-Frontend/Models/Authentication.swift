@@ -90,7 +90,7 @@ class Authentication: ObservableObject{
     func register(_ username: String, _ password: String, _ email: String) {
         
         
-        guard let url = URL(string: "http://honk-api.herokuapp.com/api/users") else {
+        guard let url = URL(string: "http://honk-staging.herokuapp.com/api/users") else {
             print("Invalid URL")
             return
         }

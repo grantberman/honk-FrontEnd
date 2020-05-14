@@ -92,23 +92,19 @@ struct ContentView: View {
                                 }) {
                                     Text("Edit")
                                 }, trailing: Button(action: {
-                                    do{
-                                        try self.moc.save()
-                                    } catch {
-                                        print("no save")
-                                    }
+                                    
                                     self.makeInfoIsPresented.toggle()
-                                    print("info button pressed...")
                                 }){
                                     Text("Info")
-                                }.sheet(isPresented: self.$makeInfoIsPresented){
-                                    return InfoView(isPresented: self.$makeInfoIsPresented)
-                                        .environmentObject( self.appState)
-                                        .environmentObject(self.user)
-                                    
                                 }
                             )
                         }.padding()
+                        .sheet(isPresented: self.$makeInfoIsPresented){
+                            return InfoView(isPresented: self.$makeInfoIsPresented)
+                                .environmentObject( self.appState)
+                                .environmentObject(self.user)
+                            
+                        }
                         
                         
                         HStack{
@@ -138,6 +134,10 @@ struct ContentView: View {
         
         
     }
+    
+    
+    
+    
     func generateChatRow(message : Message) -> ChatRow {
         return ChatRow (chatMessage: message)
     }
@@ -154,7 +154,7 @@ struct ContentView: View {
         let chatUUID = self.appState.selectedChat!.uuidDef
         let authToken = self.user.auth.token
         
-        guard let url = URL(string: "http://honk-api.herokuapp.com/api/messages") else {
+        guard let url = URL(string: "http://honk-staging.herokuapp.com/api/messages") else {
             print("Invalid URL")
             return
         }
