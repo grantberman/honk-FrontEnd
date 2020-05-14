@@ -106,7 +106,7 @@ struct ChatRow: View {
                                     .frame(maxWidth: 30, maxHeight: 30, alignment: .leading)
                             
                             Spacer()
-                        
+                        }
                     }
                 }
             } else {
@@ -189,6 +189,7 @@ struct ChatRow: View {
                 
             }
         }
+        
     }
     
     public func updateReact() -> some View{
