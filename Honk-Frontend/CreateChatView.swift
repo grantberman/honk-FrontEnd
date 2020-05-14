@@ -119,7 +119,7 @@ struct CreateChatView: View {
         
 
 
-        guard let url = URL(string: "https://honk-api.herokuapp.com/api/chats")
+        guard let url = URL(string: "https://honk-staging.herokuapp.com/api/chats")
             else {
                 print("Invalid URL")
                 return
