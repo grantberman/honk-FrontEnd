@@ -35,7 +35,7 @@ struct InfoView: View {
                     .font(.title)
                     .padding(20)
                 Group{
-                    Text("Daily Activity Delta: \(self.dailyActive ?? "")")
+                    Text("Daily Activity Delta: \(self.dailyActive ?? "") %")
                     Text("Most active member:  \(self.mostActive ?? "")")
                     Text("Weekly message count: \(self.weeklyCount ?? "")")
                 }.padding(10)

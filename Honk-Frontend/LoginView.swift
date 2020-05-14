@@ -21,7 +21,6 @@ struct LoginResult: Codable {
 struct LoginView: View {
     
 
-
     @EnvironmentObject var user: UserLocal
     @EnvironmentObject var auth: Authentication
 
@@ -97,7 +96,7 @@ struct LoginView: View {
                                 .fixedSize(horizontal: true, vertical: false)
                                 .background(Color.blue)
                                 .cornerRadius(5.0)
-                        }
+                        }//.disabled(isEmailValid())
                     }
                 }.onAppear{
                     print("auth" + String(self.user.auth.isAuthenticated))
@@ -108,7 +107,13 @@ struct LoginView: View {
         
     }
     
-    
+    func isEmailValid() -> Bool {
+        if self.user.email.isEmpty{
+            return true
+        }
+        return false
+        
+    }
     
     func register() {
         
