@@ -59,20 +59,22 @@ struct MenuContent: View {
                         bottom: 0,
                         trailing: 0))
                     ) {
-                        ForEach(community.chatArray, id: \.self) { chat in VStack {
-                            Text(chat.wrappedName).onTapGesture {
-                                self.appState.selectedCommunity = chat.inCommunity
-                                self.appState.selectedChat = chat
-                                let userDefaults = UserDefaults.standard
-                                userDefaults.set(chat.uuid, forKey: "chat")
-                                
-                                self.menuClose()
+                        ForEach(community.chatArray, id: \.self) { chat in
+                            HStack {
+                                Button(action: {
+                                    self.appState.selectedCommunity = chat.inCommunity
+                                    self.appState.selectedChat = chat
+                                    let userDefaults = UserDefaults.standard
+                                    userDefaults.set(chat.uuid, forKey: "chat")
+                                    
+                                    self.menuClose()
+                                }) {
+                                    Text(chat.wrappedName)
+                                }
                             }
+
+                            
                         }.listStyle(GroupedListStyle())
-                            
-                            
-                            
-                        }
                         Button (action: {
                             self.makeChatIsPresented.toggle()
                         }) {
@@ -93,8 +95,7 @@ struct MenuContent: View {
                     .navigationBarHidden(true)
                 
                 Button (action: {
-                    self.makeChatIsPresented.toggle()
-                    print(self.makeChatIsPresented)
+                    self.makeCommunityIsPresented.toggle()
                 }) {
                     Text("Create New Community")
                     .bold()
@@ -104,7 +105,7 @@ struct MenuContent: View {
 
             
             
-        }.sheet(isPresented: self.$makeChatIsPresented){
+        }.sheet(isPresented: self.$makeCommunityIsPresented){
             return CreateCommunityView(isPresented: self.$makeChatIsPresented).environmentObject(self.user).environmentObject(self.appState)
             
         }

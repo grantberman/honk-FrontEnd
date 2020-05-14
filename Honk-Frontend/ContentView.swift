@@ -68,12 +68,12 @@ struct ContentView: View {
                                                 VStack{
                                                     self.generateChatRow(message: msg)
                                                 }
-                                            }.onReceive(self.didSave) { _ in
-                                                self.refreshing.toggle()
+                                            }
                                             }
 
                                         }
-                                    }
+                                    }.onReceive(self.didSave) { _ in
+                                    self.refreshing.toggle()
 
                                 }
                                 
