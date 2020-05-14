@@ -95,8 +95,7 @@ struct MenuContent: View {
                     .navigationBarHidden(true)
                 
                 Button (action: {
-                    self.makeChatIsPresented.toggle()
-                    print(self.makeChatIsPresented)
+                    self.makeCommunityIsPresented.toggle()
                 }) {
                     Text("Create New Community")
                     .bold()
@@ -106,7 +105,7 @@ struct MenuContent: View {
 
             
             
-        }.sheet(isPresented: self.$makeChatIsPresented){
+        }.sheet(isPresented: self.$makeCommunityIsPresented){
             return CreateCommunityView(isPresented: self.$makeChatIsPresented).environmentObject(self.user).environmentObject(self.appState)
             
         }
