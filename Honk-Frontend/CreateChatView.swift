@@ -79,9 +79,8 @@ struct CreateChatView: View {
             }) {
                 Text("Done").bold()
             }.disabled(!self.informationValid()))
-        }.onAppear() {
-            print("appeared")
         }
+        
    
     }
     
