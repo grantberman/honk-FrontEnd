@@ -106,7 +106,7 @@ struct CreateCommunityView: View {
     private func makeCommunity(_ name: String, _ description: String, _ invite_usernames: [String], _ auth: String){
         
         
-        guard let url = URL(string: "https://honk-api.herokuapp.com/api/communities")
+        guard let url = URL(string: "https://honk-staging.herokuapp.com/api/communities")
             else {
                 print("Invalid URL")
                 return
@@ -153,6 +153,7 @@ struct CreateCommunityView: View {
                     
 
                     self.appState.selectedCommunity = community
+                    self.appState.selectedChat = community.chatArray[0]
                     
                     do {
                         try context.save()

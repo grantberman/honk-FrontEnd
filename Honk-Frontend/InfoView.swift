@@ -21,7 +21,6 @@ struct InfoView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var user: UserLocal
     
-    
     @State var dailyActive : String?
     @State var mostActive : String?
     @State var weeklyCount : String?
@@ -42,10 +41,10 @@ struct InfoView: View {
             }.navigationBarTitle(Text("Info"), displayMode: .inline)
                 .navigationBarItems(trailing: Button(action: {
                     self.isPresented = false
+
+                    
                 }){
-                    Text("Done").onTapGesture {
-                        self.isPresented = false
-                    }
+                    Text("Done")
                 })
         }.onAppear(perform: {  self.getStats(self.appState.selectedChat!.uuidDef, self.user.auth.token)
         })
