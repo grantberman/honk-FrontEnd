@@ -101,13 +101,13 @@ struct MenuContent: View {
                     Text("Create New Community")
                     .bold()
                         .foregroundColor(.blue)
-                }.sheet(isPresented: self.$makeChatIsPresented){
-                    return CreateCommunityView(isPresented: self.$makeChatIsPresented).environmentObject(self.user).environmentObject(self.appState)
-                    
                 }
             }
 
             
+            
+        }.sheet(isPresented: self.$makeChatIsPresented){
+            return CreateCommunityView(isPresented: self.$makeChatIsPresented).environmentObject(self.user).environmentObject(self.appState)
             
         }
         //        }

@@ -104,9 +104,9 @@ struct ChatRow: View {
                                         
                                     }
                                     .frame(maxWidth: 30, maxHeight: 30, alignment: .leading)
-                            }
+                            
                             Spacer()
-                        
+                        }
                     }
                 }
             } else {
@@ -189,6 +189,7 @@ struct ChatRow: View {
                 
             }
         }
+        
     }
     
     public func updateReact() -> some View{
@@ -346,7 +347,7 @@ struct ChatRow: View {
                         let jsonString = String(data: data, encoding: .utf8)
                         
                         let jsonData = jsonString!.data(using: .utf8)
-                        print(jsonData)
+                        //print(jsonData)
                         let decoder = JSONDecoder()
                         decoder.userInfo[CodingUserInfoKey.context!] = context
                         let message = try decoder.decode(Message.self, from: jsonData!)
