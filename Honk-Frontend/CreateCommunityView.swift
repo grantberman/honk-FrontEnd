@@ -140,6 +140,7 @@ struct CreateCommunityView: View {
                     
 
                     self.appState.selectedCommunity = community
+                    self.appState.selectedChat = community.chatArray[0]
                     
                     do {
                         try context.save()

@@ -91,25 +91,20 @@ struct ContentView: View {
                                 }) {
                                     Text("Menu")
                                 }, trailing: Button(action: {
-                                    do{
-                                        try self.moc.save()
-                                    } catch {
-                                        print("no save")
-                                    }
+                                    
                                     self.makeInfoIsPresented.toggle()
-                                    print("info button pressed...")
                                 }){
                                     Text("Info")
-                                    
-                                }.sheet(isPresented: self.$makeInfoIsPresented, onDismiss: {
-                                    self.makeInfoIsPresented = false
-                                }){
-                                    return InfoView(isPresented: self.$makeInfoIsPresented)
-                                        .environmentObject( self.appState)
-                                    
+
                                 }
                             )
                         }.padding()
+                        .sheet(isPresented: self.$makeInfoIsPresented){
+                            return InfoView(isPresented: self.$makeInfoIsPresented)
+                                .environmentObject( self.appState)
+                                .environmentObject(self.user)
+                            
+                        }
                         
                         
                         HStack{
@@ -138,6 +133,10 @@ struct ContentView: View {
         
         
     }
+    
+    
+    
+    
     func generateChatRow(message : Message) -> ChatRow {
         return ChatRow (chatMessage: message)
     }

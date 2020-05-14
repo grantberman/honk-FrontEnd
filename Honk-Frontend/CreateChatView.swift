@@ -99,6 +99,7 @@ struct CreateChatView: View {
                 Text("Done").bold()
             }.disabled(!self.informationValid()))
         }
+
     }
     
     private func informationValid() -> Bool {
