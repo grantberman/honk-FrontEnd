@@ -117,7 +117,7 @@ struct LoginView: View {
     
     func register() {
         
-        self.user.auth.register(user.username, user.password, user.email)
+        self.user.auth.register(user.username, user.password, user.email, user.apns)
         
     }
     

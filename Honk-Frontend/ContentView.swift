@@ -88,14 +88,14 @@ struct ContentView: View {
                                     } catch {
                                         print("no save")
                                     }
-                                    print("Edit button pressed...")
                                 }) {
-                                    Text("Edit")
+                                    Text("Menu")
                                 }, trailing: Button(action: {
                                     
                                     self.makeInfoIsPresented.toggle()
                                 }){
                                     Text("Info")
+
                                 }
                             )
                         }.padding()
@@ -110,7 +110,6 @@ struct ContentView: View {
                         HStack{
                             TextField("Message...", text: self.$composedMessage).frame(minHeight: CGFloat(30))
                             Button(action: {
-                                //self.updateMessages.toggle()
                                 self.sendMessage()
                                 self.composedMessage = ""
                             }) {

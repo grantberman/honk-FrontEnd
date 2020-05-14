@@ -35,9 +35,6 @@ struct ChatRow: View {
     var isMe : Bool  = false
     
     
-
-    
-    
     var body: some View{
         
 
@@ -86,7 +83,7 @@ struct ChatRow: View {
                                         }
                                     }
                                             .sheet(isPresented: self.$makeChatIsPresented) {
-                                        return CreateChatView(initList: self.chatMessage.reactionUsernames, communityUUID: (self.chatMessage.inChat?.inCommunity?.uuid)!, isPresented: self.$makeChatIsPresented)
+                                                return CreateChatView(initList: self.chatMessage.reactionUsernames, communityUUID: (self.chatMessage.inChat?.inCommunity?.uuid)!, isPresented: self.$makeChatIsPresented)
                                             .environmentObject(self.user).environmentObject(self.appState)
                                     }
                             }
@@ -109,7 +106,7 @@ struct ChatRow: View {
                                     .frame(maxWidth: 30, maxHeight: 30, alignment: .leading)
                             
                             Spacer()
-                        }
+                        
                     }
                 }
             } else {
@@ -175,7 +172,7 @@ struct ChatRow: View {
                                         }
                                     }
                                             .sheet(isPresented: self.$makeChatIsPresented) {
-                                        return CreateChatView(initList: self.chatMessage.reactionUsernames, communityUUID: (self.chatMessage.inChat?.inCommunity?.uuid)!, isPresented: self.$makeChatIsPresented)
+                                                return CreateChatView(initList: self.chatMessage.reactionUsernames, communityUUID: (self.chatMessage.inChat?.inCommunity?.uuid)!, isPresented: self.$makeChatIsPresented)
                                             .environmentObject(self.user).environmentObject(self.appState)
                                     }
                             }
